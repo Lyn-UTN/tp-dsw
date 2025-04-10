@@ -29,8 +29,7 @@
 Regularidad: (se incluyen los crud y cuu en los req de aprobacion directa)
 |Req|Detalle|
 |:-|:-|
-|Listado<br>+<br>detalle| 1.Listado de cocheras filtrado por tipo de vehículo, muestra ubicación, precio y tipo de vehículo permitido.
- <br> 2.Listado de reservas (para una cochera) filtrado por rango de fecha, muestra fecha inicio y fin de reserva, estado y datos del cliente |
+|Listado<br>+<br>detalle| 1.Listado de cocheras filtrado por tipo de vehículo, muestra ubicación, precio y tipo de vehículo permitido. <br> 2.Listado de reservas (para una cochera) filtrado por rango de fecha, muestra fecha inicio y fin de reserva, estado y datos del cliente |
 
 
 Adicionales para Aprobación
