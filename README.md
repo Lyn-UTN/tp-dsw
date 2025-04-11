@@ -1,25 +1,24 @@
-# TP-DSW
+# **TP-DSW**
 
-##Grupo Memby
+## Grupo Memby
 ### Integrantes
-*52583 -Gabriele, Fausto
-*52896 -Dimarco, Ignacio
-*52771 -Yaccuzzi, Lucas Elvio
-*52895 -Salguero, Manuel Hernan
+- 52583 -Gabriele, Fausto.
+- 52896 -Dimarco, Ignacio.
+- 52771 -Yaccuzzi, Lucas Elvio.
+- 52895 -Salguero, Manuel Hernan.
 
 
 ### Repositorios(archivos)
-* frontend 
-* backend 
-
+- [frontend](https://github.com/Lyn-UTN/TP-DSW/tree/main/backend) 
+- [backend](https://github.com/Lyn-UTN/TP-DSW/tree/main/frontend) 
+- [pull-request](https://github.com/Lyn-UTN/TP-DSW/pulls)
 
 ## Tema
-### Memby, sistema que permite a los dueños de cocheras registrarlas y ponerlas en alquiler, mientras que los conductores pueden buscar, reservar y pagar por su uso de forma sencilla desde la web&celular, sin dar vueltas y eligiendo el mejor precio, lugar y comodidad.
+ Memby, sistema que permite a los dueños de cocheras registrarlas y ponerlas en alquiler, mientras que los conductores pueden buscar, reservar y pagar por su uso de forma sencilla desde la web&celular, sin dar vueltas y eligiendo el mejor precio, lugar y comodidad.
 
 
 ### Modelo
-![imagen del modelo](https://app.diagrams.net/#G17CmsxCE-w4RppISFeKPXqqaWAXvFu8MM#%7B%22pageId%22%3A%22cmFTz9YPNpSMTq0lVuGJ%22%7D)
-
+![Imagen del modelo](https://github.com/user-attachments/assets/943872d9-babf-459a-a018-05460f92b754)
 
 ## Alcance Funcional 
 
