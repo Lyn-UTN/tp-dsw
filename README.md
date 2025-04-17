@@ -25,18 +25,20 @@
 
 ### Alcance Mínimo
  
-
-Regularidad: (se incluyen los crud y cuu en los req de aprobacion directa)
+Regularidad:
 |Req|Detalle|
 |:-|:-|
-|Listado<br>+<br>detalle| 1.Listado de cocheras filtrado por tipo de vehículo, muestra ubicación, precio y tipo de vehículo permitido. <br> 2.Listado de reservas (para una cochera) filtrado por rango de fecha, muestra fecha inicio y fin de reserva, estado y datos del cliente |
+|CRUD simple|1. CRUD Tipo Vehiculo<br>2. CRUD Zona<br>3. CRUD Usuario/Dueño <br>4.  Tipo Reserva|
+|CRUD dependiente|1. CRUD Vehiculo {depende de} CRUD Tipo Vehiculo, CRUD Usuario <br>2. CRUD Cochera {depende de} CRUD Tipo Vehiculo, CRUD Zona, CRUD Usuario |
+|Listado<br>+<br>detalle| 1.Listado de cocheras filtrado por tipo de vehículo, muestra ubicación, precio y tipo de vehículo permitido. <br> 2.Listado de reservas (para una cochera) filtrado por rango de fecha, muestra fecha inicio y fin de reserva, estado y datos del cliente|
+|CUU/Epic|1. Reservar cochera <br>2. Cancelar/Modificar reserva|
 
 
 Adicionales para Aprobación
 |Req|Detalle|
 |:-|:-|
 |CRUD |1. CRUD Cliente <br>2. CRUD Vehículo <br>3. CRUD Tipo de vehículo <br>4. CRUD Reserva<br>5. CRUD Tipo de reserva. (hora, día, mes) <br>6. CRUD Cochera(garage) <br>7. CRUD (Pago/factura/feedback)|
-|CUU/Epic|1. RRegistrar usuario Dueño de Cochera <br>2. Reservar cochera <br>3.  Ingresar/Agregar cochera <br>4.Confirmar (check-in) uso de cochera <br>5. Registrar usuario cliente|
+|CUU/Epic|1. Realizar pago con MP/Stripe <br>2. Feedback mod(con diccionario)|
 
 
 ### Alcance Adicional Voluntario
