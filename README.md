@@ -18,7 +18,7 @@
 
 
 ### Modelo
-(![image](https://github.com/user-attachments/assets/fe755499-28f2-461e-acaa-81b7b67f153c)
+![image](https://github.com/user-attachments/assets/fe755499-28f2-461e-acaa-81b7b67f153c)
 
 -[Link](https://app.diagrams.net/#G17CmsxCE-w4RppISFeKPXqqaWAXvFu8MM#%7B%22pageId%22%3A%22cmFTz9YPNpSMTq0lVuGJ%22%7D)
 
