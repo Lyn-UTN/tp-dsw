@@ -18,7 +18,8 @@
 
 
 ### Modelo
-![Imagen del modelo](https://github.com/user-attachments/assets/943872d9-babf-459a-a018-05460f92b754)
+![Imagen del modelo](![image](https://github.com/user-attachments/assets/7ccd2e2d-5a7b-468d-84bf-f9f9c0b06fc5)
+)
 -[Link](https://app.diagrams.net/#G17CmsxCE-w4RppISFeKPXqqaWAXvFu8MM#%7B%22pageId%22%3A%22cmFTz9YPNpSMTq0lVuGJ%22%7D)
 
 ## Alcance Funcional 
