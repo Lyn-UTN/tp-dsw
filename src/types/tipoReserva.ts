@@ -1,9 +1,9 @@
 
-type estadoReserva = "xHora" | "xdia" | "xmes";
+type descTipoReserva = "xHora" | "xdia" | "xmes";
 
 
 export type tipoReserva = {
+
     id_TipoReserva: number;
-    tipoReserva: estadoReserva;
-    descTipoReserva: string;
+    descTipoReserva: descTipoReserva;
 };
