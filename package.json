@@ -21,7 +21,12 @@
   },
   "packageManager": "pnpm@10.12.2",
   "dependencies": {
+    "@mikro-orm/cli": "^6.3.14",
+    "@mikro-orm/core": "^6.3.14",
+    "@mikro-orm/migrations": "^6.3.14",
+    "@mikro-orm/mysql": "^6.3.14",
     "dotenv": "^16.5.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "reflect-metadata": "^0.2.2"
   }
 }
