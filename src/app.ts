@@ -1,11 +1,9 @@
 import express from 'express';
-
+import cliente from './cliente/cliente.routes';
 const app = express();
 const PORT = 3000;
 
-app.use('/', (req, res) => {
-  res.send('<h1>API funcionando correctamente jeje <h1>');//<h1> es un encabezado HTML que muestra la letra en negrita
-});//res.json es otra forma de ver 
+app.use('/api/clientes', cliente.routes);
 
 // aca uso PORT como puerto para el servidor
 app.listen(PORT, () => {
