@@ -15,8 +15,8 @@ export class TipoVehiculo extends BaseEntity {
     @Property({nullable: false})
     descTipoVehiculo!: string
 
-    @OneToMany(() => Vehiculo, (vehiculo) => vehiculo.tipoVehiculo,{/* hay q hacer la crud de vehiculo*/
+    /*@OneToMany(() => vehiculo, (vehiculo) => vehiculo.tipoVehiculo,{// hay q hacer la crud de vehiculo
     cascade: [Cascade.ALL]
     })
-    vehiculos = new Collection<Vehiculo>(this);
+    vehiculos = new Collection<vehiculo>(this); */
 }
