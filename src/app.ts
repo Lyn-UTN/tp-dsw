@@ -1,11 +1,20 @@
-import express from 'express';
-import cliente from './cliente/cliente.routes';
-const app = express();
-const PORT = 3000;
+import express from 'express'
+import { clienteRoute } from './cliente/cliente.routes.js'
 
-app.use('/api/clientes', cliente.routes);
+const app = express()
+app.use(express.json())
 
-// aca uso PORT como puerto para el servidor
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+// Usamos /api/clientes para la API de clientes
+app.use('/api/clientes', clienteRoute)
+
+// Middleware para rutas no encontradas
+app.use((req, res, next) => {
+  res.status(404).send({ message: 'Resource not found' })
+})
+
+app.listen(3000, () => {
+  console.log('Server running on http://localhost:3000/')
+})
+
+import { test } from './cliente/cliente.routes.js'
+console.log(test)

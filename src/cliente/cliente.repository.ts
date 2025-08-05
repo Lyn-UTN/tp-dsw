@@ -1,52 +1,51 @@
-import { Repository } from "../shared/repository.js";
-import { Cliente } from "./cliente.entity.js";
+import { Repository } from '../shared/repository.js'
+import { Cliente } from './cliente.entity.js'
 
-const clientes = [ 
-    new Cliente(
-        "Juan",
-        "Perez",
-        "DNI",
-        12345678,
-        "1234567890",
-        "pepe@gmail",
-        "password123", 
-        1,
-        "B12345678"
-    )
-];
+const clientes = [
+  new Cliente(
+    'Juan',
+    'Pérez',
+    'DNI',
+    12345678,
+    '1123456789',
+    'juan.perez@example.com',
+    'clave123',
+    1,
+    'ABC123'
+  ),
+]
 
-export class ClienteRepository implements Repository<Cliente>{
+export class ClienteRepository implements Repository<Cliente> {
+  public findAll(): Cliente[] | undefined {
+    return clientes
+  }
 
-    public findAll(): Cliente[] | undefined {
-        return clientes;
-    }
-    public findOne(item: { id: string }): Cliente | undefined {
-        return clientes.find(cliente => cliente.idCliente.toString() === item.id);
-    }
+  public findOne(item: { idCliente: string }): Cliente | undefined {
+    return clientes.find((cliente) => cliente.idCliente.toString() === item.idCliente)
+  }
 
-    public add(item: Cliente): Cliente | undefined {
-        clientes.push(item) 
-        return item;
-    }
+  public add(item: Cliente): Cliente | undefined {
+    clientes.push(item)
+    return item
+  }
 
-    public update(item: Cliente): Cliente | undefined {
-        const index = clientes.findIndex(cliente => cliente.idCliente === item.idCliente);
-        if (index !== -1) {
-        clientes[index] = { ...clientes[index], ...item };
+  public update(item: Cliente): Cliente | undefined {
+    const clienteIdx = clientes.findIndex((cliente) => cliente.idCliente === item.idCliente)
 
-        }
-        return clientes[index];
+    if (clienteIdx !== -1) {
+      clientes[clienteIdx] = { ...clientes[clienteIdx], ...item }
     }
 
-    public delete(item: { id: string }): Cliente | undefined {
-        
-        const clienteIdx = clientes.findIndex((cliente) => cliente.idCliente.toString()=== item.id);
+    return clientes[clienteIdx]
+  }
 
+  public delete(item: { id: string }): Cliente | undefined {
+    const clienteIdx = clientes.findIndex((cliente) => cliente.idCliente.toString()=== item.id)
 
-        if (clienteIdx !== -1) {
-            const deletedCliente = clientes[clienteIdx];
-            clientes.splice(clienteIdx, 1);
-            return deletedCliente;
+    if (clienteIdx !== -1) {
+      const deletedCliente = clientes[clienteIdx]
+      clientes.splice(clienteIdx, 1)
+      return deletedCliente
     }
   }
 }

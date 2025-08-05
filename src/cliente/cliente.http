@@ -1,0 +1,44 @@
+### obtener todos los CLIENTES
+GET http://localhost:3000/api/cliente
+
+
+### obtener un CLIENTE
+GET http://localhost:3000/api/cliente/1
+
+### crear un nuevo CLIENTE
+POST http://localhost:3000/api/clientes
+Content-Type: application/json
+
+{
+    "nombre":"gerardo" ,
+    "apellido": "garcia",
+    "tipoDocumento": "DNI",
+    "documento":12345 ,
+    "telefono":"5678" ,
+    "email": "gerardo@gmail",
+    "password": "gerardito",
+    "idCliente": 2,
+    "licenciaConducir":"B456AJK"
+}
+
+### modificar un CLIENTE (PUT - recurso completo e idempotente)
+PUT http://localhost:3000/api/clientes/2
+Content-Type: application/json
+
+{
+    "nombre":"olivo" ,
+    "apellido": "garcia",
+   
+}
+
+### modificar un character (PATCH - recurso parcial)
+PATCH http://localhost:3000/api/clientes/1
+Content-Type: application/json
+
+{
+   "nombre":"pedro" ,
+    "apellido": "gonzales",
+}
+
+### borrar un character
+DELETE http://localhost:3000/api/clientes/2
