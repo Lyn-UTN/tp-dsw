@@ -62,7 +62,7 @@ function add(req: Request, res: Response): void {
 }
 
 function update(req: Request, res: Response): void {
-  req.body.sanitizedInput.idCliente = req.params.id
+  req.body.sanitizedInput.idCliente = Number(req.params.id)
   const cliente = repository.update(req.body.sanitizedInput)
 
   if (!cliente) {

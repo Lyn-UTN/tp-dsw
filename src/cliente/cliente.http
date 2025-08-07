@@ -1,9 +1,9 @@
 ### obtener todos los CLIENTES
-GET http://localhost:3000/api/cliente
+GET http://localhost:3000/api/clientes
 
 
 ### obtener un CLIENTE
-GET http://localhost:3000/api/cliente/1
+GET http://localhost:3000/api/clientes/1
 
 ### crear un nuevo CLIENTE
 POST http://localhost:3000/api/clientes
@@ -13,10 +13,10 @@ Content-Type: application/json
     "nombre":"gerardo" ,
     "apellido": "garcia",
     "tipoDocumento": "DNI",
-    "documento":12345 ,
-    "telefono":"5678" ,
+    "numeroDocumento":12345,
+    "telefono":"5678",
     "email": "gerardo@gmail",
-    "password": "gerardito",
+    "clave": "gerardito",
     "idCliente": 2,
     "licenciaConducir":"B456AJK"
 }
@@ -27,17 +27,17 @@ Content-Type: application/json
 
 {
     "nombre":"olivo" ,
-    "apellido": "garcia",
+    "apellido": "garcia"
    
 }
 
 ### modificar un character (PATCH - recurso parcial)
-PATCH http://localhost:3000/api/clientes/1
+PATCH http://localhost:3000/api/clientes/2
 Content-Type: application/json
 
 {
-   "nombre":"pedro" ,
-    "apellido": "gonzales",
+   "nombre": "pedro",
+   "apellido": "gonzales"
 }
 
 ### borrar un character
