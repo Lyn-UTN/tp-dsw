@@ -3,18 +3,23 @@ import express from 'express'
 import { tipoVehiculoRouter } from './tipoVehiculo/tipoVehiculo_routes.js'
 import { orm, syncSchema } from './shared/orm.js'
 import { RequestContext } from '@mikro-orm/core'
+import { clienteRoute } from './cliente/cliente.routes.js'
+
 
 const app = express()
 app.use(express.json())
+
 
 //luego de los middlewares de express
 app.use((req, res, next) => {
   RequestContext.create(orm.em, next)
 })
 
-//antes de las rutas y middlewares de negocio
+//Rutas de negocio
 app.use('/api/tipoVehiculo', tipoVehiculoRouter)
+app.use('/api/clientes', clienteRoute)
 
+//Middleware para rutas no encontradas
 app.use((req, res, next) => {
   return res.status(404).json({ message: 'Error 404 resource not found :(' })
 })
