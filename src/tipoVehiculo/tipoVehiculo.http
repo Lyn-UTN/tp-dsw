@@ -1,0 +1,46 @@
+### GET ALL Tipos de vehiculos
+GET http://localhost:3000/api/tipoVehiculo
+
+### POST Tipos de vehiculos
+# @name crearTipoVehiculo
+POST http://localhost:3000/api/tipoVehiculo
+Content-Type: application/json
+
+{
+  "descTipoVehiculo": "Camioneta"
+}
+
+### Guardar ID del tipo de vehiculo creado
+@id = {{crearTipoVehiculo.response.body.data[0].id}}
+
+### GET ONE Tipo de vehiculo por ID
+GET http://localhost:3000/api/tipoVehiculo/{{@id}}
+
+### PUT Tipos de vehiculos (actualiza)
+PUT http://localhost:3000/api/tipoVehiculo/{{@id}}
+Content-Type: application/json
+
+{
+  "descTipoVehiculo": "monopatin"
+}
+
+### POST2
+POST http://localhost:3000/api/tipoVehiculo
+Content-Type: application/json
+
+{
+  "descTipoVehiculo": "Moto",
+}
+
+###POST3
+POST http://localhost:3000/api/tipoVehiculo
+Content-Type: application/json
+
+{
+  "descTipoVehiculo": "Auto",
+}
+
+
+### DELETE
+@idToDelete = {{crearTipoVehiculo.response.body.data[0].id}}
+DELETE http://localhost:3000/api/tipoVehiculo/{{@idToDelete}}

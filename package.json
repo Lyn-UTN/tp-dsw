@@ -6,6 +6,7 @@
   "main": "app.js",
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
+    "started": "node ./dist/app.js",
     "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\"",
     "dev": "ts-node --loader ts-node/esm src/app.ts"
   },
@@ -14,6 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^5.0.2",
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.0.3",
     "ts-node": "^10.9.2",
     "tsc-watch": "6.0.4",
@@ -21,7 +23,13 @@
   },
   "packageManager": "pnpm@10.12.2",
   "dependencies": {
+    "@mikro-orm/cli": "^6.3.14",
+    "@mikro-orm/core": "^6.3.14",
+    "@mikro-orm/migrations": "^6.3.14",
+    "@mikro-orm/mysql": "^6.3.14",
+    "@mikro-orm/sql-highlighter": "^1.0.1",
     "dotenv": "^16.5.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "reflect-metadata": "^0.2.2"
   }
 }
