@@ -1,6 +1,7 @@
 import { Usuario } from "../usuario/usuario.entity.js";
 export class Cliente extends Usuario {
     constructor(
+    idUsuario: number,
     nombre: string,
     apellido: string,
     tipoDocumento: string,
@@ -10,6 +11,6 @@ export class Cliente extends Usuario {
     password: string,
     public idCliente: number,
     public licenciaConducir: string) {
-        super(nombre, apellido, tipoDocumento, documento, telefono, email, password);
+        super(idUsuario,nombre, apellido, tipoDocumento, documento, telefono, email, password);
     }
 }

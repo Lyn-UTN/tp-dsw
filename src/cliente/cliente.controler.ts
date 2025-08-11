@@ -46,6 +46,7 @@ function add(req: Request, res: Response): void {
   const input = req.body.sanitizedInput
 
   const clienteInput = new Cliente(
+    input.idUsuario,
     input.nombre,
     input.apellido,
     input.tipoDocumento,
