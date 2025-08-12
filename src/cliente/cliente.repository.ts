@@ -3,6 +3,7 @@ import { Cliente } from './cliente.entity.js'
 
 const clientes = [
   new Cliente(
+    3,
     'Juan',
     'Pérez',
     'DNI',
@@ -11,8 +12,8 @@ const clientes = [
     'juan.perez@example.com',
     'clave123',
     1,
-    'ABC123'
-  ),
+    'ABC123',
+  )
 ]
 
 export class ClienteRepository implements Repository<Cliente> {
