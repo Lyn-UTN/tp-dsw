@@ -32,7 +32,7 @@ function findAll(req: Request, res: Response): void {
 
 function findOne(req: Request, res: Response): void {
   const id = req.params.id
-  const cliente = repository.findOne({ idCliente: id })
+  const cliente = repository.findOne({ id: id })
 
   if (!cliente) {
     res.status(404).send({ message: 'Cliente not found' })

@@ -1,28 +1,41 @@
-/*import { Repository } from "../shared/repository.js";
+import { Repository } from "../shared/repository.js";
 import { Zona } from "./zona.entity.js";
-export class ZonaRepository implements Repository<Zona> {}
+export class ZonaRepository implements Repository<Zona, number> {
+    private zonas: Zona[] = [];
 
     public findAll(): Zona[] | undefined {
         // obtiene zonas
-        return undefined; 
+        return this.zonas; 
     }
 
-    public findOne(item: { id: string }): Zona | undefined {
-        c
-        //  encontrar una zona por ID
-        return undefined; // Placeholder
-    }
-
+    public findOne(item: { id: number }): Zona | undefined {
+    return this.zonas.find((zona) => zona.idZona === item.id)
+  }
+  
     public add(item: Zona): Zona | undefined {
+        this.zonas.push(item)
         // a agregar una nueva zona
-        return undefined; 
+        return item; 
     }
 
     public update(item: Zona): Zona | undefined {
         //  actualizar una zona existente
-        return undefined; 
+        const zonaIdx = this.zonas.findIndex((zona) => zona.idZona === item.idZona)
+
+        if (zonaIdx !== -1) {
+            this.zonas[zonaIdx] = { ...this.zonas[zonaIdx], ...item }
+        }
+        return this.zonas[zonaIdx]
     } 
     
-    public delete(item: { id: string }): boolean {
+    public delete(item: { id: number }): Zona | undefined {
+        const zonaIdx = this.zonas.findIndex((zona) => zona.idZona === item.id)
 
-}*/
+        if (zonaIdx !== -1) {
+            const deletedZonas = this.zonas[zonaIdx]
+            this.zonas.splice(zonaIdx, 1)
+            return deletedZonas
+        }
+    }
+
+}

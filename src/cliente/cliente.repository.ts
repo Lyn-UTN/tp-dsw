@@ -20,8 +20,8 @@ export class ClienteRepository implements Repository<Cliente> {
     return clientes
   }
 
-  public findOne(item: { idCliente: string }): Cliente | undefined {
-    return clientes.find((cliente) => cliente.idCliente.toString() === item.idCliente)
+  public findOne(item: { id: string }): Cliente | undefined {
+    return clientes.find((cliente) => cliente.idCliente.toString() === item.id)
   }
 
   public add(item: Cliente): Cliente | undefined {

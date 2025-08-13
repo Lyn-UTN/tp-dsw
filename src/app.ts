@@ -4,6 +4,7 @@ import { tipoVehiculoRouter } from './tipoVehiculo/tipoVehiculo_routes.js'
 import { orm, syncSchema } from './shared/orm.js'
 import { RequestContext } from '@mikro-orm/core'
 import { clienteRoute } from './cliente/cliente.routes.js'
+import { zonaRouter } from './zona/zona.routes.js'
 
 
 const app = express()
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 //Rutas de negocio
 app.use('/api/tipoVehiculo', tipoVehiculoRouter)
 app.use('/api/clientes', clienteRoute)
+app.use('/api/zonas', zonaRouter)
 
 //Middleware para rutas no encontradas
 app.use((req, res, next) => {
