@@ -29,7 +29,7 @@
 Regularidad:
 |Req|Detalle|
 |:-|:-|
-|CRUD simple|1. CRUD Tipo Vehiculo<br>2. CRUD Zona<br>3. CRUD Usuario/Dueño <br>4. CRUD Tipo Reserva|
+|CRUD simple|1. CRUD Tipo Vehiculo<br>2. CRUD Zona<br>3. CRUD Usuario/Dueño/Cliente <br>4. CRUD Tipo Reserva(hora, día, mes)|
 |CRUD dependiente|1. CRUD Vehiculo {depende de} CRUD Tipo Vehiculo, CRUD Usuario <br>2. CRUD Cochera {depende de} CRUD Tipo Vehiculo, CRUD Zona, CRUD Usuario |
 |Listado<br>+<br>detalle| 1.Listado de cocheras filtrado por tipo de vehículo, muestra ubicación, precio y tipo de vehículo permitido. <br> 2.Listado de reservas (para una cochera) filtrado por rango de fecha, muestra fecha inicio y fin de reserva, estado y datos del cliente|
 |CUU/Epic|1. Reservar cochera <br>2. Cancelar/Modificar reserva|
@@ -38,7 +38,7 @@ Regularidad:
 Adicionales para Aprobación
 |Req|Detalle|
 |:-|:-|
-|CRUD |1. CRUD Cliente <br>2. CRUD Vehículo <br>3. CRUD Tipo de vehículo <br>4. CRUD Reserva<br>5. CRUD Tipo de reserva. (hora, día, mes) <br>6. CRUD Cochera(garage) <br>7. CRUD (Pago/factura/feedback)|
+|CRUD |1. CRUD Vehículo <br>2. CRUD Reserva<br>3. CRUD Cochera(garage) <br>4. CRUD (Pago/factura/feedback)|
 |CUU/Epic|1. Realizar pago con MP/Stripe <br>2. Feedback mod(con diccionario)|
 
 
