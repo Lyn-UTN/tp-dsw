@@ -1,96 +1,89 @@
-import { Request, Response, NextFunction } from 'express'
-import { ClienteRepository } from './cliente.repository.js'
-import { Cliente } from './cliente.entity.js'
+import { Request, Response, NextFunction } from 'express';
+import { ClienteRepository } from './cliente.repository.js';
+import { Cliente } from './cliente.entity.js';
 
-const repository = new ClienteRepository()
+const repository = new ClienteRepository();
 
-function sanitizeClienteInput(req: Request, res: Response, next: NextFunction): void {
+// Middleware para sanear la entrada de datos
+function sanitizeClienteInput(req: Request, res: Response, next: NextFunction) {
   req.body.sanitizedInput = {
+    // Campos heredados de Usuario
     nombre: req.body.nombre,
     apellido: req.body.apellido,
     tipoDocumento: req.body.tipoDocumento,
-    numeroDocumento: req.body.numeroDocumento,
+    documento: req.body.documento,
     telefono: req.body.telefono,
     email: req.body.email,
-    clave: req.body.clave,
-    idCliente: req.body.idCliente,
-    licenciaConducir: req.body.licenciaConducir,
-  }
+    password: req.body.password,
 
+    // Campos propios de Cliente
+    idUsuario: req.body.idUsuario, // opcional en updates
+    idCliente: req.body.idCliente, // opcional en updates
+    licenciaConducir: req.body.licenciaConducir,
+  };
+
+  // Eliminar propiedades undefined
   Object.keys(req.body.sanitizedInput).forEach((key) => {
     if (req.body.sanitizedInput[key] === undefined) {
-      delete req.body.sanitizedInput[key]
+      delete req.body.sanitizedInput[key];
     }
-  })
+  });
 
-  next()
+  next();
 }
 
-function findAll(req: Request, res: Response): void {
-  res.json({ data: repository.findAll() })
+async function findAll(req: Request, res: Response) {
+  res.json({ data: await repository.findAll() });
 }
 
-function findOne(req: Request, res: Response): void {
-  const id = req.params.id
-  const cliente = repository.findOne({ id: id })
-
+async function findOne(req: Request, res: Response) {
+  const idCliente = req.params.id;
+  const cliente = await repository.findOne({ id: idCliente });
   if (!cliente) {
-    res.status(404).send({ message: 'Cliente not found' })
-    return
+    return res.status(404).send({ message: 'Cliente no encontrado' });
   }
-
-  res.json({ data: cliente })
+  res.json({ data: cliente });
 }
 
-function add(req: Request, res: Response): void {
-  const input = req.body.sanitizedInput
+async function add(req: Request, res: Response) {
+  const input = req.body.sanitizedInput;
 
   const clienteInput = new Cliente(
-    input.idUsuario,
+    input.idUsuario || 0, // Se asigna luego en repository.add
     input.nombre,
     input.apellido,
     input.tipoDocumento,
-    input.numeroDocumento,
+    input.documento,
     input.telefono,
     input.email,
-    input.clave,
-    input.idCliente,
+    input.password,
+    input.idCliente || 0, // Se asigna luego en repository.add
     input.licenciaConducir
-  )
+  );
 
-  const cliente = repository.add(clienteInput)
-  res.status(201).send({ message: 'Cliente created', data: cliente })
+  const cliente = await repository.add(clienteInput);
+  return res.status(201).send({ message: 'Cliente creado', data: cliente });
 }
 
-function update(req: Request, res: Response): void {
-  req.body.sanitizedInput.idCliente = Number(req.params.id)
-  const cliente = repository.update(req.body.sanitizedInput)
+async function update(req: Request, res: Response) {
+  const cliente = await repository.update(req.params.id, req.body.sanitizedInput);
 
   if (!cliente) {
-    res.status(404).send({ message: 'Cliente not found' })
-    return
+    return res.status(404).send({ message: 'Cliente no encontrado' });
   }
 
-  res.status(200).send({ message: 'Cliente updated successfully', data: cliente })
+  return res.status(200).send({ message: 'Cliente actualizado correctamente', data: cliente });
 }
 
-function remove(req: Request, res: Response): void {
-  const id = req.params.id
-  const cliente = repository.delete({ id })
+async function remove(req: Request, res: Response) {
+  const id = req.params.id;
+  const cliente = await repository.delete({ id });
 
   if (!cliente) {
-    res.status(404).send({ message: 'Cliente not found' })
-    return
+    res.status(404).send({ message: 'Cliente no encontrado' });
+  } else {
+    res.status(200).send({ message: 'Cliente eliminado correctamente' });
   }
-
-  res.status(200).send({ message: 'Cliente deleted successfully' })
 }
 
-export {
-  sanitizeClienteInput,
-  findAll,
-  findOne,
-  add,
-  update,
-  remove
-}
+export { sanitizeClienteInput, findAll, findOne, add, update, remove };
