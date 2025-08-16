@@ -10,13 +10,13 @@ importers:
     dependencies:
       '@mikro-orm/cli':
         specifier: ^6.3.14
-        version: 6.4.16
+        version: 6.4.16(mysql2@3.14.3)
       '@mikro-orm/core':
         specifier: ^6.4.16
         version: 6.4.16
       '@mikro-orm/migrations':
         specifier: ^6.3.14
-        version: 6.4.16(@mikro-orm/core@6.4.16)(@types/node@24.2.0)
+        version: 6.4.16(@mikro-orm/core@6.4.16)(@types/node@24.2.0)(mysql2@3.14.3)
       '@mikro-orm/mysql':
         specifier: ^6.4.16
         version: 6.4.16(@mikro-orm/core@6.4.16)
@@ -1238,9 +1238,28 @@ snapshots:
       - supports-color
       - tedious
 
-  '@mikro-orm/migrations@6.4.16(@mikro-orm/core@6.4.16)(@types/node@24.2.0)':
+  '@mikro-orm/knex@6.4.16(@mikro-orm/core@6.4.16)(mysql2@3.14.3)':
     dependencies:
       '@mikro-orm/core': 6.4.16
+<<<<<<< HEAD
+=======
+      fs-extra: 11.3.0
+      knex: 3.1.0(mysql2@3.14.3)
+      sqlstring: 2.3.3
+    transitivePeerDependencies:
+      - mysql
+      - mysql2
+      - pg
+      - pg-native
+      - sqlite3
+      - supports-color
+      - tedious
+
+  '@mikro-orm/migrations@6.4.16(@mikro-orm/core@6.4.16)(@types/node@24.2.0)(mysql2@3.14.3)':
+    dependencies:
+      '@mikro-orm/core': 6.4.16
+      '@mikro-orm/knex': 6.4.16(@mikro-orm/core@6.4.16)(mysql2@3.14.3)
+>>>>>>> Comienzo-persistencia-usuario/cliente
       fs-extra: 11.3.0
       knex: 3.1.0(mysql2@3.14.3)
       sqlstring: 2.3.3

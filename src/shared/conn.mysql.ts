@@ -1,10 +1,15 @@
 import mysql from 'mysql2/promise';
 
+<<<<<<< HEAD
 export const pool = mysql.createPool({
+=======
+const pool = mysql.createPool({
+>>>>>>> Comienzo-persistencia-usuario/cliente
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER ||   'root',
     password: process.env.DB_PASSWORD || 'PALANGANA2005',
     database: process.env.DB_NAME || 'tp_dsw',
+<<<<<<< HEAD
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
@@ -12,4 +17,6 @@ export const pool = mysql.createPool({
     idleTimeout: 60000, // 60 seconds
     enableKeepAlive: true, //evita timeout desde el lado del servidor
     keepAliveInitialDelay: 0,
+=======
+>>>>>>> Comienzo-persistencia-usuario/cliente
 });
