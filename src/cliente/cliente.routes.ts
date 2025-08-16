@@ -1,20 +1,12 @@
-import { Router, type RequestHandler } from 'express'
-import {
-  sanitizeClienteInput,
-  findAll,
-  findOne,
-  add,
-  update,
-  remove
-} from './cliente.controler.js'
+// cliente.routes.ts
+import { Router } from 'express';
+import { sanitizeClienteInput, findAll, findOne, add, update, remove } from './cliente.controler.js';
 
-export const clienteRoute = Router()
+export const clienteRouter = Router();
 
-clienteRoute.get('/', findAll )
-clienteRoute.get('/:id', findOne )
-clienteRoute.post('/', sanitizeClienteInput,add )
-clienteRoute.put('/:id', sanitizeClienteInput, update )
-clienteRoute.patch('/:id', sanitizeClienteInput, update)
-clienteRoute.delete('/:id', remove)
-
-
+clienteRouter.get('/', findAll);
+clienteRouter.get('/:id', findOne);
+clienteRouter.post('/', sanitizeClienteInput, add);
+clienteRouter.put('/:id', sanitizeClienteInput, update);
+clienteRouter.patch('/:id', sanitizeClienteInput, update);
+clienteRouter.delete('/:id', remove);
