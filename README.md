@@ -14,7 +14,7 @@
 - [pull-request](https://github.com/Lyn-UTN/TP-DSW/pulls)
 
 ## Tema
- Memby, sistema que permite a los dueños de cocheras registrarlas y ponerlas en alquiler, mientras que los conductores pueden buscar, reservar y pagar por su uso de forma sencilla desde la web&celular, sin dar vueltas y eligiendo el mejor precio, lugar y comodidad.
+AIRBNG. Sistema que permite a un cliente reservar un garage de una casa, el cual un dueño lo pone en estado disponible. 
 
 
 ### Modelo
@@ -31,15 +31,15 @@ Regularidad:
 |Req|Detalle|
 |:-|:-|
 |CRUD simple|1. CRUD Tipo Vehiculo<br>2. CRUD Zona<br>3. CRUD Cliente <br>4. CRUD Tipo Reserva(hora, día, mes)|
-|CRUD dependiente|1. CRUD Vehiculo {depende de} CRUD Tipo Vehiculo, CRUD Usuario <br>2. CRUD Cochera {depende de} CRUD Tipo Vehiculo, CRUD Zona, CRUD Cliente |
-|Listado<br>+<br>detalle| 1.Listado de cocheras filtrado por tipo de vehículo, muestra ubicación, precio y tipo de vehículo permitido. <br> 2.Listado de reservas (para una cochera) filtrado por rango de fecha, muestra fecha inicio y fin de reserva, estado y datos del cliente|
-|CUU/Epic|1. Reservar cochera <br>2. Cancelar/Modificar reserva|
+|CRUD dependiente|1. CRUD Vehiculo {depende de} CRUD Tipo Vehiculo, CRUD Usuario <br>2. CRUD Garage {depende de} CRUD Tipo Vehiculo, CRUD Zona, CRUD Cliente |
+|Listado<br>+<br>detalle| 1.Listado de garages filtrado por tipo de vehículo, muestra ubicación, precio y tipo de vehículo permitido. <br> 2.Listado de reservas (para una garage) filtrado por rango de fecha, muestra fecha inicio y fin de reserva, estado y datos del cliente|
+|CUU/Epic|1. Reservar garage <br>2. Cancelar/Modificar reserva|
 
 
 Adicionales para Aprobación
 |Req|Detalle|
 |:-|:-|
-|CRUD |1. CRUD Vehículo <br>2. CRUD Reserva<br>3. CRUD Cochera(garage) <br>4. CRUD (Pago/factura/feedback)|
+|CRUD |1. CRUD Vehículo <br>2. CRUD Reserva<br>3. CRUD Garage <br>4. CRUD (Pago/factura/feedback)|
 |CUU/Epic|1. Realizar pago con MP/Stripe <br>2. Feedback mod(con diccionario)|
 
 
