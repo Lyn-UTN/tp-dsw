@@ -112,6 +112,6 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true                                 /* Skip type checking all .d.ts files. */
   },
-  "include": ["src/**/*"],
+  "include": ["src/zona/**/*", "src/app.ts"],
   "exclude": ["node_modules","dist"]
 }

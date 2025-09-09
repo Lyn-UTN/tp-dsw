@@ -1,41 +1,40 @@
-import { Repository } from "../shared/repository.js";
-import { Zona } from "./zona.entity.js";
-export class ZonaRepository implements Repository<Zona, number> {
-    private zonas: Zona[] = [];
+import { Zona } from './zona_entity.js'
+import { orm } from '../shared/orm.js'
 
-    public findAll(): Zona[] | undefined {
-        // obtiene zonas
-        return this.zonas; 
-    }
+const em = orm.em
 
-    public findOne(item: { id: number }): Zona | undefined {
-    return this.zonas.find((zona) => zona.idZona === item.id)
+export class ZonaRepository {
+  async findAll(): Promise<Zona[]> {
+    return await em.find(Zona, {})
   }
-  
-    public add(item: Zona): Zona | undefined {
-        this.zonas.push(item)
-        // a agregar una nueva zona
-        return item; 
-    }
 
-    public update(item: Zona): Zona | undefined {
-        //  actualizar una zona existente
-        const zonaIdx = this.zonas.findIndex((zona) => zona.idZona === item.idZona)
+  async findOne(id: number): Promise<Zona | null> {
+    return await em.findOne(Zona, { id })
+  }
 
-        if (zonaIdx !== -1) {
-            this.zonas[zonaIdx] = { ...this.zonas[zonaIdx], ...item }
-        }
-        return this.zonas[zonaIdx]
-    } 
-    
-    public delete(item: { id: number }): Zona | undefined {
-        const zonaIdx = this.zonas.findIndex((zona) => zona.idZona === item.id)
+  async findOneOrFail(id: number): Promise<Zona> {
+    return await em.findOneOrFail(Zona, { id })
+  }
 
-        if (zonaIdx !== -1) {
-            const deletedZonas = this.zonas[zonaIdx]
-            this.zonas.splice(zonaIdx, 1)
-            return deletedZonas
-        }
-    }
+  async add(data: { nombreZona: string }): Promise<Zona> {
+  const zona = em.create(Zona, data)
+  await em.flush()
+  return zona
+}
 
+
+  async update(id: number, data: Partial<Zona>): Promise<Zona | null> {
+    const zona = await em.findOne(Zona, { id })
+    if (!zona) return null
+    em.assign(zona, data)
+    await em.flush()
+    return zona
+  }
+
+  async remove(id: number): Promise<boolean> {
+    const zona = await em.findOne(Zona, { id })
+    if (!zona) return false
+    await em.removeAndFlush(zona)
+    return true
+  }
 }

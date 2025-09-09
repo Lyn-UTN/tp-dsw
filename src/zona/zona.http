@@ -1,0 +1,42 @@
+#GET all zonas
+GET http://localhost:3000/api/zona
+
+
+###POST a zona
+# @name createZona
+POST http://localhost:3000/api/zona
+Content-Type: application/json
+
+{
+    "idZona": 10,
+    "nombreZona": "Centro"
+}
+
+### ID
+@id = {{createZona.response.body.data.id}}
+
+### GET one Zona
+http://localhost:3000/api/zona/{{id}}
+
+### PUT a Zona
+PUT http://localhost:3000/api/zona/{{id}}
+Content-Type: application/json
+
+{
+    "idZona": 10,
+    "nombreZona": "Sur"
+}
+
+###ID TO DELETE
+@idToDelete = {{createZona.response.body.data.id}}
+
+### DELETE a Zona
+DELETE http://localhost:3000/api/zona/{{idToDelete}}
+
+### PATCH a Zona
+PATCH http://localhost:3000/api/zona/{{idToDelete}}
+Content-Type: application/json
+
+{
+    "nombreZona": "Norte"
+}

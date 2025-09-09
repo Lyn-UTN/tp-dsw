@@ -49,11 +49,7 @@ async function add(req: Request, res: Response) {
   const input = req.body.sanitizedInput;
 
   const clienteInput = new Cliente(
-<<<<<<< HEAD
     input.idUsuario || 0, // Se asigna luego en repository.add
-=======
-    input.idUsuario,
->>>>>>> Comienzo-persistencia-usuario/cliente
     input.nombre,
     input.apellido,
     input.tipoDocumento,
