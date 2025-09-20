@@ -1,1 +1,1 @@
-//aca vamos a hacer test unitarios de la entidad tipoVehiculo en jest
+//aca vamos a hacer test unitarios de la entidad tipoVehiculo en jest, podemos usar playwright pero jest es mas comun para test unitarios

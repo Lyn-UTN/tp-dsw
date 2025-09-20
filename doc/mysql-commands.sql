@@ -1,4 +1,4 @@
-create database if not exists tp_dsw;
+create database if not exists AIRBNG;
 
-create user if not exists 'tp_dsw_user'@'localhost' identified by 'tp_dsw_password';
-grant all on tp_dsw.* to 'tp_dsw_user'@'localhost';
+create user if not exists 'AIRBNG_user'@'localhost' identified by 'AIRBNG_password';
+grant all on AIRBNG.* to 'AIRBNG_user'@'localhost';
