@@ -8,7 +8,7 @@
     "build": "tsc -p ./tsconfig.json",
     "started": "node ./dist/app.js",
     "start:dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/app.js\"",
-    "dev": "ts-node --loader ts-node/esm src/app.ts"
+    "dev": "node --loader ts-node/esm src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "ts-node": "^10.9.2",
+    "ts-node-esm": "^0.0.6",
     "tsc-watch": "6.0.4",
     "typescript": "5.1.3"
   },

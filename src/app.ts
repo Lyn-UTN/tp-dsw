@@ -1,9 +1,10 @@
 import 'reflect-metadata'
 import express from 'express'
-import { tipoVehiculoRouter } from './tipoVehiculo/tipoVehiculo_routes.js'
+//import { tipoVehiculoRouter } from './tipoVehiculo/tipoVehiculo_routes.js'
 import { orm, syncSchema } from './shared/orm.js'
 import { RequestContext } from '@mikro-orm/core'
-import { clienteRouter } from './cliente/cliente.routes.js'
+//import { clienteRouter } from './cliente/cliente.routes.js'
+import { zonaRouter } from './zona/zona.routes.js'
 
 
 const app = express()
@@ -16,8 +17,9 @@ app.use((req, res, next) => {
 })
 
 //Rutas de negocio
-app.use('/api/tipoVehiculo', tipoVehiculoRouter)
-app.use('/api/clientes', clienteRouter)
+//app.use('/api/tipoVehiculo', tipoVehiculoRouter)
+//app.use('/api/clientes', clienteRouter)
+app.use('/api/zona', zonaRouter)
 
 //Middleware para rutas no encontradas
 app.use((req, res, next) => {
