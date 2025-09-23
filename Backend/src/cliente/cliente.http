@@ -1,44 +1,52 @@
-### obtener todos los CLIENTES
+
+### GET all Clientes
 GET http://localhost:3000/api/clientes
 
-
-### obtener un CLIENTE
-GET http://localhost:3000/api/clientes/1
-
-### crear un nuevo CLIENTE
+### POST a Cliente
+# @name createCliente
 POST http://localhost:3000/api/clientes
 Content-Type: application/json
 
 {
-    "nombre":"gerardo" ,
-    "apellido": "garcia",
-    "tipoDocumento": "DNI",
-    "numeroDocumento":12345,
-    "telefono":"5678",
-    "email": "gerardo@gmail",
-    "clave": "gerardito",
-    "idCliente": 2,
-    "licenciaConducir":"B456AJK"
+  "nombre": "Gerardo",
+  "apellido": "Garcia",
+  "tipoDocumento": "DNI",
+  "documento": 12345,
+  "telefono": "5678",
+  "email": "gerardo@gmail.com",
+  "password": "gerardito",
+  "licenciaConducir": "B456AJK"
 }
 
-### modificar un CLIENTE (PUT - recurso completo e idempotente)
-PUT http://localhost:3000/api/clientes/2
+### ID
+@id = {{createCliente.response.body.data.idCliente}}
+
+### GET one Cliente
+GET http://localhost:3000/api/clientes/{{id}}
+
+### PUT a Cliente (reemplaza todos los campos)
+PUT http://localhost:3000/api/clientes/{{id}}
 Content-Type: application/json
 
 {
-    "nombre":"olivo" ,
-    "apellido": "garcia"
-   
+  "nombre": "Olivo",
+  "apellido": "Garcia",
+  "tipoDocumento": "DNI",
+  "documento": 54321,
+  "telefono": "9999",
+  "email": "olivo@gmail.com",
+  "password": "olivito",
+  "licenciaConducir": "C123XYZ"
 }
 
-### modificar un character (PATCH - recurso parcial)
-PATCH http://localhost:3000/api/clientes/2
+### PATCH a Cliente (actualización parcial)
+PATCH http://localhost:3000/api/clientes/{{id}}
 Content-Type: application/json
 
 {
-   "nombre": "pedro",
-   "apellido": "gonzales"
+  "nombre": "Pedro",
+  "apellido": "Gonzales"
 }
 
-### borrar un character
-DELETE http://localhost:3000/api/clientes/2
+### DELETE a Cliente
+DELETE http://localhost:3000/api/clientes/{{id}}
