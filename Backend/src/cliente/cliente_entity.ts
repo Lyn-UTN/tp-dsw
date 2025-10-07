@@ -1,4 +1,5 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Collection, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import { Vehiculo } from '../vehiculo/vehiculo_entity';
 
 @Entity()
 export class Cliente {
@@ -28,4 +29,7 @@ export class Cliente {
 
   @Property()
   licenciaConducir!: string;
+
+  @OneToMany(()=> Vehiculo, vehiculo => vehiculo.cliente)
+  vehiculos = new Collection<Vehiculo>(this);
 }
