@@ -1,13 +1,15 @@
-import Card, { CardBody } from './components/Card';
-import List from './components/List.tsx';
+import { Routes, Route } from "react-router-dom";
+import RootLayout from "./layouts/RootLayout.tsx";
+import Home from "./pages/Home";
+//importar paginas
 
 function App() {
-  const list = ['Cocheras', 'Autos', 'Usuarios'];
   return (
-    <Card>
-      <CardBody title="AIRBNG" text="Mensaje random" />
-      <List data={list} />
-    </Card>
+    <Routes>
+      <Route path="/" element={<RootLayout />}>
+        <Route index element={<Home />} />
+      </Route>
+    </Routes>
   );
 }
 
