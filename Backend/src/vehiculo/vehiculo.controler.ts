@@ -9,7 +9,7 @@ export function sanitizeVehiculoInput(req: Request, res: Response, next: NextFun
 
   const sanitizedInput: any = {
     marca: marca?.trim(),
-    patente: patente?.trim().toUpperCase(),
+    patente: patente?.trim().toUpperCase(), 
     clienteId: Number(clienteId),
     tipoVehiculoId: Number(tipoVehiculoId),
   };

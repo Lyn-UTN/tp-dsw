@@ -1,5 +1,6 @@
-import { Collection, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import { Collection, Entity, ManyToMany, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
 import { Vehiculo } from '../vehiculo/vehiculo_entity';
+import { Garage } from '../garage/garage_entity';
 
 @Entity()
 export class Cliente {
@@ -32,4 +33,8 @@ export class Cliente {
 
   @OneToMany(()=> Vehiculo, vehiculo => vehiculo.cliente)
   vehiculos = new Collection<Vehiculo>(this);
+  
+  // a implementar para el feedback
+  /*@ManyToMany(()=> Garage, garage => garage.clientes)
+  garages = new Collection<Garage>(this);*/
 }
