@@ -1,7 +1,7 @@
-import { orm } from "../shared/orm";
-import {Entity, Property, PrimaryKey, ManyToOne, ManyToMany,Collection} from "@mikro-orm/core";
-import { Zona } from "../zona/zona_entity";
-import {Cliente} from "../cliente/cliente_entity";
+
+import {Entity, Property, PrimaryKey, ManyToOne} from "@mikro-orm/core";
+import { Zona } from "../zona/zona_entity.js";
+// import {Cliente} from "../cliente/cliente_entity";
 
 
 @Entity()

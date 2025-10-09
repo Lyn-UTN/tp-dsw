@@ -1,5 +1,5 @@
 import { Entity, PrimaryKey, Property, ManyToOne, Rel } from "@mikro-orm/core"
-import { Tiporeserva } from "../tipoReserva/tipoReserva_entity"
+import { Tiporeserva } from "../tipoReserva/tipoReserva_entity.js"
 
 export type EstadoRes = "pendiente" | "confirmada" | "cancelada"
 

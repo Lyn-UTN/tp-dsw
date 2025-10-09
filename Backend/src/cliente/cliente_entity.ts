@@ -1,6 +1,6 @@
 import { Collection, Entity, ManyToMany, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
-import { Vehiculo } from '../vehiculo/vehiculo_entity';
-import { Garage } from '../garage/garage_entity';
+import { Vehiculo } from '../vehiculo/vehiculo_entity.js';
+import { Garage } from '../garage/garage_entity.js';
 
 @Entity()
 export class Cliente {

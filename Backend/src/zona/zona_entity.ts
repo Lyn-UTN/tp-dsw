@@ -1,4 +1,5 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core'
+import { Entity, OneToMany, PrimaryKey, Property,Collection} from '@mikro-orm/core'
+import { Garage } from '../garage/garage_entity.js';
 
 @Entity()
 export class Zona {
@@ -7,6 +8,9 @@ export class Zona {
 
   @Property()
   nombreZona!: string
+
+  @OneToMany(()=> Garage, garage => garage.zona)
+  garages = new Collection<Garage>(this);
 }
 
 

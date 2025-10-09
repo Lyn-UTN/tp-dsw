@@ -8,15 +8,13 @@
     Rel,
     Collection,
 } from '@mikro-orm/core';
+import { Vehiculo } from '../vehiculo/vehiculo_entity.js';
 import { BaseEntity } from '../shared/baseEntity_entity.js';
-
 @Entity()
 export class TipoVehiculo extends BaseEntity {
     @Property({nullable: false})
     descTipoVehiculo!: string
 
-    /*@OneToMany(() => vehiculo, (vehiculo) => vehiculo.tipoVehiculo,{// hay q hacer la crud de vehiculo
-    cascade: [Cascade.ALL]
-    })
-    vehiculos = new Collection<vehiculo>(this); */
+    @OneToMany(() => Vehiculo, (vehiculo) => vehiculo.tipoVehiculo, { cascade: [Cascade.PERSIST, Cascade.REMOVE] })
+    vehiculos = new Collection<Vehiculo>(this);
 }

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { Tiporeserva } from "./tipoReserva_entity.js"
+import { Tiporeserva } from "./tipoReserva_entity"
 import { orm } from "../shared/orm.js"
 
 const em = orm.em

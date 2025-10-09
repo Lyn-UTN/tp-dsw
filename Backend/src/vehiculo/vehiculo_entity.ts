@@ -1,6 +1,6 @@
 import { Entity, Property, PrimaryKey, ManyToOne} from "@mikro-orm/core";
-import{Cliente } from "../cliente/cliente_entity"
-import { TipoVehiculo } from "../tipoVehiculo/tipoVehiculo_entity";
+import{Cliente } from "../cliente/cliente_entity.js"
+import { TipoVehiculo } from "../tipoVehiculo/tipoVehiculo_entity.js";
 
 
 @Entity()
