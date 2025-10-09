@@ -1,21 +1,23 @@
 import { Router } from "express";
-import {findAll,findOne,addVehiculo,updateVehiculo,removeVehiculo} from "./vehiculo.controler";
+import {findAll,findOne,addVehiculo,updateVehiculo,removeVehiculo, sanitizeVehiculoInput} from "./vehiculo.controler";
 
-const router = Router();
 
+export const vehiculoRouter = Router();
 // Obtener todos los vehículos
-router.get("/", findAll);
+vehiculoRouter.get("/", findAll);
 
 // Obtener un vehículo por ID
-router.get("/:id", findOne);
+vehiculoRouter.get("/:id", findOne);
 
 // Crear un vehículo
-router.post("/", addVehiculo);
+vehiculoRouter.post("/",sanitizeVehiculoInput, addVehiculo);
 
 // Actualizar un vehículo por ID
-router.put("/:id", updateVehiculo);
+vehiculoRouter.put("/:id", sanitizeVehiculoInput, updateVehiculo);
 
 // Eliminar un vehículo por ID
-router.delete("/:id", removeVehiculo);
+vehiculoRouter.delete("/:id", sanitizeVehiculoInput, removeVehiculo);
 
-export default router;
+//actualizar vehiculo parcialmente
+vehiculoRouter.patch("/:id", sanitizeVehiculoInput, updateVehiculo);
+
