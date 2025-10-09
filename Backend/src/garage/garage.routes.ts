@@ -18,4 +18,4 @@ router.put("/:id", updateGarage);
 //eliminar garage por ID
 router.delete("/:id", deleteGarage);
 
-export default router; 
+export const garageRouter = router;
