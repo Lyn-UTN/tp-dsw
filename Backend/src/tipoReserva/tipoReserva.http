@@ -1,0 +1,32 @@
+GET http://localhost:3000/api/tiporeservas 
+
+obtener un  tiposreserva
+GET http://localhost:3000/api/tiporeservas/1 
+
+crea un tiporeserva
+POST http://localhost:3000/api/tiporeservas
+Content-Type: application/json
+
+{
+    "descTipoReserva":"xDia"
+}
+
+Modifica un tiporeserva (put (recurso completo e idempotente ) modifica todo, patch una parte)
+PUT http://localhost:3000/api/tiporeservas/1
+Content-Type: application/json
+
+{
+    "idtiporeserva": 1,
+    "descTipoReserva":"xHora"
+}
+
+Modifica un tiporeserva parcialmente con patch
+PATCH http://localhost:3000/api/tiporeservas/1
+Content-Type: application/json
+
+{
+    "descTipoReserva":"xmesiano"
+}
+
+Borrar un tiporeserva
+DELETE  http://localhost:3000/api/tiporeservas/2

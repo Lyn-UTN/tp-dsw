@@ -1,9 +1,17 @@
+import { Entity, Property, PrimaryKey, OneToMany, Collection } from '@mikro-orm/core'
+import { Reserva } from "../reserva/reserva_entity.js"
 
-type descTipoReserva = "xHora" | "xdia" | "xmes";
+export type DescTipoReserva = "xDia" | "xMes" | "xHora"
 
+@Entity()
+export class Tiporeserva {
 
-export type tipoReserva = {
+  @PrimaryKey()
+  idtiporeserva!: number
 
-    id_TipoReserva: number;
-    descTipoReserva: descTipoReserva;
-};
+  @Property({ nullable: false })
+  descTipoReserva!: DescTipoReserva
+
+  @OneToMany(() => Reserva, reserva => reserva.tipoReserva)
+  reservas = new Collection<Reserva>(this)
+}

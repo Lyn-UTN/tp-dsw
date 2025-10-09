@@ -1,13 +1,31 @@
+import { Entity, PrimaryKey, Property, ManyToOne, Rel } from "@mikro-orm/core"
+import { Tiporeserva } from "../tipoReserva/tipoReserva_entity"
 
-type estadoReserva = "Confirmada" | "En espera" ;
+export type EstadoRes = "pendiente" | "confirmada" | "cancelada"
 
+@Entity()
+export class Reserva {
+  @PrimaryKey()
+  idReserva!: number
 
-export type Reserva = {
+  @Property()
+  fechaReserva!: Date
 
-    fechaDesde: Date;
-    fechaHasta: Date;
-    nroReserva: number;
-    estadoReserva:  estadoReserva;
+  @Property()
+  fechaDesde!: Date
 
-    
+  @Property()
+  fechaHasta!: Date
+
+  @Property()
+  horaDesde!: string
+
+  @Property()
+  horaHasta!: string
+
+  @Property()
+  estadoRes!: EstadoRes
+
+  @ManyToOne(() => Tiporeserva, { nullable: false })
+  tipoReserva!: Rel<Tiporeserva>
 }

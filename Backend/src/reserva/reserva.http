@@ -1,0 +1,48 @@
+Obtener todas las reservas
+GET http://localhost:3000/api/reservas
+
+Obtener una reserva por ID
+GET http://localhost:3000/api/reservas/1
+
+
+Crear una reserva
+POST http://localhost:3000/api/reservas
+Content-Type: application/json
+
+{
+  "fechaReserva": "2025-10-09",
+  "fechaDesde": "2025-10-10",
+  "fechaHasta": "2025-10-12",
+  "horaDesde": "10:00",
+  "horaHasta": "18:00",
+  "estadoRes": "pendiente",
+  "tipoReserva": 1
+}
+
+
+Modificar completamente una reserva (PUT)
+PUT http://localhost:3000/api/reservas/1
+Content-Type: application/json
+
+{
+  "fechaReserva": "2025-10-09",
+  "fechaDesde": "2025-10-11",
+  "fechaHasta": "2025-10-13",
+  "horaDesde": "09:00",
+  "horaHasta": "17:00",
+  "estadoRes": "confirmada",
+  "tipoReserva": 2
+}
+
+
+Modificar parcialmente una reserva (PATCH)
+PATCH http://localhost:3000/api/reservas/1
+Content-Type: application/json
+
+{
+  "estadoRes": "cancelada"
+}
+
+
+Eliminar una reserva
+DELETE http://localhost:3000/api/reservas/1
