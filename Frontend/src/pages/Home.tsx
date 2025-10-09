@@ -1,10 +1,21 @@
-function Home() {
+"use client";
+
+import { Header } from "@/components/header";
+import { Hero } from "@/components/hero";
+import { Features } from "@/components/features";
+import { HowItWorks } from "@/components/como-funciona";
+import { Footer } from "@/components/footer";
+
+export default function Home() {
   return (
-    <>
-      <h4>Pagina de inicio</h4>
-      <p>Bienvenido a nuestra pagina</p>
-    </>
+    <div className="min-h-screen">
+      <Header />
+      <main>
+        <Hero />
+        <Features />
+        <HowItWorks />
+      </main>
+      <Footer />
+    </div>
   );
 }
-
-export default Home;
