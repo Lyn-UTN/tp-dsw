@@ -1,5 +1,5 @@
 import { Request,Response, NextFunction } from "express";
-import { TipoVehiculo } from "./tipoVehiculo_entity.js";
+import { TipoVehiculo } from "./tipoVehiculo_entity";
 import { orm } from "../shared/orm.js";
 
 const em = orm.em

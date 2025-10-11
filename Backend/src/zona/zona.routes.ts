@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { sanitizeZonaInput, findAll, findOne, add, update, remove } from './zona.controler.js'
+import { sanitizeZonaInput, findAll, findOne, add, update, remove } from './zona.controler'
 
 export const zonaRouter = Router()
 

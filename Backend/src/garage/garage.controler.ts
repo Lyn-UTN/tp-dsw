@@ -1,7 +1,7 @@
 import {orm} from "../shared/orm.js";
 import {Request, Response, NextFunction} from  "express";
-import {Garage} from "./garage_entity";
-import {Cliente} from "../cliente/cliente_entity";
+import {Garage} from "./garage_entity.js";
+import {Cliente} from "../cliente/cliente_entity.js";
 
 const em=orm.em;
 

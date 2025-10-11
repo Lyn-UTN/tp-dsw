@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { Reserva } from "./reserva_entity.js"
+import { Reserva } from "./reserva_entity"
 import { orm } from "../shared/orm.js"
 
 const em = orm.em

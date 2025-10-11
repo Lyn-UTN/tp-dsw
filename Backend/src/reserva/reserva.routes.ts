@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { sanitizeReservaInput,findAll,findOne,add,update,remove } from "./reserva.controler.js";
+import { sanitizeReservaInput,findAll,findOne,add,update,remove } from "./reserva.controler";
 
 export const reservaRouter = Router()
 
