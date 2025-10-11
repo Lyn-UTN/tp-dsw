@@ -1,6 +1,6 @@
 
 import { Request, Response, NextFunction } from 'express';
-import { ClienteRepository } from './cliente.repository';
+import { ClienteRepository } from './cliente.repository.js';
 
 const repository = new ClienteRepository();
 
