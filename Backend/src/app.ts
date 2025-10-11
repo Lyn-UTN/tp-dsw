@@ -26,7 +26,7 @@ app.use('/api/garage', garageRouter)
 app.use('/api/tipoVehiculo', tipoVehiculoRouter)
 app.use('/api/clientes', clienteRouter)
 app.use('/api/zona', zonaRouter)
-app.use('api/vehiculo', tipoVehiculoRouter)
+app.use('/api/vehiculo', tipoVehiculoRouter)
 
 //Middleware para rutas no encontradas
 app.use((req, res, next) => {

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { sanitizeTipoReservaInput, findAll, findOne, add, update, remove} from "./tipoReserva.controler";
+import { sanitizeTipoReservaInput, findAll, findOne, add, update, remove} from "./tipoReserva.controler.js";
 
 
 export const tiporeservaRouter = Router() 

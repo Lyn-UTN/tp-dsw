@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { Zona } from './zona_entity'
+import { Zona } from './zona_entity.js'
 import { orm } from '../shared/orm.js'
 
 const em = orm.em

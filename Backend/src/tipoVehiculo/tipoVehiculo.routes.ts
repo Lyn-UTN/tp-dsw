@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { sanitizeTipoVehiculoInput, findAll, findOne, add, update, remove } from "./tipoVehiculo.controler";
+import { sanitizeTipoVehiculoInput, findAll, findOne, add, update, remove } from "./tipoVehiculo.controler.js";
 
 export const tipoVehiculoRouter = Router();
 

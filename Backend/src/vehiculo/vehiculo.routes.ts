@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {findAll,findOne,addVehiculo,updateVehiculo,removeVehiculo, sanitizeVehiculoInput} from "./vehiculo.controler";
+import {findAll,findOne,addVehiculo,updateVehiculo,removeVehiculo, sanitizeVehiculoInput} from "./vehiculo.controler.js";
 
 
 export const vehiculoRouter = Router();
