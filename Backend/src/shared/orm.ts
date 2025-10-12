@@ -11,10 +11,17 @@ console.log({
 import { MikroORM } from "@mikro-orm/core";
 import { MySqlDriver } from "@mikro-orm/mysql"; // Esto en la v5 es nuevo, antes se usaba 'type'
 import { SqlHighlighter } from "@mikro-orm/sql-highlighter";
-
+/*Importo entidades */
+import { TipoVehiculo} from "../tipoVehiculo/tipoVehiculo_entity.js";
+import { Vehiculo } from "../vehiculo/vehiculo_entity.js";
+import { Tiporeserva } from "../tipoReserva/tipoReserva_entity.js";
+import { Reserva } from "../reserva/reserva_entity.js";
+import { Cliente } from "../cliente/cliente_entity.js";
+import { Garage } from "../garage/garage_entity.js";
+import { Zona } from "../zona/zona_entity.js";  
 
 export const orm = await MikroORM.init<MySqlDriver>({
-    entities: ['Backend/dist/**/*_entity.js'],
+    entities: [Vehiculo, TipoVehiculo, Cliente, Garage, Reserva, Tiporeserva, Zona],
     entitiesTs: ['Backend/src/**/*_entity.ts'],
     dbName: process.env.DB_NAME,
     clientUrl: `mysql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,

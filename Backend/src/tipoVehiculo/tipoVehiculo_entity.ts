@@ -1,11 +1,19 @@
-import {Entity, Property, Cascade, OneToMany, Collection} from '@mikro-orm/core';
-import { Vehiculo } from '../vehiculo/vehiculo_entity.js';
-import { BaseEntity } from '../shared/baseEntity_entity.js';
-@Entity()
-export class TipoVehiculo extends BaseEntity {
-    @Property({nullable: false})
-    descTipoVehiculo!: string
+import {Entity, Property, Cascade , OneToMany, Collection, PrimaryKey} from '@mikro-orm/core';
+import { Vehiculo } from '../vehiculo/vehiculo_entity.js'
 
-    @OneToMany(() => Vehiculo, (vehiculo) => vehiculo.tipoVehiculo, { cascade: [Cascade.PERSIST, Cascade.REMOVE] })
+export type DescTipoVehiculo = "auto" | "moto" | "camioneta"
+
+@Entity()
+export class TipoVehiculo {
+
+    @PrimaryKey()
+    idTipoVehiculo!: Number
+
+    @Property({nullable: false})
+    desctipoVehiculo!: DescTipoVehiculo
+
+    @OneToMany(() => Vehiculo, vehiculo => vehiculo.tipoVehiculo)
     vehiculos = new Collection<Vehiculo>(this);
+
+
 }

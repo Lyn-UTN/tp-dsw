@@ -1,6 +1,6 @@
-import { Entity, Property, PrimaryKey, ManyToOne} from "@mikro-orm/core";
-import{Cliente } from "../cliente/cliente_entity.js"
-import { TipoVehiculo } from "../tipoVehiculo/tipoVehiculo_entity.js";
+import { Entity, Property, PrimaryKey, ManyToOne, Rel} from "@mikro-orm/core";
+import {Cliente } from "../cliente/cliente_entity.js"
+import  { TipoVehiculo } from "../tipoVehiculo/tipoVehiculo_entity.js";
 
 
 @Entity()
@@ -18,7 +18,7 @@ export class Vehiculo {
     @ManyToOne(()=> Cliente)
     cliente!: Cliente;
 
-    @ManyToOne(()=> TipoVehiculo)
-    tipoVehiculo!: TipoVehiculo;
+     @ManyToOne(() => TipoVehiculo, { nullable: false })
+    tipoVehiculo!: Rel<TipoVehiculo>;
 
 }

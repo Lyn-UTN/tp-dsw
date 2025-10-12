@@ -4,12 +4,13 @@ import { orm, syncSchema } from './shared/orm.js'
 import { RequestContext } from '@mikro-orm/core'
 
 import { tiporeservaRouter } from './tipoReserva/tipoReserva.routes.js'
-import { reservaRouter } from './reserva/reserva.routes.js'
-import { garageRouter } from './garage/garage.routes.js'
 import { tipoVehiculoRouter } from './tipoVehiculo/tipoVehiculo.routes.js'
+import { reservaRouter } from './reserva/reserva.routes.js'
+import { vehiculoRouter } from './vehiculo/vehiculo.routes.js'
+import { garageRouter } from './garage/garage.routes.js'
 import { clienteRouter } from './cliente/cliente.routes.js'
 import { zonaRouter } from './zona/zona.routes.js'
-import { vehiculoRouter } from './vehiculo/vehiculo.routes.js'
+
 
 
 const app = express()
