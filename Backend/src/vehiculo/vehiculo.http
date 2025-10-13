@@ -1,0 +1,35 @@
+//Get all vehiculos
+GET http://localhost:3000/api/vehiculo      
+
+//Crear vehiculo
+POST http://localhost:3000/api/vehiculo
+Content-Type: application/json
+{
+    "patente": "ABC123",
+    "marca": "Toyota",
+    "cliente": 1,
+    "tipoVehiculo": 1
+}
+
+//Get vehiculo by id
+GET http://localhost:3000/api/vehiculo/1        
+
+//actualizar vehiculo   
+PUT http://localhost:3000/api/vehiculo/1
+Content-Type: application/json
+{
+    "patente": "XYZ789",
+    "marca": "Honda",
+    "cliente": 2, 
+    "tipoVehiculo": 2
+}   
+
+//Eliminar vehiculo     
+DELETE http://localhost:3000/api/vehiculo/1 
+
+//actualizar vehiculo parcialmente      
+PATCH http://localhost:3000/api/vehiculo/1
+Content-Type: application/json
+{
+    "marca": "Ford"
+}   

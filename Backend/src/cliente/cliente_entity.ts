@@ -1,4 +1,6 @@
-import { Entity, PrimaryKey, Property } from '@mikro-orm/core';
+import { Collection, Entity, ManyToMany, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
+import { Vehiculo } from '../vehiculo/vehiculo_entity.js';
+// import { Garage } from '../garage/garage_entity.js';
 
 @Entity()
 export class Cliente {
@@ -28,4 +30,11 @@ export class Cliente {
 
   @Property()
   licenciaConducir!: string;
+
+  @OneToMany(()=> Vehiculo, vehiculo => vehiculo.cliente)
+  vehiculos = new Collection<Vehiculo>(this);
+  
+  // a implementar para el feedback
+  /*@ManyToMany(()=> Garage, garage => garage.clientes)
+  garages = new Collection<Garage>(this);*/
 }

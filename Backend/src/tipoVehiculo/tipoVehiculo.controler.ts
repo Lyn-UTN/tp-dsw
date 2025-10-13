@@ -21,13 +21,10 @@ Object.keys(req.body.sanitizedInput).forEach((key) => {
     next()
 }
 
+
 async function findAll(req: Request, res: Response) {
   try {
-    const tipoVehiculos = await em.find(
-      TipoVehiculo,
-      {},
-      { populate: ['descTipoVehiculo'] }
-    )
+    const tipoVehiculos = await em.find(TipoVehiculo, {} )
     res.status(200).json({ message: 'found all tipoVehiculos', data: tipoVehiculos })
   } catch (error: any) {
     res.status(500).json({ message: error.message })
@@ -36,11 +33,8 @@ async function findAll(req: Request, res: Response) {
 
 async function findOne(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
-    const tipoVehiculo = await em.findOneOrFail(
-      TipoVehiculo,
-      { id },
-      { populate: ['descTipoVehiculo'] }
+    const tipoVehiculo = await em.findOneOrFail(TipoVehiculo,
+      { idTipoVehiculo: Number(req.params.id) },
     )
     res.status(200).json({ message: 'found tipoVehiculo', data: tipoVehiculo })
   } catch (error: any) {
@@ -60,8 +54,7 @@ async function add(req: Request, res: Response) {
 
 async function update(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
-    const tipoVehiculoToUpdate = await em.findOneOrFail(TipoVehiculo, { id })
+    const tipoVehiculoToUpdate = await em.findOneOrFail(TipoVehiculo, { idTipoVehiculo: Number(req.params.id) })
     em.assign(tipoVehiculoToUpdate, req.body.sanitizedInput)
     await em.flush()
     res
@@ -74,9 +67,11 @@ async function update(req: Request, res: Response) {
 
 async function remove(req: Request, res: Response) {
   try {
-    const id = Number.parseInt(req.params.id)
-    const tipoVehiculo = em.getReference(TipoVehiculo, id)
+    const tipoVehiculo = em.findOne(TipoVehiculo, {idTipoVehiculo: Number(req.params.id)});
+    if(!tipoVehiculo) return res.status(404).json({message: 'TipoVehiculo no encontrado'})
     await em.removeAndFlush(tipoVehiculo)
+    res.status(200).json({ message: 'tipoVehiculo deleted' })
+    
   } catch (error: any) {
     res.status(500).json({ message: error.message })
   }
