@@ -1,0 +1,46 @@
+//Todos los garages
+GET http://localhost:3000/api/garages
+
+//garage por id
+GET http://localhost:3000/api/garages/1
+
+//crear garage
+POST http://localhost:3000/api/garages
+Content-Type: application/json
+
+{
+    "titulo": "Garage Central",
+    "direccion": "Av. Principal 123",
+    "tipoGarage": "subterraneo",
+    "telefono": "123456789",
+    "mailDueno": "pepe@gmail.com",
+    "estado": "activo",
+    "zona": 1
+}
+
+//modificar completamente un garage (put)
+PUT http://localhost:3000/api/garages/1
+Content-Type: application/json  
+
+{
+    "titulo": "Garage Central Modificado",
+    "direccion": "Av. Principal 1234",
+    "tipoGarage": "aereo",
+    "telefono": "987654321",
+    "mailDueno": "pepo@gmail.com",
+     "estado": "inactivo",
+    "zona": 2
+}   
+
+//eliminar garage
+
+DELETE http://localhost:3000/api/garages/1  
+
+//modificar parcialmente un garage (patch)
+PATCH http://localhost:3000/api/garages/1
+Content-Type: application/json  
+
+{
+    "estado": "activo"
+}               
+                
