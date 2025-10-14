@@ -17,7 +17,7 @@ export class Cliente {
   tipoDocumento!: string;
 
   @Property()
-  documento!: number;
+  documento!: number; 
 
   @Property()
   telefono!: string;
