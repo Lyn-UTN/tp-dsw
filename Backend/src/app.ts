@@ -32,10 +32,18 @@ app.use('/api/clientes', clienteRouter)
 app.use('/api/zona', zonaRouter)
 app.use('/api/vehiculo', vehiculoRouter)
 
+
+
+
 //Middleware para rutas no encontradas
 app.use((req, res, next) => {
   return res.status(404).json({ message: 'Error 404 resource not found :(' })
 })
+
+
+
+
+
 
 await syncSchema() //never call this in production, only for development
 

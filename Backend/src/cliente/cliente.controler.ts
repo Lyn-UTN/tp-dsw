@@ -1,8 +1,6 @@
-
 import { Request, Response, NextFunction } from 'express';
-import { ClienteRepository } from './cliente.repository.js';
-
-const repository = new ClienteRepository();
+import { orm } from '../shared/orm';
+import { Cliente } from './cliente_entity';
 
 // Middleware para sanear la entrada
 export function sanitizeClienteInput(req: Request, res: Response, next: NextFunction) {
@@ -29,13 +27,20 @@ export function sanitizeClienteInput(req: Request, res: Response, next: NextFunc
 
 // GET todos los clientes
 export async function findAll(req: Request, res: Response) {
-  const clientes = await repository.findAll();
+  const clientes = await orm.em.find(Cliente, {});
   res.json({ data: clientes });
 }
 
-// GET un cliente por ID
+// GET un cliente por email
+export async function getClienteByEmail(req: Request, res: Response) {
+  const cliente = await orm.em.findOne(Cliente, { email: req.params.email });
+  if (!cliente) return res.status(404).json({ message: 'Cliente no encontrado' });
+  res.json({ data: cliente });
+}
+
+// GET un cliente por id
 export async function findOne(req: Request, res: Response) {
-  const cliente = await repository.findOne({ idCliente: Number(req.params.id) });
+  const cliente = await orm.em.findOne(Cliente, { idCliente: Number(req.params.id) });
   if (!cliente) return res.status(404).json({ message: 'Cliente no encontrado' });
   res.json({ data: cliente });
 }
@@ -43,20 +48,31 @@ export async function findOne(req: Request, res: Response) {
 // POST - crear un cliente
 export async function add(req: Request, res: Response) {
   const input = req.body.sanitizedInput;
-  const result = await repository.add(input); // objeto plano
-  res.status(201).json({ message: 'Cliente creado', data: result });
+
+  const cliente = orm.em.create(Cliente, input);
+  await orm.em.persistAndFlush(cliente);
+
+  res.status(201).json({ message: 'Cliente creado', data: cliente });
 }
 
 // PUT/PATCH - actualizar cliente
 export async function update(req: Request, res: Response) {
-  const result = await repository.update(Number(req.params.id), req.body.sanitizedInput);
-  if (!result) return res.status(404).json({ message: 'Cliente no encontrado' });
-  res.json({ message: 'Cliente actualizado', data: result });
+  const cliente = await orm.em.findOne(Cliente, { idCliente: Number(req.params.id) });
+
+  if (!cliente) return res.status(404).json({ message: 'Cliente no encontrado' });
+
+  orm.em.assign(cliente, req.body.sanitizedInput);
+  await orm.em.persistAndFlush(cliente);
+
+  res.json({ message: 'Cliente actualizado', data: cliente });
 }
 
 // DELETE - eliminar cliente
 export async function remove(req: Request, res: Response) {
-  const deleted = await repository.delete({ idCliente: Number(req.params.id) });
-  if (!deleted) return res.status(404).json({ message: 'Cliente no encontrado' });
+  const cliente = await orm.em.findOne(Cliente, { idCliente: Number(req.params.id) });
+
+  if (!cliente) return res.status(404).json({ message: 'Cliente no encontrado' });
+
+  await orm.em.removeAndFlush(cliente);
   res.json({ message: 'Cliente eliminado correctamente' });
 }
