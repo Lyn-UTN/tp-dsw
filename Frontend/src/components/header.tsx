@@ -53,10 +53,14 @@ export function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuItem asChild>
-                  <Link to="/registrarse">Registrarse</Link>
+                  <Link to="/registrarse" className="cursor-pointer">
+                    Registrarse
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/login">Iniciar sesión</Link>
+                  <Link to="/login" className="cursor-pointer">
+                    Iniciar sesión
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="md:hidden">
                   Publicar mi garage

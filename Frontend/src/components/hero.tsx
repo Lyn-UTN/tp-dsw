@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, MapPin, Calendar } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Search, MapPin, Calendar } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { RotatingText } from '@/components/ui/rotating-text';
 
 export function Hero() {
   return (
@@ -11,7 +12,11 @@ export function Hero() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center mb-12">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-balance mb-6">
-            Encontrá el garage perfecto en Rosario
+            Encontrá el garage{' '}
+            <RotatingText
+              words={['perfecto', 'más cercano', 'salvador', 'ideal']}
+              className="text-primary"
+            />{' '}
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground text-balance">
             Alquilá garages por hora, día o mes en toda la ciudad
