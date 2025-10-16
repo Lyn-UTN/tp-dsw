@@ -1,5 +1,7 @@
 import { Entity, PrimaryKey, Property, ManyToOne, Rel } from "@mikro-orm/core"
 import { Tiporeserva } from "../tipoReserva/tipoReserva_entity.js"
+import { Cliente } from "../cliente/cliente_entity.js"
+import { Garage } from "../garage/garage_entity.js" 
 
 export type EstadoRes = "pendiente" | "confirmada" | "cancelada"
 
@@ -28,4 +30,10 @@ export class Reserva {
 
   @ManyToOne(() => Tiporeserva, { nullable: false })
   tipoReserva!: Rel<Tiporeserva>
+
+  @ManyToOne(() => Cliente, { nullable: false })
+  cliente!: Rel<Cliente>    
+
+  @ManyToOne(() => Garage, {nullable: false})
+  garage!: Rel<Garage>
 }

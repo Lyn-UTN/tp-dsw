@@ -1,6 +1,7 @@
 
-import {Entity, Property, PrimaryKey, ManyToOne} from "@mikro-orm/core";
+import {Entity, Property, PrimaryKey, ManyToOne, Collection, OneToMany} from "@mikro-orm/core";
 import { Zona } from "../zona/zona_entity.js";
+import { Reserva } from "../reserva/reserva_entity.js";
 // import {Cliente} from "../cliente/cliente_entity";
 
 
@@ -27,6 +28,9 @@ export class Garage{
 
     @ManyToOne(()=> Zona)
     zona!: Zona;
+
+    @OneToMany(()=> Reserva, reserva => reserva.garage)
+    reservas = new Collection<Reserva>(this);
 
     //para implementar feedback:
    /* @ManyToMany(()=> Cliente, cliente => cliente.garages)
