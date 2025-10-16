@@ -31,7 +31,7 @@ Regularidad:
 |Req|Detalle|
 |:-|:-|
 |CRUD simple|1. CRUD Tipo Vehiculo<br>2. CRUD Zona<br>3. CRUD Cliente <br>4. CRUD Tipo Reserva(hora, día, mes)|
-|CRUD dependiente|1. CRUD Vehiculo {depende de} CRUD Tipo Vehiculo, CRUD Usuario <br>2. CRUD Garage {depende de} CRUD Tipo Vehiculo, CRUD Zona, CRUD Usuario |
+|CRUD dependiente|1. CRUD Vehiculo {depende de} CRUD Tipo Vehiculo, CRUD Cliente <br>2. CRUD Garage {depende de} CRUD Tipo Vehiculo, CRUD Zona, CRUD Cliente |
 |Listado<br>+<br>detalle| 1.Listado de garages filtrado por tipo de vehículo, muestra ubicación, precio y tipo de vehículo permitido. <br> 2.Listado de reservas (para una garage) filtrado por rango de fecha, muestra fecha inicio y fin de reserva, estado y datos del cliente|
 |CUU/Epic|1. Reservar garage <br>2. Cancelar/Modificar reserva|
 
