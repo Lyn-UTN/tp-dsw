@@ -12,7 +12,7 @@ function sanitizeReservaInput(req: Request, res: Response, next: NextFunction) {
     horaDesde: req.body.horaDesde,
     horaHasta: req.body.horaHasta,
     estadoRes: req.body.estadoRes,
-    tipoReserva: req.body.tipoReserva, // ← ID del tipo
+    tipoReserva: req.body.tipoReserva, // ← ID del tipodereserva
   }
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {

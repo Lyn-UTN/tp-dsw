@@ -11,7 +11,7 @@ function sanitizeTipoReservaInput(req: Request, res: Response, next: NextFunctio
     !valoresValidos.includes(req.body.descTipoReserva)
   ) {
     return res.status(400).json({
-      message: `Valor no valido para descTipoReserva. Valores permitidos: ${valoresValidos}`,
+      message: `???, Los valores permitidos son: ${valoresValidos}`,
     })
   }
 

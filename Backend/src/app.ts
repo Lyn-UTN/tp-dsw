@@ -12,6 +12,9 @@ import { garageRouter } from './garage/garage.routes.js'
 import { clienteRouter } from './cliente/cliente.routes.js'
 import { zonaRouter } from './zona/zona.routes.js'
 
+import { seedTipoReserva } from './tipoReserva/tipoReserva.seed.js'
+import { seedZonas } from './zona/zona.seed.js'
+
 
 
 const app = express()
@@ -46,7 +49,9 @@ app.use((req, res, next) => {
 
 
 await syncSchema() //never call this in production, only for development
+await seedTipoReserva()
+await seedZonas()
 
 app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000')
+  console.log('El servidor ta coshiendo cumpa, en http://localhost:3000')
 })

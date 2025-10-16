@@ -4,14 +4,18 @@ import { orm } from '../shared/orm.js'
 
 const em = orm.em
 
-function sanitizeZonaInput(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+function sanitizeZonaInput(req: Request, res: Response, next: NextFunction) {
+  const valoresValidos = ["Centro", "Norte", "Sur", "Este", "Oeste"]
+
+  if (req.body.nombreZona && !valoresValidos.includes(req.body.nombreZona)) {
+    return res.status(400).json({
+      message: `???, los valores permitidos son: ${valoresValidos}`,
+    })
+  }
+
   req.body.sanitizedInput = {
-    id: req.body.idZona,
-    nombreZona: req.body.nombreZona
+    id: req.body.id,
+    nombreZona: req.body.nombreZona,
   }
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
