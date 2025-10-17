@@ -18,8 +18,33 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function RegisterPage() {
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const [formData, setFormData] = useState({
+    nombre: '',
+    apellido: '',
+    tipoDocumento: '',
+    numeroDocumento: '',
+    telefono: '',
+    email: '',
+    password: '',
+    confirmarPassword: '',
+    aceptarTerminos: false,
+  });
+
+
+  const chek
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value,
+    });
+  };
+
+
 
   return (
     <div className="min-h-screen flex flex-col">
