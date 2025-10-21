@@ -35,16 +35,51 @@ export default function RegisterPage() {
   });
 
 
-  const chek
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value,
-    });
+  const { name, value, type } = e.target;
+
+  // Si es un input tipo checkbox, usamos "checked"
+  const newValue =
+    type === 'checkbox' && e.target instanceof HTMLInputElement
+      ? e.target.checked
+      : value;
+
+  setFormData({
+    ...formData,
+    [name]: newValue,
+  });
+};
+
+const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validaciones básicas
+    if (!formData.nombre || !formData.apellido || !formData.email || !formData.password) {
+      alert('Por favor, completá todos los campos obligatorios.');
+      return;
+    }
+
+    if (formData.password !== formData.confirmarPassword) {
+      alert('Las contraseñas no coinciden.');
+      return;
+    }
+
+    if (!formData.aceptarTerminos) {
+      alert('Debés aceptar los términos y condiciones.');
+      return;
+    }
+
+    // Acá podrías enviar los datos al backend
+    try {
+      console.log('Datos a enviar:', formData);
+      // const response = await fetch('/api/register', { ... });
+      alert('Cuenta creada exitosamente');
+    } catch (error) {
+      console.error('Error al registrar usuario:', error);
+      alert('Ocurrió un error al registrar el usuario.');
+    }
   };
-
-
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -63,13 +98,20 @@ export default function RegisterPage() {
 
             <Card className="shadow-lg">
               <CardContent className="p-6 md:p-8">
-                <form className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="space-y-2">
                     <label className="text-sm font-medium flex items-center gap-2">
                       <User className="h-4 w-4 text-primary" />
                       Nombre
                     </label>
-                    <Input type="text" placeholder="Juan" className="w-full" />
+                    <Input 
+                    name = "nombre"
+                    type="text" 
+                    placeholder="Juan" 
+                    className="w-full" 
+                    value={formData.nombre}
+                    onChange={handleChange}
+                    />
                   </div>
 
                   <div className="space-y-2">
@@ -77,7 +119,13 @@ export default function RegisterPage() {
                       <User className="h-4 w-4 text-primary" />
                       Apellido
                     </label>
-                    <Input type="text" placeholder="Pérez" className="w-full" />
+                    <Input 
+                    type="text" 
+                    placeholder="Pérez" 
+                    className="w-full" 
+                    value={formData.apellido}
+                    onChange={handleChange}
+                    />
                   </div>
 
                   <div className="space-y-2">
@@ -103,6 +151,8 @@ export default function RegisterPage() {
                       type="number"
                       placeholder="12345678"
                       className="w-full"
+                      value={formData.numeroDocumento}
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -115,6 +165,8 @@ export default function RegisterPage() {
                       type="tel"
                       placeholder="+54 9 341 123-4567"
                       className="w-full"
+                      value={formData.telefono}
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -127,6 +179,8 @@ export default function RegisterPage() {
                       type="email"
                       placeholder="tu@email.com"
                       className="w-full"
+                      value={formData.email}
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -140,6 +194,8 @@ export default function RegisterPage() {
                         type={showPassword ? 'text' : 'password'}
                         placeholder="••••••••"
                         className="w-full pr-10"
+                        value={formData.password}
+                        onChange={handleChange}
                       />
                       <button
                         type="button"
@@ -165,6 +221,8 @@ export default function RegisterPage() {
                         type={showConfirmPassword ? 'text' : 'password'}
                         placeholder="••••••••"
                         className="w-full pr-10"
+                        value={formData.confirmarPassword}
+                        onChange={handleChange}
                       />
                       <button
                         type="button"
@@ -186,6 +244,8 @@ export default function RegisterPage() {
                     <input
                       type="checkbox"
                       className="mt-1 rounded border-border"
+                      checked={formData.aceptarTerminos}
+                      onChange={handleChange}
                     />
                     <span className="text-muted-foreground">
                       Acepto los{' '}
