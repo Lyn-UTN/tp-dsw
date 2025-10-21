@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { orm } from "../shared/orm.js";
 import { Cliente } from "./cliente_entity.js";
-
+//c
 // Middleware para sanear la entrada
 export function sanitizeClienteInput(
   req: Request,
