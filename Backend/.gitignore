@@ -29,3 +29,6 @@ dist/**/*
 *.vsix
 
 tsconfig.tsbuildinfo
+
+## user y claves de mysql
+conn.mysql.ts
