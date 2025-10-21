@@ -1,6 +1,13 @@
-import { Collection, Entity, ManyToMany, OneToMany, PrimaryKey, Property } from '@mikro-orm/core';
-import { Vehiculo } from '../vehiculo/vehiculo_entity.js';
-import { Reserva } from '../reserva/reserva_entity.js';
+import {
+  Collection,
+  Entity,
+  ManyToMany,
+  OneToMany,
+  PrimaryKey,
+  Property,
+} from "@mikro-orm/core";
+import { Vehiculo } from "../vehiculo/vehiculo_entity.js";
+import { Reserva } from "../reserva/reserva_entity.js";
 // import { Garage } from '../garage/garage_entity.js';
 
 @Entity()
@@ -17,8 +24,8 @@ export class Cliente {
   @Property()
   tipoDocumento!: string;
 
-  @Property()
-  documento!: number; 
+  @Property({ nullable: true })
+  numeroDocumento?: number;
 
   @Property()
   telefono!: string;
@@ -29,15 +36,15 @@ export class Cliente {
   @Property()
   password!: string;
 
-  @Property()
-  licenciaConducir!: string;
+  @Property({ nullable: true })
+  licenciaConducir?: string;
 
-  @OneToMany(()=> Vehiculo, vehiculo => vehiculo.cliente)
+  @OneToMany(() => Vehiculo, (vehiculo) => vehiculo.cliente)
   vehiculos = new Collection<Vehiculo>(this);
 
-  @OneToMany(() => Reserva , reserva => reserva.cliente)
-  reservas = new Collection<Reserva>(this); 
-  
+  @OneToMany(() => Reserva, (reserva) => reserva.cliente)
+  reservas = new Collection<Reserva>(this);
+
   // a implementar para el feedback
   /*@ManyToMany(()=> Garage, garage => garage.clientes)
   garages = new Collection<Garage>(this);*/

@@ -1,9 +1,13 @@
-import { Request, Response, NextFunction } from 'express';
-import { orm } from '../shared/orm';
-import { Cliente } from './cliente_entity';
+import { Request, Response, NextFunction } from "express";
+import { orm } from "../shared/orm.js";
+import { Cliente } from "./cliente_entity.js";
 
 // Middleware para sanear la entrada
-export function sanitizeClienteInput(req: Request, res: Response, next: NextFunction) {
+export function sanitizeClienteInput(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   req.body.sanitizedInput = {
     nombre: req.body.nombre,
     apellido: req.body.apellido,
@@ -34,14 +38,18 @@ export async function findAll(req: Request, res: Response) {
 // GET un cliente por email
 export async function getClienteByEmail(req: Request, res: Response) {
   const cliente = await orm.em.findOne(Cliente, { email: req.params.email });
-  if (!cliente) return res.status(404).json({ message: 'Cliente no encontrado' });
+  if (!cliente)
+    return res.status(404).json({ message: "Cliente no encontrado" });
   res.json({ data: cliente });
 }
 
 // GET un cliente por id
 export async function findOne(req: Request, res: Response) {
-  const cliente = await orm.em.findOne(Cliente, { idCliente: Number(req.params.id) });
-  if (!cliente) return res.status(404).json({ message: 'Cliente no encontrado' });
+  const cliente = await orm.em.findOne(Cliente, {
+    idCliente: Number(req.params.id),
+  });
+  if (!cliente)
+    return res.status(404).json({ message: "Cliente no encontrado" });
   res.json({ data: cliente });
 }
 
@@ -52,27 +60,33 @@ export async function add(req: Request, res: Response) {
   const cliente = orm.em.create(Cliente, input);
   await orm.em.persistAndFlush(cliente);
 
-  res.status(201).json({ message: 'Cliente creado', data: cliente });
+  res.status(201).json({ message: "Cliente creado", data: cliente });
 }
 
 // PUT/PATCH - actualizar cliente
 export async function update(req: Request, res: Response) {
-  const cliente = await orm.em.findOne(Cliente, { idCliente: Number(req.params.id) });
+  const cliente = await orm.em.findOne(Cliente, {
+    idCliente: Number(req.params.id),
+  });
 
-  if (!cliente) return res.status(404).json({ message: 'Cliente no encontrado' });
+  if (!cliente)
+    return res.status(404).json({ message: "Cliente no encontrado" });
 
   orm.em.assign(cliente, req.body.sanitizedInput);
   await orm.em.persistAndFlush(cliente);
 
-  res.json({ message: 'Cliente actualizado', data: cliente });
+  res.json({ message: "Cliente actualizado", data: cliente });
 }
 
 // DELETE - eliminar cliente
 export async function remove(req: Request, res: Response) {
-  const cliente = await orm.em.findOne(Cliente, { idCliente: Number(req.params.id) });
+  const cliente = await orm.em.findOne(Cliente, {
+    idCliente: Number(req.params.id),
+  });
 
-  if (!cliente) return res.status(404).json({ message: 'Cliente no encontrado' });
+  if (!cliente)
+    return res.status(404).json({ message: "Cliente no encontrado" });
 
   await orm.em.removeAndFlush(cliente);
-  res.json({ message: 'Cliente eliminado correctamente' });
+  res.json({ message: "Cliente eliminado correctamente" });
 }

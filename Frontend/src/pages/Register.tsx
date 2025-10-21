@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { AuthHeader } from '@/components/auth-header';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
+import { AuthHeader } from "@/components/auth-header";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   User,
   Mail,
@@ -13,71 +13,77 @@ import {
   EyeOff,
   FileText,
   CreditCard,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { api } from "@/api/axiosConfig";
 
 export default function RegisterPage() {
-
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [formData, setFormData] = useState({
-    nombre: '',
-    apellido: '',
-    tipoDocumento: '',
-    numeroDocumento: '',
-    telefono: '',
-    email: '',
-    password: '',
-    confirmarPassword: '',
+    nombre: "",
+    apellido: "",
+    tipoDocumento: "",
+    numeroDocumento: "",
+    telefono: "",
+    email: "",
+    password: "",
+    confirmarPassword: "",
     aceptarTerminos: false,
   });
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value, type } = e.target;
 
-  
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-  const { name, value, type } = e.target;
+    // Si es un input tipo checkbox, usamos "checked"
+    const newValue =
+      type === "checkbox" && e.target instanceof HTMLInputElement
+        ? e.target.checked
+        : value;
 
-  // Si es un input tipo checkbox, usamos "checked"
-  const newValue =
-    type === 'checkbox' && e.target instanceof HTMLInputElement
-      ? e.target.checked
-      : value;
+    setFormData({
+      ...formData,
+      [name]: newValue,
+    });
+  };
 
-  setFormData({
-    ...formData,
-    [name]: newValue,
-  });
-};
-
-const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Validaciones básicas
-    if (!formData.nombre || !formData.apellido || !formData.email || !formData.password) {
-      alert('Por favor, completá todos los campos obligatorios.');
+    if (
+      !formData.nombre ||
+      !formData.apellido ||
+      !formData.email ||
+      !formData.password
+    ) {
+      alert("Por favor, completá todos los campos obligatorios.");
       return;
     }
 
     if (formData.password !== formData.confirmarPassword) {
-      alert('Las contraseñas no coinciden.');
+      alert("Las contraseñas no coinciden.");
       return;
     }
 
     if (!formData.aceptarTerminos) {
-      alert('Debés aceptar los términos y condiciones.');
+      alert("Debés aceptar los términos y condiciones.");
       return;
     }
 
     // Acá podrías enviar los datos al backend
     try {
-      console.log('Datos a enviar:', formData);
-      // const response = await fetch('/api/register', { ... });
-      alert('Cuenta creada exitosamente');
+      const response = await api.post("/clientes", formData);
+      console.log("Respuesta del backend:", response.data);
+
+      alert("Cuenta creada exitosamente");
     } catch (error) {
-      console.error('Error al registrar usuario:', error);
-      alert('Ocurrió un error al registrar el usuario.');
+      console.error("Error al registrar usuario:", error);
+      alert("Ocurrió un error al registrar el usuario.");
     }
   };
 
@@ -104,13 +110,13 @@ const handleSubmit = async (e: React.FormEvent) => {
                       <User className="h-4 w-4 text-primary" />
                       Nombre
                     </label>
-                    <Input 
-                    name = "nombre"
-                    type="text" 
-                    placeholder="Juan" 
-                    className="w-full" 
-                    value={formData.nombre}
-                    onChange={handleChange}
+                    <Input
+                      name="nombre"
+                      type="text"
+                      placeholder="Juan"
+                      className="w-full"
+                      value={formData.nombre}
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -119,12 +125,13 @@ const handleSubmit = async (e: React.FormEvent) => {
                       <User className="h-4 w-4 text-primary" />
                       Apellido
                     </label>
-                    <Input 
-                    type="text" 
-                    placeholder="Pérez" 
-                    className="w-full" 
-                    value={formData.apellido}
-                    onChange={handleChange}
+                    <Input
+                      name="apellido"
+                      type="text"
+                      placeholder="Pérez"
+                      className="w-full"
+                      value={formData.apellido}
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -148,6 +155,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                       Número de documento
                     </label>
                     <Input
+                      name="numeroDocumento"
                       type="number"
                       placeholder="12345678"
                       className="w-full"
@@ -162,6 +170,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                       Teléfono
                     </label>
                     <Input
+                      name="telefono"
                       type="tel"
                       placeholder="+54 9 341 123-4567"
                       className="w-full"
@@ -176,6 +185,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                       Correo electrónico
                     </label>
                     <Input
+                      name="email"
                       type="email"
                       placeholder="tu@email.com"
                       className="w-full"
@@ -191,7 +201,8 @@ const handleSubmit = async (e: React.FormEvent) => {
                     </label>
                     <div className="relative">
                       <Input
-                        type={showPassword ? 'text' : 'password'}
+                        name="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder="••••••••"
                         className="w-full pr-10"
                         value={formData.password}
@@ -218,7 +229,8 @@ const handleSubmit = async (e: React.FormEvent) => {
                     </label>
                     <div className="relative">
                       <Input
-                        type={showConfirmPassword ? 'text' : 'password'}
+                        name="confirmarPassword"
+                        type={showConfirmPassword ? "text" : "password"}
                         placeholder="••••••••"
                         className="w-full pr-10"
                         value={formData.confirmarPassword}
@@ -242,17 +254,18 @@ const handleSubmit = async (e: React.FormEvent) => {
 
                   <div className="flex items-start gap-2 text-sm">
                     <input
+                      name="aceptarTerminos"
                       type="checkbox"
                       className="mt-1 rounded border-border"
                       checked={formData.aceptarTerminos}
                       onChange={handleChange}
                     />
                     <span className="text-muted-foreground">
-                      Acepto los{' '}
+                      Acepto los{" "}
                       <a href="#" className="text-primary hover:underline">
                         términos y condiciones
-                      </a>{' '}
-                      y la{' '}
+                      </a>{" "}
+                      y la{" "}
                       <a href="#" className="text-primary hover:underline">
                         política de privacidad
                       </a>
@@ -269,7 +282,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
                 <div className="mt-6 text-center">
                   <p className="text-sm text-muted-foreground">
-                    ¿Ya tenés cuenta?{' '}
+                    ¿Ya tenés cuenta?{" "}
                     <Link
                       to="/login"
                       className="text-primary hover:underline font-medium"
