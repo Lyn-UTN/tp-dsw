@@ -1,12 +1,23 @@
 'use client';
 
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, MapPin, Calendar } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { RotatingText } from '@/components/ui/rotating-text';
 
-export function Hero() {
+interface HeroProps {
+  onSearch: (query: string) => void;
+}
+
+export function Hero({ onSearch }: HeroProps) {
+  const [direccion, setDireccion] = useState('');
+
+  const handleSearch = () => {
+    onSearch(direccion.trim());
+  };
+
   return (
     <section className="relative bg-gradient-to-b from-primary-light to-background py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,7 +25,7 @@ export function Hero() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-balance mb-6">
             Encontrá el garage{' '}
             <RotatingText
-              words={['perfecto', 'más cercano', 'salvador', 'ideal']}
+              words={['perfecto', 'más cercano', 'seguro', 'ideal']}
               className="text-primary"
             />{' '}
           </h1>
@@ -32,6 +43,8 @@ export function Hero() {
                 Ubicación
               </label>
               <Input
+                value={direccion}
+                onChange={(e) => setDireccion(e.target.value)}
                 placeholder="¿Dónde necesitás estacionar?"
                 className="w-full"
               />
@@ -54,7 +67,10 @@ export function Hero() {
             </div>
           </div>
 
-          <Button className="w-full mt-6 bg-primary hover:bg-primary-hover text-white h-12 text-base font-semibold">
+          <Button
+            onClick={handleSearch}
+            className="w-full mt-6 bg-primary hover:bg-primary-hover text-white h-12 text-base font-semibold"
+          >
             <Search className="mr-2 h-5 w-5" />
             Buscar garages
           </Button>

@@ -1,57 +1,50 @@
-import cors from 'cors'
-import 'reflect-metadata'
-import express from 'express'
-import { orm, syncSchema } from './shared/orm.js'
-import { RequestContext } from '@mikro-orm/core'
+import cors from 'cors';
+import 'reflect-metadata';
+import express from 'express';
+import { orm, syncSchema } from './shared/orm.js';
+import { RequestContext } from '@mikro-orm/core';
 
-import { tiporeservaRouter } from './tipoReserva/tipoReserva.routes.js'
-import { tipoVehiculoRouter } from './tipoVehiculo/tipoVehiculo.routes.js'
-import { reservaRouter } from './reserva/reserva.routes.js'
-import { vehiculoRouter } from './vehiculo/vehiculo.routes.js'
-import { garageRouter } from './garage/garage.routes.js'
-import { clienteRouter } from './cliente/cliente.routes.js'
-import { zonaRouter } from './zona/zona.routes.js'
+import { tiporeservaRouter } from './tipoReserva/tipoReserva.routes.js';
+import { tipoVehiculoRouter } from './tipoVehiculo/tipoVehiculo.routes.js';
+import { reservaRouter } from './reserva/reserva.routes.js';
+import { vehiculoRouter } from './vehiculo/vehiculo.routes.js';
+import { garageRouter } from './garage/garage.routes.js';
+import { clienteRouter } from './cliente/cliente.routes.js';
+import { zonaRouter } from './zona/zona.routes.js';
 
-import { seedTipoReserva } from './tipoReserva/tipoReserva.seed.js'
-import { seedZonas } from './zona/zona.seed.js'
+import { seedTipoReserva } from './tipoReserva/tipoReserva.seed.js';
+import { seedZonas } from './zona/zona-seed.js';
+import { seedGarages } from './garage/garage.seed.js';
 
+const app = express();
 
-
-const app = express()
-
-app.use(cors())
-app.use(express.json())
-
+app.use(cors());
+app.use(express.json());
 
 //luego de los middlewares de express
 app.use((req, res, next) => {
-  RequestContext.create(orm.em, next)
-})
+  RequestContext.create(orm.em, next);
+});
 
 //Rutas de negocio
-app.use('/api/tipoReserva', tiporeservaRouter)
-app.use('/api/reserva', reservaRouter)
-app.use('/api/garage', garageRouter)
-app.use('/api/tipoVehiculo', tipoVehiculoRouter)
-app.use('/api/clientes', clienteRouter)
-app.use('/api/zona', zonaRouter)
-app.use('/api/vehiculo', vehiculoRouter)
-
-
-
+app.use('/api/tipoReserva', tiporeservaRouter);
+app.use('/api/reserva', reservaRouter);
+app.use('/api/garage', garageRouter);
+app.use('/api/tipoVehiculo', tipoVehiculoRouter);
+app.use('/api/clientes', clienteRouter);
+app.use('/api/zona', zonaRouter);
+app.use('/api/vehiculo', vehiculoRouter);
 
 //Middleware para rutas no encontradas
 app.use((req, res, next) => {
-  return res.status(404).json({ message: 'Error 404 resource not found :(' })
-})
+  return res.status(404).json({ message: 'Error 404 resource not found :(' });
+});
 
-
-
-
-await syncSchema() //never call this in production, only for development
-await seedTipoReserva()
-await seedZonas()
+await syncSchema(); //never call this in production, only for development
+await seedTipoReserva();
+await seedZonas();
+await seedGarages();
 
 app.listen(3000, () => {
-  console.log('El servidor ta coshiendo cumpa, en http://localhost:3000')
-})
+  console.log('El servidor ta coshiendo cumpa, en http://localhost:3000');
+});

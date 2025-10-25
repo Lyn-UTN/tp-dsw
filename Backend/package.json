@@ -8,7 +8,9 @@
     "build": "tsc",
     "start": "node ./Backend/dist/app.js",
     "start:dev": "tsc-watch --noClear --onSuccess \"node ./dist/app.js\"",
-    "dev": "node --loader ts-node/esm Backend/src/app.ts"
+    "dev": "node --loader ts-node/esm Backend/src/app.ts",
+    "seed:zonas": "ts-node --esm src/zona/zona-seed.ts",
+    "seed:garages": "ts-node --esm src/garage/garage.seed.ts"
   },
   "keywords": [],
   "author": "",
