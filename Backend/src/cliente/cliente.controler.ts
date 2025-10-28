@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { orm } from "../shared/orm.js";
 import { Cliente } from "./cliente_entity.js";
+
+const em = orm.em;
 //c
 // Middleware para sanear la entrada
 export function sanitizeClienteInput(
@@ -12,14 +14,13 @@ export function sanitizeClienteInput(
     nombre: req.body.nombre,
     apellido: req.body.apellido,
     tipoDocumento: req.body.tipoDocumento,
-    documento: req.body.documento,
+    numeroDocumento: req.body.numeroDocumento,
     telefono: req.body.telefono,
     email: req.body.email,
     password: req.body.password,
     licenciaConducir: req.body.licenciaConducir,
   };
-
-  // eliminar undefined
+  // Eliminar campos vacios (undefined)
   Object.keys(req.body.sanitizedInput).forEach((key) => {
     if (req.body.sanitizedInput[key] === undefined) {
       delete req.body.sanitizedInput[key];
@@ -31,8 +32,12 @@ export function sanitizeClienteInput(
 
 // GET todos los clientes
 export async function findAll(req: Request, res: Response) {
-  const clientes = await orm.em.find(Cliente, {});
-  res.json({ data: clientes });
+  try {
+    const clientes = await orm.em.find(Cliente, {});
+    res.json({ data: clientes });
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener los clientes" });
+  }
 }
 
 // GET un cliente por email
@@ -45,12 +50,21 @@ export async function getClienteByEmail(req: Request, res: Response) {
 
 // GET un cliente por id
 export async function findOne(req: Request, res: Response) {
-  const cliente = await orm.em.findOne(Cliente, {
-    idCliente: Number(req.params.id),
-  });
-  if (!cliente)
-    return res.status(404).json({ message: "Cliente no encontrado" });
-  res.json({ data: cliente });
+  try {
+    const id = Number.parseInt(req.params.id);
+    if (Number.isNaN(id)) {
+      return res.status(400).json({ message: "ID invalido" });
+    }
+
+    const cliente = await em.findOne(Cliente, { idCliente: id });
+    if (!cliente) {
+      return res.status(404).json({ message: "Cliente no encontrado" });
+    }
+
+    res.status(200).json({ message: "Ok", data: cliente });
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener el cliente" });
+  }
 }
 
 // POST - crear un cliente
