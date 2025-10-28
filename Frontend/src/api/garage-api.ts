@@ -1,5 +1,5 @@
 // src/apis/garage-api.ts
-import { api } from './axiosConfig';
+import { api } from "./axiosConfig";
 
 export interface ZonaDto {
   id: number;
@@ -12,6 +12,7 @@ export interface GarageDto {
   tipoGarage: string;
   mailDueno: string;
   estado: string;
+  precio: number;
   zona?: ZonaDto | null;
 }
 

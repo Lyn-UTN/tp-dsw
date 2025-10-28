@@ -22,7 +22,8 @@ export function sanitizeGarageInput(
   res: Response,
   next: NextFunction
 ) {
-  const { titulo, direccion, tipoGarage, mailDueno, estado, zonaId } = req.body;
+  const { titulo, direccion, tipoGarage, mailDueno, estado, zonaId, precio } =
+    req.body;
 
   const sanitizedInput: any = {
     titulo: titulo?.trim(),

@@ -20,6 +20,7 @@ export async function seedGarages() {
         tipoGarage: "Para auto",
         mailDueno: "juanperez@gmail.com",
         estado: "Disponible",
+        precio: 150,
         zona: getZona(NombreZona.CENTRO),
       },
       {
@@ -28,6 +29,7 @@ export async function seedGarages() {
         tipoGarage: "Para camioneta",
         mailDueno: "maria.sosa@hotmail.com",
         estado: "Disponible",
+        precio: 180,
         zona: getZona(NombreZona.PICHINCHA),
       },
       {
@@ -36,6 +38,7 @@ export async function seedGarages() {
         tipoGarage: "Para auto",
         mailDueno: "carlos.rodriguez@gmail.com",
         estado: "Disponible",
+        precio: 140,
         zona: getZona(NombreZona.ECHESORTU),
       },
       {
@@ -44,6 +47,7 @@ export async function seedGarages() {
         tipoGarage: "Para camioneta",
         mailDueno: "lucia.fernandez@gmail.com",
         estado: "Disponible",
+        precio: 200,
         zona: getZona(NombreZona.FISHERTON),
       },
       {
@@ -52,6 +56,7 @@ export async function seedGarages() {
         tipoGarage: "Para moto",
         mailDueno: "roberto.garage@gmail.com",
         estado: "Disponible",
+        precio: 80,
         zona: getZona(NombreZona.BARRIO_MARTIN),
       },
       {
@@ -60,6 +65,7 @@ export async function seedGarages() {
         tipoGarage: "Para auto",
         mailDueno: "martin.alberdi@gmail.com",
         estado: "Disponible",
+        precio: 130,
         zona: getZona(NombreZona.ALBERDI),
       },
       {
@@ -68,6 +74,7 @@ export async function seedGarages() {
         tipoGarage: "Para moto",
         mailDueno: "paula.mendez@gmail.com",
         estado: "Disponible",
+        precio: 90,
         zona: getZona(NombreZona.REPUBLICA_DE_LA_SEXTA),
       },
     ];

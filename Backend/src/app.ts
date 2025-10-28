@@ -15,6 +15,7 @@ import { zonaRouter } from "./zona/zona.routes.js";
 import { seedTipoReserva } from "./tipoReserva/tipoReserva.seed.js";
 import { seedZonas } from "./zona/zona-seed.js";
 import { seedGarages } from "./garage/garage.seed.js";
+import authRouter from "./auth-login/auth.routes.js";
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use("/api/clientes", clienteRouter);
 app.use("/api/zona", zonaRouter);
 app.use("/api/vehiculo", vehiculoRouter);
 
+app.use("/auth", authRouter);
 //RTA 404 - NOT FOUND
 app.use((_, res) => {
   //ignora la peticion por eso el _

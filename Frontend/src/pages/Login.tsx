@@ -1,12 +1,13 @@
-'use client';
+"use client";
 
-import { AuthHeader } from '@/components/auth-header';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
-import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { AuthHeader } from "@/components/auth-header";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+// import { api } from "../api/axiosConfig";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -48,7 +49,7 @@ export default function LoginPage() {
                     </label>
                     <div className="relative">
                       <Input
-                        type={showPassword ? 'text' : 'password'}
+                        type={showPassword ? "text" : "password"}
                         placeholder="••••••••"
                         className="w-full pr-10"
                       />
@@ -81,18 +82,19 @@ export default function LoginPage() {
                       ¿Olvidaste tu contraseña?
                     </a>
                   </div>
-
-                  <Button
-                    type="submit"
-                    className="w-full bg-primary hover:bg-primary-hover text-white h-12 text-base font-semibold"
-                  >
-                    Iniciar sesión
-                  </Button>
+                  <Link to="/" className="w-full">
+                    <Button
+                      type="submit"
+                      className="w-full bg-primary hover:bg-primary-hover text-white h-12 text-base font-semibold"
+                    >
+                      Iniciar sesión
+                    </Button>
+                  </Link>
                 </form>
 
                 <div className="mt-6 text-center">
                   <p className="text-sm text-muted-foreground">
-                    ¿No tenés cuenta?{' '}
+                    ¿No tenés cuenta?{" "}
                     <Link
                       to="/registrarse"
                       className="text-primary hover:underline font-medium"
