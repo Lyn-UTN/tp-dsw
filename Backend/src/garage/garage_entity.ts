@@ -30,6 +30,9 @@ export class Garage {
   @Property()
   estado!: string;
 
+  @Property()
+  precio!: number;
+
   @ManyToOne(() => Zona)
   zona!: Zona;
 
