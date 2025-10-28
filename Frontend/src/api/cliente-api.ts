@@ -13,18 +13,33 @@ export interface Cliente {
 }
 
 export const getClientes = async () => {
-  const response = await api.get("/clientes");
-  return response.data;
+  try {
+    const response = await api.get("/clientes");
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener clientes:", error);
+    throw error;
+  }
 };
 
 export const getClienteById = async () => {
-  const response = await api.get("/clientes/id");
-  return response.data;
+  try {
+    const response = await api.get("/clientes/id");
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener clientes:", error);
+    throw error;
+  }
 };
 
 export const getClienteByEmail = async () => {
-  const response = await api.get("/clientes/email");
-  return response.data;
+  try {
+    const response = await api.get("/clientes/email");
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener cliente por email:", error);
+    throw error;
+  }
 };
 
 export const createCliente = async (clienteData: Cliente) => {
