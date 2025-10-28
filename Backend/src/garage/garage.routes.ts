@@ -1,5 +1,11 @@
-import { Router } from "express"; 
-import { findAll, findOne, updateGarage, deleteGarage, addGarage } from "./garage.controler.js";
+import { Router } from "express";
+import {
+  findAll,
+  findOne,
+  updateGarage,
+  deleteGarage,
+  addGarage,
+} from "./garage.controler.js";
 
 export const garageRouter = Router();
 
@@ -7,7 +13,7 @@ export const garageRouter = Router();
 garageRouter.get("/", findAll);
 
 // Obtener un garage por ID
-garageRouter.get("/:id", findOne); 
+garageRouter.get("/:id", findOne);
 
 //crear garage
 garageRouter.post("/", addGarage);
@@ -17,4 +23,3 @@ garageRouter.put("/:id", updateGarage);
 
 //eliminar garage por ID
 garageRouter.delete("/:id", deleteGarage);
-

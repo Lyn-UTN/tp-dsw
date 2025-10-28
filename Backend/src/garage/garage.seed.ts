@@ -1,6 +1,6 @@
-import { orm } from '../shared/orm.js';
-import { Garage } from './garage_entity.js';
-import { Zona, NombreZona } from '../zona/zona_entity.js';
+import { orm } from "../shared/orm.js";
+import { Garage } from "./garage_entity.js";
+import { Zona, NombreZona } from "../zona/zona_entity.js";
 
 export async function seedGarages() {
   const em = orm.em.fork();
@@ -15,59 +15,59 @@ export async function seedGarages() {
 
     const garagesPorDefecto = [
       {
-        titulo: 'Garage Tucumán',
-        direccion: 'Tucumán 1450 (Entre Corrientes y Paraguay)',
-        tipoGarage: 'Para auto',
-        mailDueno: 'juanperez@gmail.com',
-        estado: 'Disponible',
+        titulo: "Garage Tucumán",
+        direccion: "Tucumán 1450 (Entre Corrientes y Paraguay)",
+        tipoGarage: "Para auto",
+        mailDueno: "juanperez@gmail.com",
+        estado: "Disponible",
         zona: getZona(NombreZona.CENTRO),
       },
       {
-        titulo: 'Garage Pichincha Parking',
-        direccion: 'Ovidio Lagos 1200 (Entre Salta y Jujuy)',
-        tipoGarage: 'Para camioneta',
-        mailDueno: 'maria.sosa@hotmail.com',
-        estado: 'Disponible',
+        titulo: "Garage Pichincha Parking",
+        direccion: "Ovidio Lagos 1200 (Entre Salta y Jujuy)",
+        tipoGarage: "Para camioneta",
+        mailDueno: "maria.sosa@hotmail.com",
+        estado: "Disponible",
         zona: getZona(NombreZona.PICHINCHA),
       },
       {
-        titulo: 'Garage Córdoba Oeste',
-        direccion: 'Av. Córdoba 3500 (Entre Cafferata y Vera Mujica)',
-        tipoGarage: 'Para auto',
-        mailDueno: 'carlos.rodriguez@gmail.com',
-        estado: 'Disponible',
+        titulo: "Garage Córdoba Oeste",
+        direccion: "Av. Córdoba 3500 (Entre Cafferata y Vera Mujica)",
+        tipoGarage: "Para auto",
+        mailDueno: "carlos.rodriguez@gmail.com",
+        estado: "Disponible",
         zona: getZona(NombreZona.ECHESORTU),
       },
       {
-        titulo: 'Garage Fisherton Express',
-        direccion: 'Av. Eva Perón 8200 (Entre Wilde y Sánchez de Loria)',
-        tipoGarage: 'Para camioneta',
-        mailDueno: 'lucia.fernandez@gmail.com',
-        estado: 'Disponible',
+        titulo: "Garage Fisherton Express",
+        direccion: "Av. Eva Perón 8200 (Entre Wilde y Sánchez de Loria)",
+        tipoGarage: "Para camioneta",
+        mailDueno: "lucia.fernandez@gmail.com",
+        estado: "Disponible",
         zona: getZona(NombreZona.FISHERTON),
       },
       {
-        titulo: 'Garage Parque Urquiza',
-        direccion: '3 de Febrero 450 (Entre Necochea y Colón)',
-        tipoGarage: 'Para moto',
-        mailDueno: 'roberto.garage@gmail.com',
-        estado: 'Disponible',
+        titulo: "Garage Parque Urquiza",
+        direccion: "3 de Febrero 450 (Entre Necochea y Colón)",
+        tipoGarage: "Para moto",
+        mailDueno: "roberto.garage@gmail.com",
+        estado: "Disponible",
         zona: getZona(NombreZona.BARRIO_MARTIN),
       },
       {
-        titulo: 'Garage Alberdi Norte',
-        direccion: 'Av. Alberdi 900 (Entre French y Agrelo)',
-        tipoGarage: 'Para auto',
-        mailDueno: 'martin.alberdi@gmail.com',
-        estado: 'Disponible',
+        titulo: "Garage Alberdi Norte",
+        direccion: "Av. Alberdi 900 (Entre French y Agrelo)",
+        tipoGarage: "Para auto",
+        mailDueno: "martin.alberdi@gmail.com",
+        estado: "Disponible",
         zona: getZona(NombreZona.ALBERDI),
       },
       {
-        titulo: 'Garage La Sexta',
-        direccion: 'Av. Pellegrini 1900 (Entre Moreno y Dorrego)',
-        tipoGarage: 'Para moto',
-        mailDueno: 'paula.mendez@gmail.com',
-        estado: 'Disponible',
+        titulo: "Garage La Sexta",
+        direccion: "Av. Pellegrini 1900 (Entre Moreno y Dorrego)",
+        tipoGarage: "Para moto",
+        mailDueno: "paula.mendez@gmail.com",
+        estado: "Disponible",
         zona: getZona(NombreZona.REPUBLICA_DE_LA_SEXTA),
       },
     ];
@@ -84,6 +84,6 @@ export async function seedGarages() {
     }
 
     await em.flush();
-    console.log('Garages precargados correctamente');
+    console.log("Garages precargados correctamente");
   }
 }

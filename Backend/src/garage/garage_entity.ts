@@ -5,9 +5,9 @@ import {
   ManyToOne,
   Collection,
   OneToMany,
-} from '@mikro-orm/core';
-import { Zona } from '../zona/zona_entity.js';
-import { Reserva } from '../reserva/reserva_entity.js';
+} from "@mikro-orm/core";
+import { Zona } from "../zona/zona_entity.js";
+import { Reserva } from "../reserva/reserva_entity.js";
 // import {Cliente} from "../cliente/cliente_entity";
 
 @Entity()

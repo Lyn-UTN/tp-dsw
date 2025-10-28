@@ -8,12 +8,13 @@ import {
 } from "@mikro-orm/core";
 import { Vehiculo } from "../vehiculo/vehiculo_entity.js";
 import { Reserva } from "../reserva/reserva_entity.js";
+//import { BaseEntity } from "@mikro-orm/core";
 // import { Garage } from '../garage/garage_entity.js';
 
 @Entity()
 export class Cliente {
   @PrimaryKey()
-  idCliente!: number;
+  idCliente!: number; //ATENCION! --> No estamos usando el BaseEntity, fijense que lo importo peor habria que usarlo con un extends a la hora de exportar la clase.
 
   @Property()
   nombre!: string;

@@ -4,17 +4,17 @@ import {
   PrimaryKey,
   Property,
   Collection,
-} from '@mikro-orm/core';
-import { Garage } from '../garage/garage_entity.js';
+} from "@mikro-orm/core";
+import { Garage } from "../garage/garage_entity.js";
 
 export enum NombreZona {
-  CENTRO = 'Centro',
-  PICHINCHA = 'Pichincha',
-  ECHESORTU = 'Echesortu',
-  FISHERTON = 'Fisherton',
-  BARRIO_MARTIN = 'Barrio Martin',
-  ALBERDI = 'Alberdi',
-  REPUBLICA_DE_LA_SEXTA = 'Republica de la Sexta',
+  CENTRO = "Centro",
+  PICHINCHA = "Pichincha",
+  ECHESORTU = "Echesortu",
+  FISHERTON = "Fisherton",
+  BARRIO_MARTIN = "Barrio Martin",
+  ALBERDI = "Alberdi",
+  REPUBLICA_DE_LA_SEXTA = "Republica de la Sexta",
 }
 
 @Entity()

@@ -1,5 +1,5 @@
-import { Zona, NombreZona } from './zona_entity.js';
-import { orm } from '../shared/orm.js';
+import { Zona, NombreZona } from "./zona_entity.js";
+import { orm } from "../shared/orm.js";
 
 export async function seedZonas() {
   const em = orm.em.fork();
@@ -22,6 +22,6 @@ export async function seedZonas() {
     }
 
     await em.flush();
-    console.log('Zonas precargadas correctamente');
+    console.log("Zonas precargadas correctamente");
   }
 }
