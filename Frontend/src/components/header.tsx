@@ -43,7 +43,7 @@ export function Header() {
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link to="/login" className="cursor-pointer">
+                  <Link to="/" className="cursor-pointer">
                     Iniciar sesión
                   </Link>
                 </DropdownMenuItem>
