@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import { MikroORM } from "@mikro-orm/core";
 import { MySqlDriver } from "@mikro-orm/mysql";
 import { SqlHighlighter } from "@mikro-orm/sql-highlighter";
@@ -14,8 +16,8 @@ import { Zona } from "../zona/zona_entity.js";
 // 🔧 Configuración directa sin dotenv, con valores por defecto
 const DB_NAME = process.env.DB_NAME || "AIRBNG";
 const DB_USER = process.env.DB_USER || "root";
-const DB_PASSWORD = "PALANGANA2005";
-process.env.DB_PASSWORD ||
+const DB_PASSWORD =
+  process.env.DB_PASSWORD ||
   ""; /*agreguen su contraseña de mysql entre las comillas*/
 const DB_HOST = process.env.DB_HOST || "localhost";
 const DB_PORT = Number(process.env.DB_PORT) || 3306;
