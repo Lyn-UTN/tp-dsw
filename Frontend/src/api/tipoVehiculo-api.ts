@@ -1,4 +1,4 @@
-import api from "./axiosConfig";
+import { api } from "./axiosConfig";
 
 export interface TipoVehiculo {
   idTipoVehiculo?: number;
@@ -17,7 +17,7 @@ export const gettipoVehiculoById = async () => {
 
 export const createTipoVehiculo = async (tipoVehiculoData: TipoVehiculo) => {
   try {
-    const response = await api.post("api/tipoVehiculo", tipoVehiculoData);
+    const response = await api.post("/tipoVehiculo", tipoVehiculoData);
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {
