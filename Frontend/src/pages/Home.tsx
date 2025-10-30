@@ -1,26 +1,30 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Header } from '@/components/header';
-import { Hero } from '@/components/hero';
-import { Features } from '@/components/features';
-import { HowItWorks } from '@/components/como-funciona';
-import { Footer } from '@/components/footer';
-import { GarageList } from '@/components/garage-list';
+import { useState } from "react";
+import { Header } from "@/components/header";
+import { Hero } from "@/components/hero";
+import { Features } from "@/components/features";
+import { Footer } from "@/components/footer";
+import { GarageList } from "@/components/garage-list";
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [vehicleTypeFilter, setVehicleTypeFilter] = useState<string[]>([]);
 
   return (
     <div className="min-h-screen">
       <Header />
       <main>
         <Hero onSearch={setSearchQuery} />
+        <div className="border-t border-gray-200 my-8"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <GarageList searchQuery={searchQuery} />
+          <GarageList
+            searchQuery={searchQuery}
+            vehicleTypeFilter={vehicleTypeFilter}
+            onVehicleTypeChange={setVehicleTypeFilter}
+          />
         </div>
         <Features />
-        <HowItWorks />
       </main>
       <Footer />
     </div>
