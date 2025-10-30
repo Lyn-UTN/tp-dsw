@@ -14,9 +14,9 @@ import {
   FileText,
   CreditCard,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { api } from "@/api/axiosConfig";
+import { registerCliente, loginCliente } from "@/api/auth-api";
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -51,6 +51,8 @@ export default function RegisterPage() {
     });
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -75,12 +77,51 @@ export default function RegisterPage() {
       return;
     }
 
-    // Acá podrías enviar los datos al backend
-    try {
-      const response = await api.post("/clientes", formData);
-      console.log("Respuesta del backend:", response.data);
+    // Preparar payload para la API de registro
+    type RegisterPayload = {
+      nombre: string;
+      apellido: string;
+      tipoDocumento: string;
+      numeroDocumento?: number;
+      telefono: string;
+      email: string;
+      password: string;
+      licenciaConducir?: string;
+    };
 
-      alert("Cuenta creada exitosamente");
+    const payload: RegisterPayload = {
+      nombre: formData.nombre,
+      apellido: formData.apellido,
+      tipoDocumento: formData.tipoDocumento,
+      telefono: formData.telefono,
+      email: formData.email,
+      password: formData.password,
+    };
+
+    if (formData.numeroDocumento) {
+      const n = Number(formData.numeroDocumento);
+      if (!Number.isNaN(n)) payload.numeroDocumento = n;
+    }
+
+    try {
+      // Usamos la nueva API de auth
+      const res = await registerCliente(payload);
+      console.log("Register response:", res);
+
+      // Opcional: loguear automáticamente tras el registro
+      try {
+        const login = await loginCliente(formData.email, formData.password);
+        localStorage.setItem("token", login.token);
+        localStorage.setItem("cliente", JSON.stringify(login.cliente));
+        // redirigir al home
+        navigate("/");
+      } catch (loginErr) {
+        console.warn(
+          "Registro OK pero no se pudo loguear automáticamente:",
+          loginErr
+        );
+        alert("Cuenta creada. Por favor, iniciá sesión.");
+      }
     } catch (error) {
       console.error("Error al registrar usuario:", error);
       alert("Ocurrió un error al registrar el usuario.");
@@ -140,7 +181,12 @@ export default function RegisterPage() {
                       <FileText className="h-4 w-4 text-primary" />
                       Tipo de documento
                     </label>
-                    <select className="w-full h-10 px-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
+                    <select
+                      name="tipoDocumento"
+                      value={formData.tipoDocumento}
+                      onChange={handleChange}
+                      className="w-full h-10 px-3 rounded-md border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
                       <option value="">Seleccioná un tipo</option>
                       <option value="DNI">DNI</option>
                       <option value="Pasaporte">Pasaporte</option>

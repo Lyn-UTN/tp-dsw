@@ -5,12 +5,35 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-// import { api } from "../api/axiosConfig";
+import { loginCliente } from "@/api/auth-api";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+    try {
+      const data = await loginCliente(email, password);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("cliente", JSON.stringify(data.cliente));
+      navigate("/");
+    } catch (err) {
+      setError("Correo o contraseña incorrectos");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -29,7 +52,7 @@ export default function LoginPage() {
 
             <Card className="shadow-lg">
               <CardContent className="p-6 md:p-8">
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="space-y-2">
                     <label className="text-sm font-medium flex items-center gap-2">
                       <Mail className="h-4 w-4 text-primary" />
@@ -38,6 +61,9 @@ export default function LoginPage() {
                     <Input
                       type="email"
                       placeholder="tu@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
                       className="w-full"
                     />
                   </div>
@@ -51,6 +77,9 @@ export default function LoginPage() {
                       <Input
                         type={showPassword ? "text" : "password"}
                         placeholder="••••••••"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
                         className="w-full pr-10"
                       />
                       <button
@@ -67,6 +96,16 @@ export default function LoginPage() {
                     </div>
                   </div>
 
+                  {error && <p className="text-sm text-red-600">{error}</p>}
+
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-primary hover:bg-primary-hover text-white h-12 text-base font-semibold"
+                  >
+                    {loading ? "Iniciando sesión..." : "Iniciar sesión"}
+                  </Button>
+
                   <div className="flex items-center justify-between text-sm">
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
@@ -82,14 +121,6 @@ export default function LoginPage() {
                       ¿Olvidaste tu contraseña?
                     </a>
                   </div>
-                  <Link to="/" className="w-full">
-                    <Button
-                      type="submit"
-                      className="w-full bg-primary hover:bg-primary-hover text-white h-12 text-base font-semibold"
-                    >
-                      Iniciar sesión
-                    </Button>
-                  </Link>
                 </form>
 
                 <div className="mt-6 text-center">

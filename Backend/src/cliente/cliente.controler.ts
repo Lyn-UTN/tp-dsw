@@ -75,7 +75,8 @@ export async function findOne(req: Request, res: Response) {
 export async function add(req: Request, res: Response) {
   const input = req.body.sanitizedInput;
   try {
-    const cliente = orm.em.create(Cliente, input);
+    // Cast a 'any' to avoid TypeScript requiring the PK when creating a new entity
+    const cliente = orm.em.create(Cliente, input as any);
     await orm.em.persistAndFlush(cliente);
     res.status(201).json({ message: "Cliente creado", data: cliente });
   } catch (error) {
