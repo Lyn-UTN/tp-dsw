@@ -1,8 +1,9 @@
-import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Login from './pages/Login.tsx';
-import Register from './pages/Register.tsx';
-import GararageReserva from './pages/GarageReserva.tsx';
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login.tsx";
+import Register from "./pages/Register.tsx";
+import GararageReserva from "./pages/GarageReserva.tsx";
+import NotFound from "./pages/NotFound.tsx";
 
 function App() {
   return (
@@ -11,26 +12,9 @@ function App() {
       <Route path="/home" element={<Home />} />
       <Route path="/registrarse" element={<Register />} />
       <Route path="/garagereserva/:id" element={<GararageReserva />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
 
 export default App;
-
-/*import { Routes, Route } from "react-router-dom";
-import RootLayout from "./layouts/RootLayout.tsx";
-import Home from "./pages/Home";
-//importar paginas
-
-function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<RootLayout />}>
-        <Route index element={<Home />} />
-      </Route>
-    </Routes>
-  );
-}
-
-export default App;
-*/
