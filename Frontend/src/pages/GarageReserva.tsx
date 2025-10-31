@@ -18,7 +18,7 @@ import { Clock, MapPin, Star, Shield, Car } from 'lucide-react';
 import type { GarageDto } from '@/api/garage-api';
 
 export default function GarageDetail() {
-  const { id } = useParams(); // 🔹 obtenemos el id de la URL
+  const { id } = useParams(); // obtenemos el id de la URL
   const navigate = useNavigate();
 
   const [garage, setGarage] = useState<GarageDto | null>(null);
@@ -94,11 +94,17 @@ export default function GarageDetail() {
         <div className="max-w-6xl mx-auto">
           {/* Imagen del garage */}
           <Card className="overflow-hidden shadow-lg mb-8">
-            <img
-              src="/modern-garage-interior-with-parking-space.jpg"
-              alt="Garage"
-              className="w-full h-[400px] object-cover"
-            />
+            {garage?.imagen ? (
+              <img
+                src={garage.imagen}
+                alt={garage.titulo}
+                className="w-full h-80 object-cover"
+              />
+            ) : (
+              <div className="w-full h-80 bg-gray-200 flex items-center justify-center text-gray-500">
+                Imagen no disponible
+              </div>
+            )}
           </Card>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -152,9 +158,7 @@ export default function GarageDetail() {
               <Card className="p-6 shadow-sm">
                 <h2 className="text-xl font-semibold mb-4">Descripción</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  {garage.tipoGarage} disponible en zona{' '}
-                  {garage.zona?.nombreZona ?? 'sin especificar'}. Excelente
-                  ubicación y acceso rápido.
+                  {garage.descripcion}
                 </p>
               </Card>
             </div>

@@ -14,6 +14,8 @@ export interface GarageDto {
   estado: string;
   precio: number;
   zona?: ZonaDto | null;
+  descripcion: string;
+  imagen: string;
 }
 
 export async function getAllGarages(limit = 100): Promise<GarageDto[]> {
