@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, User } from 'lucide-react';
@@ -11,6 +12,27 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 export function Header() {
+  const [nombreUsuario, setNombreUsuario] = useState<string | null>(null);
+
+  useEffect(() => {
+    const clienteStr = localStorage.getItem('cliente');
+
+    if (clienteStr) {
+      try {
+        const cliente = JSON.parse(clienteStr) as {
+          nombre?: string;
+          apellido?: string;
+        };
+        if (cliente?.nombre) {
+          setNombreUsuario(cliente.nombre);
+          return;
+        }
+      } catch (err) {
+        console.error('Error parseando cliente desde localStorage:', err);
+      }
+    }
+  }, []);
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,7 +47,6 @@ export function Header() {
           </Link>
 
           <div className="flex items-center gap-2 ml-auto">
-            {/* Primer botón (menú hamburguesa) */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -36,20 +57,8 @@ export function Header() {
                   <Menu className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
+              {/*aca se podría agregar un cerrar sesión que anule el token y redirija al login*/}
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem asChild>
-                  <Link to="/registrarse" className="cursor-pointer">
-                    Registrarse
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/" className="cursor-pointer">
-                    Iniciar sesión
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="md:hidden">
-                  Publicar mi garage
-                </DropdownMenuItem>
                 <DropdownMenuItem>Ayuda</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -66,12 +75,18 @@ export function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuItem asChild>
-                  <Link to="/garagereserva" className="cursor-pointer">
+                  <Link to="/home" className="cursor-pointer">
                     Mis Reservas
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {nombreUsuario && (
+              <p className="text-sm text-muted-foreground mt-1">
+                Hola, {nombreUsuario}
+              </p>
+            )}
           </div>
         </div>
       </div>
