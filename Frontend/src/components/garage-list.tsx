@@ -174,7 +174,7 @@ export function GarageList({
                 </p>
                 {g.zona && (
                   <p className="text-sm text-muted-foreground">
-                    Zona: {g.zona.nombre}
+                    Zona: {g.zona.nombreZona}
                   </p>
                 )}
               </Card>

@@ -153,7 +153,7 @@ export default function GarageDetail() {
                 <h2 className="text-xl font-semibold mb-4">Descripción</h2>
                 <p className="text-muted-foreground leading-relaxed">
                   {garage.tipoGarage} disponible en zona{' '}
-                  {garage.zona?.nombre ?? 'sin especificar'}. Excelente
+                  {garage.zona?.nombreZona ?? 'sin especificar'}. Excelente
                   ubicación y acceso rápido.
                 </p>
               </Card>

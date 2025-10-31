@@ -3,7 +3,7 @@ import { api } from './axiosConfig';
 
 export interface ZonaDto {
   id: number;
-  nombre?: string;
+  nombreZona?: string;
 }
 export interface GarageDto {
   idGarage: number;
