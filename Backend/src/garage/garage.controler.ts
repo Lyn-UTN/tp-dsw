@@ -1,9 +1,9 @@
 // garage.controller.ts
-import { orm } from "../shared/orm.js";
-import { Request, Response, NextFunction } from "express";
-import { Garage } from "./garage_entity.js";
-import { Zona } from "../zona/zona_entity.js"; // usado si queremos popular Zona
-import { wrap } from "@mikro-orm/core";
+import { orm } from '../shared/orm.js';
+import { Request, Response, NextFunction } from 'express';
+import { Garage } from './garage_entity.js';
+import { Zona } from '../zona/zona_entity.js'; // usado si queremos popular Zona
+import { wrap } from '@mikro-orm/core';
 
 // Usa fork() para cada request (buena práctica)
 const getEm = () => orm.em.fork();
@@ -12,8 +12,8 @@ const getEm = () => orm.em.fork();
 function normalizeText(str: string) {
   return str
     .toLowerCase()
-    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "") // quitar signos
-    .replace(/\s+/g, " ") // normalizar espacios
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '') // quitar signos
+    .replace(/\s+/g, ' ') // normalizar espacios
     .trim();
 }
 
@@ -22,8 +22,17 @@ export function sanitizeGarageInput(
   res: Response,
   next: NextFunction
 ) {
-  const { titulo, direccion, tipoGarage, mailDueno, estado, zonaId, precio } =
-    req.body;
+  const {
+    titulo,
+    direccion,
+    tipoGarage,
+    mailDueno,
+    estado,
+    zonaId,
+    precio,
+    descripcion,
+    imagen,
+  } = req.body;
 
   const sanitizedInput: any = {
     titulo: titulo?.trim(),
@@ -32,10 +41,13 @@ export function sanitizeGarageInput(
     mailDueno: mailDueno?.trim(),
     estado: estado?.trim(),
     zonaId: zonaId ? Number(zonaId) : undefined,
+    precio: precio?.trim(),
+    descripcion: descripcion?.trim(),
+    imagen: imagen?.trim(),
   };
 
   Object.keys(sanitizedInput).forEach((key) => {
-    if (sanitizedInput[key] === undefined || sanitizedInput[key] === "") {
+    if (sanitizedInput[key] === undefined || sanitizedInput[key] === '') {
       delete sanitizedInput[key];
     }
   });
@@ -49,10 +61,10 @@ export async function findAll(req: Request, res: Response) {
     const em = getEm();
 
     // Si viene ?direccion=term entonces filtramos por direccion o titulo
-    const direccionQuery = (req.query.direccion as string) || "";
+    const direccionQuery = (req.query.direccion as string) || '';
     const limit = req.query.limit ? Number(req.query.limit) : 100;
 
-    if (direccionQuery && direccionQuery.trim() !== "") {
+    if (direccionQuery && direccionQuery.trim() !== '') {
       const term = direccionQuery.trim();
 
       // Intentamos filtrar en la DB si el driver lo soporta (Postgres: ILIKE).
@@ -61,11 +73,11 @@ export async function findAll(req: Request, res: Response) {
       try {
         // Postgres: ILIKE para case-insensitive. Si usás MySQL/SQLite puede requerir cambiar a LIKE.
         const qb = em
-          .createQueryBuilder(Garage, "g")
-          .select(["g.*", "z.*"])
-          .leftJoinAndSelect("g.zona", "z")
+          .createQueryBuilder(Garage, 'g')
+          .select(['g.*', 'z.*'])
+          .leftJoinAndSelect('g.zona', 'z')
           .where(
-            "LOWER(g.direccion) LIKE LOWER(?) OR LOWER(g.titulo) LIKE LOWER(?)",
+            'LOWER(g.direccion) LIKE LOWER(?) OR LOWER(g.titulo) LIKE LOWER(?)',
             [`%${term}%`, `%${term}%`]
           )
           .limit(limit);
@@ -76,17 +88,17 @@ export async function findAll(req: Request, res: Response) {
         return res.json({ data: garagesJson });
       } catch (err) {
         console.warn(
-          "QueryBuilder search failed (fallando a filtro en memoria):",
+          'QueryBuilder search failed (fallando a filtro en memoria):',
           (err as any).message
         );
 
         // Fallback: traer todos y filtrar en memoria (pequeña carga de datos)
-        const all = await em.find(Garage, {}, { populate: ["zona"], limit });
+        const all = await em.find(Garage, {}, { populate: ['zona'], limit });
 
         const filtered = all.filter((g) => {
-          const direccion = normalizeText(g.direccion || "");
-          const titulo = normalizeText(g.titulo || "");
-          const searchTerms = normalizeText(term).split(" ");
+          const direccion = normalizeText(g.direccion || '');
+          const titulo = normalizeText(g.titulo || '');
+          const searchTerms = normalizeText(term).split(' ');
 
           return searchTerms.every(
             (t) => direccion.includes(t) || titulo.includes(t)
@@ -98,7 +110,7 @@ export async function findAll(req: Request, res: Response) {
     }
 
     // Si no hay query `direccion`, devolvemos todos (limit por si acaso)
-    const garages = await em.find(Garage, {}, { populate: ["zona"], limit });
+    const garages = await em.find(Garage, {}, { populate: ['zona'], limit });
     const garagesJson = garages.map((g) => wrap(g).toJSON());
 
     res.json({ data: garagesJson });
@@ -114,10 +126,10 @@ export async function findOne(req: Request, res: Response) {
     const garage = await em.findOne(
       Garage,
       { idGarage: Number(req.params.id) },
-      { populate: ["zona"] }
+      { populate: ['zona'] }
     );
     if (!garage)
-      return res.status(404).json({ message: "Garage no enccontrado" });
+      return res.status(404).json({ message: 'Garage no enccontrado' });
     res.json({ data: garage });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -146,7 +158,7 @@ export async function addGarage(req: Request, res: Response) {
     const garage = em.create(Garage, payload);
     await em.persistAndFlush(garage);
 
-    res.status(201).json({ message: "Garage creado", data: garage });
+    res.status(201).json({ message: 'Garage creado', data: garage });
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ message: error.message });
@@ -160,10 +172,10 @@ export async function deleteGarage(req: Request, res: Response) {
       idGarage: Number(req.params.id),
     });
     if (!garageToDelete)
-      return res.status(404).json({ message: "Garage no encontrado" });
+      return res.status(404).json({ message: 'Garage no encontrado' });
 
     await em.removeAndFlush(garageToDelete);
-    res.json({ message: "Garage eliminado" });
+    res.json({ message: 'Garage eliminado' });
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ message: error.message });
@@ -177,7 +189,7 @@ export async function updateGarage(req: Request, res: Response) {
       idGarage: Number(req.params.id),
     });
     if (!garageToUpdate)
-      return res.status(404).json({ message: "Garage no encontrado" });
+      return res.status(404).json({ message: 'Garage no encontrado' });
 
     const payload = req.body.sanitizedInput ?? req.body;
 
@@ -194,7 +206,7 @@ export async function updateGarage(req: Request, res: Response) {
     em.assign(garageToUpdate, payload);
     await em.flush();
 
-    res.json({ message: "Garage actualizado", data: garageToUpdate });
+    res.json({ message: 'Garage actualizado', data: garageToUpdate });
   } catch (error: any) {
     console.error(error);
     res.status(500).json({ message: error.message });
