@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { AuthHeader } from "@/components/auth-header";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { loginCliente } from "@/api/auth-api";
+import { AuthHeader } from '@/components/auth-header';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { loginCliente } from '@/api/auth-api';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -24,16 +24,24 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const data = await loginCliente(email, password);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("cliente", JSON.stringify(data.cliente));
-      navigate("/");
+
+      if (!data?.token) {
+        // Si por algún motivo el backend responde OK pero no manda token
+        throw new Error('No se recibió token del servidor');
+      }
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('cliente', JSON.stringify(data.cliente));
+      navigate('/home');
     } catch (err) {
-      setError("Correo o contraseña incorrectos");
+      setError('Correo o contraseña incorrectos');
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
+
+  const isFormValid = email.trim() !== '' && password.trim() !== '';
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -75,7 +83,7 @@ export default function LoginPage() {
                     </label>
                     <div className="relative">
                       <Input
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? 'text' : 'password'}
                         placeholder="••••••••"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -100,10 +108,10 @@ export default function LoginPage() {
 
                   <Button
                     type="submit"
-                    disabled={loading}
+                    disabled={loading || !isFormValid}
                     className="w-full bg-primary hover:bg-primary-hover text-white h-12 text-base font-semibold"
                   >
-                    {loading ? "Iniciando sesión..." : "Iniciar sesión"}
+                    {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
                   </Button>
 
                   <div className="flex items-center justify-between text-sm">
@@ -125,7 +133,7 @@ export default function LoginPage() {
 
                 <div className="mt-6 text-center">
                   <p className="text-sm text-muted-foreground">
-                    ¿No tenés cuenta?{" "}
+                    ¿No tenés cuenta?{' '}
                     <Link
                       to="/registrarse"
                       className="text-primary hover:underline font-medium"

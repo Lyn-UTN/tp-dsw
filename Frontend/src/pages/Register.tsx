@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { AuthHeader } from "@/components/auth-header";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
+import { AuthHeader } from '@/components/auth-header';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   User,
   Mail,
@@ -13,24 +13,24 @@ import {
   EyeOff,
   FileText,
   CreditCard,
-} from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { registerCliente, loginCliente } from "@/api/auth-api";
+} from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { registerCliente, loginCliente } from '@/api/auth-api';
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [formData, setFormData] = useState({
-    nombre: "",
-    apellido: "",
-    tipoDocumento: "",
-    numeroDocumento: "",
-    telefono: "",
-    email: "",
-    password: "",
-    confirmarPassword: "",
+    nombre: '',
+    apellido: '',
+    tipoDocumento: '',
+    numeroDocumento: '',
+    telefono: '',
+    email: '',
+    password: '',
+    confirmarPassword: '',
     aceptarTerminos: false,
   });
 
@@ -41,7 +41,7 @@ export default function RegisterPage() {
 
     // Si es un input tipo checkbox, usamos "checked"
     const newValue =
-      type === "checkbox" && e.target instanceof HTMLInputElement
+      type === 'checkbox' && e.target instanceof HTMLInputElement
         ? e.target.checked
         : value;
 
@@ -63,17 +63,17 @@ export default function RegisterPage() {
       !formData.email ||
       !formData.password
     ) {
-      alert("Por favor, completá todos los campos obligatorios.");
+      alert('Por favor, completá todos los campos obligatorios.');
       return;
     }
 
     if (formData.password !== formData.confirmarPassword) {
-      alert("Las contraseñas no coinciden.");
+      alert('Las contraseñas no coinciden.');
       return;
     }
 
     if (!formData.aceptarTerminos) {
-      alert("Debés aceptar los términos y condiciones.");
+      alert('Debés aceptar los términos y condiciones.');
       return;
     }
 
@@ -106,25 +106,25 @@ export default function RegisterPage() {
     try {
       // Usamos la nueva API de auth
       const res = await registerCliente(payload);
-      console.log("Register response:", res);
+      console.log('Register response:', res);
 
       // Opcional: loguear automáticamente tras el registro
       try {
         const login = await loginCliente(formData.email, formData.password);
-        localStorage.setItem("token", login.token);
-        localStorage.setItem("cliente", JSON.stringify(login.cliente));
+        localStorage.setItem('token', login.token);
+        localStorage.setItem('cliente', JSON.stringify(login.cliente));
         // redirigir al home
-        navigate("/");
+        navigate('/home');
       } catch (loginErr) {
         console.warn(
-          "Registro OK pero no se pudo loguear automáticamente:",
+          'Registro OK pero no se pudo loguear automáticamente:',
           loginErr
         );
-        alert("Cuenta creada. Por favor, iniciá sesión.");
+        alert('Cuenta creada. Por favor, iniciá sesión.');
       }
     } catch (error) {
-      console.error("Error al registrar usuario:", error);
-      alert("Ocurrió un error al registrar el usuario.");
+      console.error('Error al registrar usuario:', error);
+      alert('Ocurrió un error al registrar el usuario.');
     }
   };
 
@@ -248,7 +248,7 @@ export default function RegisterPage() {
                     <div className="relative">
                       <Input
                         name="password"
-                        type={showPassword ? "text" : "password"}
+                        type={showPassword ? 'text' : 'password'}
                         placeholder="••••••••"
                         className="w-full pr-10"
                         value={formData.password}
@@ -276,7 +276,7 @@ export default function RegisterPage() {
                     <div className="relative">
                       <Input
                         name="confirmarPassword"
-                        type={showConfirmPassword ? "text" : "password"}
+                        type={showConfirmPassword ? 'text' : 'password'}
                         placeholder="••••••••"
                         className="w-full pr-10"
                         value={formData.confirmarPassword}
@@ -307,11 +307,11 @@ export default function RegisterPage() {
                       onChange={handleChange}
                     />
                     <span className="text-muted-foreground">
-                      Acepto los{" "}
+                      Acepto los{' '}
                       <a href="#" className="text-primary hover:underline">
                         términos y condiciones
-                      </a>{" "}
-                      y la{" "}
+                      </a>{' '}
+                      y la{' '}
                       <a href="#" className="text-primary hover:underline">
                         política de privacidad
                       </a>
@@ -328,9 +328,9 @@ export default function RegisterPage() {
 
                 <div className="mt-6 text-center">
                   <p className="text-sm text-muted-foreground">
-                    ¿Ya tenés cuenta?{" "}
+                    ¿Ya tenés cuenta?{' '}
                     <Link
-                      to="/login"
+                      to="/"
                       className="text-primary hover:underline font-medium"
                     >
                       Iniciá sesión
