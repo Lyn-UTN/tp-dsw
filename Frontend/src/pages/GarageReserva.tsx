@@ -1,37 +1,56 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { createReserva } from "@/api/reserva-api";
-import { Header } from "@/components/header";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getGarageById } from '@/api/garage-api';
+import { createReserva } from '@/api/reserva-api';
+import { Header } from '@/components/header';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Clock, MapPin, Star, Shield, Car } from "lucide-react";
+} from '@/components/ui/dialog';
+import { Clock, MapPin, Star, Shield, Car } from 'lucide-react';
+import type { GarageDto } from '@/api/garage-api';
 
 export default function GarageDetail() {
-  const [dateRange, setDateRange] = useState<
-    { from: Date; to?: Date } | undefined
-  >(undefined);
-
+  const { id } = useParams(); // 🔹 obtenemos el id de la URL
   const navigate = useNavigate();
 
-  const [showTimeSelector, setShowTimeSelector] = useState(false);
-  const [selectedStartTime, setSelectedStartTime] = useState<string>("");
-  const [selectedEndTime, setSelectedEndTime] = useState<string>("");
+  const [garage, setGarage] = useState<GarageDto | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Generar todas las horas del día
+  // Estado del calendario
+  const [dateRange, setDateRange] = useState<{ from: Date; to?: Date }>();
+  const [showTimeSelector, setShowTimeSelector] = useState(false);
+  const [selectedStartTime, setSelectedStartTime] = useState('');
+  const [selectedEndTime, setSelectedEndTime] = useState('');
+
+  // 🔹 Cargar datos del garage cuando cambia el id
+  useEffect(() => {
+    if (!id) return;
+    const fetchGarage = async () => {
+      try {
+        const data = await getGarageById(Number(id));
+        setGarage(data);
+      } catch (err) {
+        console.error('Error al obtener el garage:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchGarage();
+  }, [id]);
+
   const generateHours = () => {
     const hours = [];
     for (let i = 0; i < 24; i++) {
-      hours.push(`${i.toString().padStart(2, "0")}:00`);
-      hours.push(`${i.toString().padStart(2, "0")}:30`);
+      hours.push(`${i.toString().padStart(2, '0')}:00`);
+      hours.push(`${i.toString().padStart(2, '0')}:30`);
     }
     return hours;
   };
@@ -42,16 +61,12 @@ export default function GarageDetail() {
     date: Date | { from: Date; to?: Date } | undefined
   ) => {
     if (!date) return;
-
-    // Si es un rango
-    if ("from" in date) {
-      setDateRange(date); // ya tiene el tipo correcto
-      // Abrir selector de horas si es un solo día
+    if ('from' in date) {
+      setDateRange(date);
       if (!date.to || date.from.toDateString() === date.to.toDateString()) {
         setShowTimeSelector(true);
       }
     } else {
-      // Si es solo una fecha (modo single)
       setDateRange({ from: date, to: date });
       setShowTimeSelector(true);
     }
@@ -59,15 +74,17 @@ export default function GarageDetail() {
 
   const handleTimeConfirm = () => {
     setShowTimeSelector(false);
-    // Aquí puedes manejar la lógica de confirmación
-    if (dateRange) {
-      console.log("Fecha:", dateRange.from);
-      console.log("Hora inicio:", selectedStartTime);
-      console.log("Hora fin:", selectedEndTime);
-    }
-    console.log("[v0] Hora inicio:", selectedStartTime);
-    console.log("[v0] Hora fin:", selectedEndTime);
   };
+
+  // Si todavía carga
+  if (loading)
+    return <div className="text-center py-20 text-lg">Cargando...</div>;
+
+  // Si no se encontró el garage
+  if (!garage)
+    return (
+      <div className="text-center py-20 text-lg">Garage no encontrado</div>
+    );
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-light to-background">
@@ -87,14 +104,13 @@ export default function GarageDetail() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Información principal */}
             <div className="lg:col-span-2 space-y-6">
-              {/* Título y ubicación */}
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-balance mb-4">
-                  Garage Céntrico - Centro de Rosario
+                <h1 className="text-3xl md:text-4xl font-bold mb-4">
+                  {garage.titulo}
                 </h1>
                 <div className="flex items-center gap-2 text-muted-foreground mb-4">
                   <MapPin className="h-5 w-5 text-primary" />
-                  <span>Av. Pellegrini 1234, Rosario, Santa Fe</span>
+                  <span>{garage.direccion}</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-1">
@@ -105,7 +121,6 @@ export default function GarageDetail() {
                 </div>
               </div>
 
-              {/* Características */}
               <Card className="p-6 shadow-sm">
                 <h2 className="text-xl font-semibold mb-4">Características</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -134,16 +149,12 @@ export default function GarageDetail() {
                 </div>
               </Card>
 
-              {/* Descripción */}
               <Card className="p-6 shadow-sm">
                 <h2 className="text-xl font-semibold mb-4">Descripción</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  Garage céntrico ubicado en pleno corazón de Rosario, a pocas
-                  cuadras de la peatonal Córdoba. Ideal para quienes trabajan en
-                  el centro o necesitan estacionar mientras realizan trámites.
-                  Cuenta con acceso fácil, portón automático y vigilancia las 24
-                  horas. El espacio es amplio y techado, perfecto para proteger
-                  tu vehículo de las inclemencias del tiempo.
+                  {garage.tipoGarage} disponible en zona{' '}
+                  {garage.zona?.nombre ?? 'sin especificar'}. Excelente
+                  ubicación y acceso rápido.
                 </p>
               </Card>
             </div>
@@ -151,32 +162,18 @@ export default function GarageDetail() {
             {/* Panel de reserva */}
             <div className="lg:col-span-1">
               <Card className="p-6 shadow-lg sticky top-24">
-                {/* Precios */}
                 <div className="mb-6">
                   <h3 className="text-lg font-semibold mb-4">Precios</h3>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center p-3 bg-muted rounded-lg">
                       <span className="text-sm font-medium">Por hora</span>
                       <span className="text-lg font-bold text-primary">
-                        $500
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-muted rounded-lg">
-                      <span className="text-sm font-medium">Por día</span>
-                      <span className="text-lg font-bold text-primary">
-                        $3.000
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center p-3 bg-muted rounded-lg">
-                      <span className="text-sm font-medium">Por mes</span>
-                      <span className="text-lg font-bold text-primary">
-                        $45.000
+                        ${garage.precio}
                       </span>
                     </div>
                   </div>
                 </div>
 
-                {/* Calendario */}
                 <div className="mb-6">
                   <h3 className="text-lg font-semibold mb-4">
                     Seleccionar fechas
@@ -190,53 +187,51 @@ export default function GarageDetail() {
                   />
                 </div>
 
-                {/* Botón de reserva */}
                 <Button
                   className="w-full bg-primary hover:bg-primary-hover text-white h-12 text-base font-semibold"
                   disabled={!dateRange?.from}
                   onClick={async () => {
-                    // Verificar si está logueado
-                    const token = localStorage.getItem("token");
+                    const token = localStorage.getItem('token');
                     if (!token) {
-                      // redirigir a login
-                      navigate("/login");
+                      navigate('/login');
                       return;
                     }
 
-                    // Preparar payload mínimo. TODO: reemplazar garage/tipoReserva por valores reales según el contexto
-                    if (!dateRange) return;
-                    const clienteStr = localStorage.getItem("cliente");
+                    const clienteStr = localStorage.getItem('cliente');
                     const clienteObj = clienteStr
                       ? JSON.parse(clienteStr)
                       : null;
-                    if (!clienteObj || !clienteObj.idCliente) {
-                      alert(
-                        "Debés iniciar sesión con una cuenta válida para reservar"
-                      );
-                      navigate("/login");
+
+                    if (!clienteObj?.idCliente) {
+                      alert('Debés iniciar sesión con una cuenta válida');
+                      navigate('/login');
                       return;
                     }
 
+                    if (!dateRange?.from) {
+                      alert('Seleccioná una fecha válida antes de reservar');
+                      return;
+                    }
                     const payload = {
                       fechaReserva: new Date().toISOString(),
-                      fechaDesde: dateRange.from.toISOString(),
+                      fechaDesde: dateRange?.from.toISOString(),
                       fechaHasta: (
-                        dateRange.to || dateRange.from
+                        dateRange.to ?? dateRange.from
                       ).toISOString(),
-                      horaDesde: selectedStartTime || "00:00",
-                      horaHasta: selectedEndTime || "23:59",
-                      estadoRes: "pendiente",
-                      tipoReserva: 1, // usar ID real según tu catálogo
+                      horaDesde: selectedStartTime || '00:00',
+                      horaHasta: selectedEndTime || '23:59',
+                      estadoRes: 'pendiente',
+                      tipoReserva: 1,
                       cliente: clienteObj.idCliente,
-                      garage: 1, // TODO: pasar el id del garage seleccionado
+                      garage: garage.idGarage,
                     };
 
                     try {
                       await createReserva(payload);
-                      alert("Reserva creada correctamente");
+                      alert('Reserva creada correctamente');
                     } catch (err) {
-                      console.error("Error creando reserva", err);
-                      alert("No se pudo crear la reserva. Revisá la consola.");
+                      console.error('Error creando reserva', err);
+                      alert('No se pudo crear la reserva');
                     }
                   }}
                 >
@@ -248,7 +243,6 @@ export default function GarageDetail() {
         </div>
       </main>
 
-      {/* Dialog para seleccionar horas */}
       <Dialog open={showTimeSelector} onOpenChange={setShowTimeSelector}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
@@ -258,7 +252,6 @@ export default function GarageDetail() {
           </DialogHeader>
 
           <div className="space-y-6 py-4">
-            {/* Hora de inicio */}
             <div>
               <label className="text-sm font-medium mb-3 flex items-center gap-2">
                 <Clock className="h-4 w-4 text-primary" />
@@ -268,11 +261,11 @@ export default function GarageDetail() {
                 {availableHours.map((hour) => (
                   <Button
                     key={`start-${hour}`}
-                    variant={selectedStartTime === hour ? "default" : "outline"}
+                    variant={selectedStartTime === hour ? 'default' : 'outline'}
                     className={`h-10 ${
                       selectedStartTime === hour
-                        ? "bg-primary hover:bg-primary-hover text-white"
-                        : ""
+                        ? 'bg-primary hover:bg-primary-hover text-white'
+                        : ''
                     }`}
                     onClick={() => setSelectedStartTime(hour)}
                   >
@@ -282,7 +275,6 @@ export default function GarageDetail() {
               </div>
             </div>
 
-            {/* Hora de fin (opcional) */}
             {selectedStartTime && (
               <div>
                 <label className="text-sm font-medium mb-3 flex items-center gap-2">
@@ -296,12 +288,12 @@ export default function GarageDetail() {
                       <Button
                         key={`end-${hour}`}
                         variant={
-                          selectedEndTime === hour ? "default" : "outline"
+                          selectedEndTime === hour ? 'default' : 'outline'
                         }
                         className={`h-10 ${
                           selectedEndTime === hour
-                            ? "bg-primary hover:bg-primary-hover text-white"
-                            : ""
+                            ? 'bg-primary hover:bg-primary-hover text-white'
+                            : ''
                         }`}
                         onClick={() => setSelectedEndTime(hour)}
                       >
@@ -312,15 +304,14 @@ export default function GarageDetail() {
               </div>
             )}
 
-            {/* Botones de acción */}
             <div className="flex gap-3 pt-4">
               <Button
                 variant="outline"
                 className="flex-1 bg-transparent"
                 onClick={() => {
                   setShowTimeSelector(false);
-                  setSelectedStartTime("");
-                  setSelectedEndTime("");
+                  setSelectedStartTime('');
+                  setSelectedEndTime('');
                 }}
               >
                 Cancelar

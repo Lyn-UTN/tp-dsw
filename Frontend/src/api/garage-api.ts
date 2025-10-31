@@ -1,5 +1,5 @@
 // src/apis/garage-api.ts
-import { api } from "./axiosConfig";
+import { api } from './axiosConfig';
 
 export interface ZonaDto {
   id: number;
@@ -47,4 +47,9 @@ export async function updateGarage(id: number, payload: Partial<GarageDto>) {
 export async function deleteGarage(id: number) {
   const res = await api.delete(`/garage/${id}`);
   return res.data;
+}
+
+export async function getGarageById(id: number): Promise<GarageDto> {
+  const res = await api.get<{ data: GarageDto }>(`/garage/${id}`);
+  return res.data.data;
 }

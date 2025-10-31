@@ -10,7 +10,7 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/home" element={<Home />} />
       <Route path="/registrarse" element={<Register />} />
-      <Route path="/garagereserva" element={<GararageReserva />} />
+      <Route path="/garagereserva/:id" element={<GararageReserva />} />
     </Routes>
   );
 }

@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { getAllGarages, searchGaragesByDireccion } from "@/api/garage-api";
-import type { GarageDto } from "@/api/garage-api";
-import { Card } from "@/components/ui/card";
-import { MapPin } from "lucide-react";
+import { useEffect, useState } from 'react';
+import { getAllGarages, searchGaragesByDireccion } from '@/api/garage-api';
+import type { GarageDto } from '@/api/garage-api';
+import { Card } from '@/components/ui/card';
+import { MapPin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface GarageListProps {
   searchQuery: string;
@@ -19,6 +20,11 @@ export function GarageList({
 }: GarageListProps) {
   const [garages, setGarages] = useState<GarageDto[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const handleGarageClick = (id: number) => {
+    navigate(`/garagereserva/${id}`);
+  };
 
   useEffect(() => {
     async function loadGarages() {
@@ -32,7 +38,7 @@ export function GarageList({
         }
         setGarages(data);
       } catch (error) {
-        console.error("Error cargando garages:", error);
+        console.error('Error cargando garages:', error);
       } finally {
         setLoading(false);
       }
@@ -52,7 +58,7 @@ export function GarageList({
       : garages;
 
   const handleCheckboxChange = (type: string) => {
-    if (type === "todos") {
+    if (type === 'todos') {
       // Si se selecciona "Todos", limpiar todos los filtros
       onVehicleTypeChange([]);
     } else {
@@ -85,7 +91,7 @@ export function GarageList({
               <input
                 type="checkbox"
                 checked={vehicleTypeFilter.length === 0}
-                onChange={() => handleCheckboxChange("todos")}
+                onChange={() => handleCheckboxChange('todos')}
                 className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
               />
               <span className="text-sm">Todos</span>
@@ -95,8 +101,8 @@ export function GarageList({
             <label className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-md transition-colors">
               <input
                 type="checkbox"
-                checked={vehicleTypeFilter.includes("auto")}
-                onChange={() => handleCheckboxChange("auto")}
+                checked={vehicleTypeFilter.includes('auto')}
+                onChange={() => handleCheckboxChange('auto')}
                 className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
               />
               <span className="text-sm">Auto</span>
@@ -106,8 +112,8 @@ export function GarageList({
             <label className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-md transition-colors">
               <input
                 type="checkbox"
-                checked={vehicleTypeFilter.includes("moto")}
-                onChange={() => handleCheckboxChange("moto")}
+                checked={vehicleTypeFilter.includes('moto')}
+                onChange={() => handleCheckboxChange('moto')}
                 className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
               />
               <span className="text-sm">Moto</span>
@@ -117,8 +123,8 @@ export function GarageList({
             <label className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 p-2 rounded-md transition-colors">
               <input
                 type="checkbox"
-                checked={vehicleTypeFilter.includes("camioneta")}
-                onChange={() => handleCheckboxChange("camioneta")}
+                checked={vehicleTypeFilter.includes('camioneta')}
+                onChange={() => handleCheckboxChange('camioneta')}
                 className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
               />
               <span className="text-sm">Camioneta</span>
@@ -132,10 +138,10 @@ export function GarageList({
         <div className="mb-6">
           <h2 className="text-2xl font-bold">Garages Disponibles</h2>
           <p className="text-muted-foreground mt-1">
-            {filteredGarages.length}{" "}
+            {filteredGarages.length}{' '}
             {filteredGarages.length === 1
-              ? "garage encontrado"
-              : "garages encontrados"}
+              ? 'garage encontrado'
+              : 'garages encontrados'}
           </p>
         </div>
 
@@ -150,7 +156,12 @@ export function GarageList({
                 key={g.idGarage}
                 className="p-6 shadow-md hover:shadow-lg transition"
               >
-                <h3 className="text-xl font-semibold mb-2">{g.titulo}</h3>
+                <h3
+                  onClick={() => handleGarageClick(g.idGarage)}
+                  className="text-xl font-semibold mb-2 text-primary cursor-pointer hover:underline"
+                >
+                  {g.titulo}
+                </h3>
                 <p className="flex items-center text-muted-foreground mb-2">
                   <MapPin className="h-4 w-4 mr-1 text-primary" />
                   {g.direccion}
