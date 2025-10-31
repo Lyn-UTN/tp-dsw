@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { RequestContext } from "@mikro-orm/core";
+import { orm } from "../shared/orm.js";
 import {
   sanitizeReservaInput,
   findAll,
@@ -9,6 +11,11 @@ import {
 } from "./reserva.controler.js";
 
 export const reservaRouter = Router();
+
+//middleware: crea un RequestContext por cada request para que `em` funcione bien
+reservaRouter.use((req, res, next) => {
+  RequestContext.create(orm.em, next);
+});
 
 reservaRouter.get("/", findAll);
 reservaRouter.get("/:id", findOne);

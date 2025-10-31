@@ -7,9 +7,10 @@ export interface ReservaPayload {
   horaDesde: string;
   horaHasta: string;
   estadoRes: string;
-  tipoReserva: number;
-  cliente: number;
-  garage: number;
+  tipoReserva: number;  // idtiporeserva
+  cliente: number;      // idCliente
+  garage: number;       // idGarage
+
 }
 
 export async function createReserva(payload: ReservaPayload) {

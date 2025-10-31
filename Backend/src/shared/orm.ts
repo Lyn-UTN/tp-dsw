@@ -18,7 +18,7 @@ const DB_NAME = process.env.DB_NAME || "AIRBNG";
 const DB_USER = process.env.DB_USER || "root";
 const DB_PASSWORD =
   process.env.DB_PASSWORD ||
-  ""; /*agreguen su contraseña de mysql entre las comillas*/
+  "PALANGANA2005"; /*agreguen su contraseña de mysql entre las comillas*/
 const DB_HOST = process.env.DB_HOST || "localhost";
 const DB_PORT = Number(process.env.DB_PORT) || 3306;
 

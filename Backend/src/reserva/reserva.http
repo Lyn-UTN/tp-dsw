@@ -1,12 +1,12 @@
-Obtener todas las reservas
-GET http://localhost:3000/api/reservas
+###Obtener todas las reservas
+GET http://localhost:3000/api/reserva
 
-Obtener una reserva por ID
-GET http://localhost:3000/api/reservas/1
+###Obtener una reserva por ID
+GET http://localhost:3000/api/reserva/1
 
 
-Crear una reserva
-POST http://localhost:3000/api/reservas
+###Crear una reserva
+POST http://localhost:3000/api/reserva
 Content-Type: application/json
 
 {
@@ -20,8 +20,8 @@ Content-Type: application/json
 }
 
 
-Modificar completamente una reserva (PUT)
-PUT http://localhost:3000/api/reservas/1
+###Modificar completamente una reserva (PUT)
+PUT http://localhost:3000/api/reserva/1
 Content-Type: application/json
 
 {
@@ -35,8 +35,8 @@ Content-Type: application/json
 }
 
 
-Modificar parcialmente una reserva (PATCH)
-PATCH http://localhost:3000/api/reservas/1
+###Modificar parcialmente una reserva (PATCH)
+PATCH http://localhost:3000/api/reserva/1
 Content-Type: application/json
 
 {
@@ -44,5 +44,5 @@ Content-Type: application/json
 }
 
 
-Eliminar una reserva
-DELETE http://localhost:3000/api/reservas/1
+###Eliminar una reserva
+DELETE http://localhost:3000/api/reserva/1
