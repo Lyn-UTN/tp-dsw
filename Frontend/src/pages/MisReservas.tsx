@@ -1,104 +1,117 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Header } from "@/components/header"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { MapPin, Calendar, Clock } from "lucide-react"
-import { getReservas, updateReserva } from "@/api/reserva-api"
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Header } from "@/components/header";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { MapPin, Calendar, Clock } from "lucide-react";
+import { getReservas, updateReserva } from "@/api/reserva-api";
 
 interface Reserva {
-  idReserva: number
-  fechaReserva: string
-  fechaDesde: string
-  fechaHasta: string
-  horaDesde: string
-  horaHasta: string
-  estadoRes: "pendiente" | "confirmada" | "cancelada"
+  idReserva: number;
+  fechaReserva: string;
+  fechaDesde: string;
+  fechaHasta: string;
+  horaDesde: string;
+  horaHasta: string;
+  estadoRes: "pendiente" | "confirmada" | "cancelada";
   garage: {
-    titulo: string
-    direccion: string
-  }
+    titulo: string;
+    direccion: string;
+  };
 }
 
 export default function MisReservas() {
-  const [reservas, setReservas] = useState<Reserva[]>([])
-  const [loading, setLoading] = useState(true)
+  const [reservas, setReservas] = useState<Reserva[]>([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   //  cargar reservas del backend
   useEffect(() => {
     const fetchReservas = async () => {
       try {
-        const data = await getReservas()
-        setReservas(data.data) 
+        const data = await getReservas();
+        setReservas(data.data);
       } catch (err) {
-        console.error("Error al obtener reservas:", err)
+        console.error("Error al obtener reservas:", err);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchReservas()
-  }, [])
+    };
+    fetchReservas();
+  }, []);
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString)
+    const date = new Date(dateString);
     return date.toLocaleDateString("es-ES", {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
-    })
-  }
+    });
+  };
 
-  const getStatusBadgeStyle = (estado: "pendiente" | "confirmada" | "cancelada") => {
+  const getStatusBadgeStyle = (
+    estado: "pendiente" | "confirmada" | "cancelada"
+  ) => {
     const styles = {
       pendiente: "bg-yellow-100 text-yellow-800 border border-yellow-300",
       confirmada: "bg-green-100 text-green-800 border border-green-300",
       cancelada: "bg-red-100 text-red-800 border border-red-300",
-    }
-    return styles[estado]
-  }
+    };
+    return styles[estado];
+  };
 
   const getStatusLabel = (estado: "pendiente" | "confirmada" | "cancelada") => {
     const labels = {
       pendiente: "Pendiente",
       confirmada: "Confirmada",
       cancelada: "Cancelada",
-    }
-    return labels[estado]
-  }
+    };
+    return labels[estado];
+  };
 
   //  cancelar reserva
   const handleCancelar = async (id: number) => {
-    if (!confirm("¿Seguro que querés cancelar esta reserva?")) return
+    if (!confirm("¿Seguro que querés cancelar esta reserva?")) return;
     try {
-      await updateReserva(id, { estadoRes: "cancelada" })
-      setReservas((prev) => prev.map((r) => (r.idReserva === id ? { ...r, estadoRes: "cancelada" } : r)))
+      await updateReserva(id, { estadoRes: "cancelada" });
+      setReservas((prev) =>
+        prev.map((r) =>
+          r.idReserva === id ? { ...r, estadoRes: "cancelada" } : r
+        )
+      );
     } catch (err) {
-      console.error("Error al cancelar reserva:", err)
-      alert("No se pudo cancelar la reserva")
+      console.error("Error al cancelar reserva:", err);
+      alert("No se pudo cancelar la reserva");
     }
-  }
+  };
 
   //  confirmar reserva
   const handleConfirmar = async (id: number) => {
     try {
-      await updateReserva(id, { estadoRes: "confirmada" })
-      setReservas((prev) => prev.map((r) => (r.idReserva === id ? { ...r, estadoRes: "confirmada" } : r)))
+      await updateReserva(id, { estadoRes: "confirmada" });
+      setReservas((prev) =>
+        prev.map((r) =>
+          r.idReserva === id ? { ...r, estadoRes: "confirmada" } : r
+        )
+      );
     } catch (err) {
-      console.error("Error al Confirmar reserva:", err)
-      alert("No se pudo Confirmar la reserva")
+      console.error("Error al Confirmar reserva:", err);
+      alert("No se pudo Confirmar la reserva");
     }
-  }
+  };
 
   //   handler para modificar reserva
   const handleModificar = async (id: number) => {
-    
-    console.log("Modificar reserva:", id)
-    alert("Función de modificar en desarrollo")
-  }
+    // Redirigir a la página de edición de reserva
+    navigate(`/reserva/editar/${id}`);
+  };
 
   if (loading) {
-    return <div className="text-center py-20 text-lg">Cargando reservas...</div>
+    return (
+      <div className="text-center py-20 text-lg">Cargando reservas...</div>
+    );
   }
 
   return (
@@ -107,14 +120,16 @@ export default function MisReservas() {
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground">Mis Reservas</h1>
-          <p className="text-muted-foreground mt-2">Aquí puedes ver y gestionar todas tus reservas</p>
+          <p className="text-muted-foreground mt-2">
+            Aquí puedes ver y gestionar todas tus reservas
+          </p>
         </div>
 
         <div className="space-y-4">
           {reservas.length > 0 ? (
             reservas.map((reserva) => {
-              const estado = reserva.estadoRes
-              const mostrarBotones = estado === "pendiente"
+              const estado = reserva.estadoRes;
+              const mostrarBotones = estado === "pendiente";
 
               return (
                 <Card
@@ -124,7 +139,9 @@ export default function MisReservas() {
                   <div className="flex items-center justify-between px-6">
                     <div className="flex-1 grid grid-cols-2 md:grid-cols-6 gap-4 items-center">
                       <div className="col-span-2 md:col-span-1">
-                        <h3 className="font-semibold text-foreground">{reserva.garage?.titulo ?? "Garage"}</h3>
+                        <h3 className="font-semibold text-foreground">
+                          {reserva.garage?.titulo ?? "Garage"}
+                        </h3>
                         <div className="flex items-center gap-1 text-sm text-muted-foreground mt-1">
                           <MapPin className="h-4 w-4" />
                           <span>{reserva.garage?.direccion}</span>
@@ -135,9 +152,13 @@ export default function MisReservas() {
                         <div className="flex items-center gap-2 text-sm">
                           <Calendar className="h-4 w-4 text-primary" />
                           <div>
-                            <p className="font-medium text-foreground">{formatDate(reserva.fechaDesde)}</p>
+                            <p className="font-medium text-foreground">
+                              {formatDate(reserva.fechaDesde)}
+                            </p>
                             {reserva.fechaDesde !== reserva.fechaHasta && (
-                              <p className="text-xs text-muted-foreground">hasta {formatDate(reserva.fechaHasta)}</p>
+                              <p className="text-xs text-muted-foreground">
+                                hasta {formatDate(reserva.fechaHasta)}
+                              </p>
                             )}
                           </div>
                         </div>
@@ -147,8 +168,12 @@ export default function MisReservas() {
                         <div className="flex items-center gap-2 text-sm">
                           <Clock className="h-4 w-4 text-primary" />
                           <div>
-                            <p className="font-medium text-foreground">{reserva.horaDesde}</p>
-                            <p className="text-xs text-muted-foreground">a {reserva.horaHasta}</p>
+                            <p className="font-medium text-foreground">
+                              {reserva.horaDesde}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              a {reserva.horaHasta}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -156,7 +181,7 @@ export default function MisReservas() {
                       <div className="col-span-1">
                         <span
                           className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getStatusBadgeStyle(
-                            estado,
+                            estado
                           )}`}
                         >
                           {getStatusLabel(estado)}
@@ -189,7 +214,7 @@ export default function MisReservas() {
                     )}
                   </div>
                 </Card>
-              )
+              );
             })
           ) : (
             <div className="text-center py-12">
@@ -199,5 +224,5 @@ export default function MisReservas() {
         </div>
       </main>
     </div>
-  )
+  );
 }

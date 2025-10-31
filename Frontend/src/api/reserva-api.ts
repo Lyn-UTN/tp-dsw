@@ -7,10 +7,9 @@ export interface ReservaPayload {
   horaDesde: string;
   horaHasta: string;
   estadoRes: string;
-  tipoReserva: number;  // idtiporeserva
-  cliente: number;      // idCliente
-  garage: number;       // idGarage
-
+  tipoReserva: number; // idtiporeserva
+  cliente: number; // idCliente
+  garage: number; // idGarage
 }
 
 export async function createReserva(payload: ReservaPayload) {
@@ -26,7 +25,15 @@ export async function getReservas() {
   return res.data;
 }
 
-export async function updateReserva(id: number, payload: Partial<ReservaPayload>) {
+export async function getReservaById(id: number) {
+  const res = await api.get(`/reserva/${id}`);
+  return res.data;
+}
+
+export async function updateReserva(
+  id: number,
+  payload: Partial<ReservaPayload>
+) {
   const token =
     typeof window !== "undefined" ? localStorage.getItem("token") : null;
   const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
@@ -43,4 +50,3 @@ export async function deleteReserva(id: number) {
   const res = await api.delete(`/reserva/${id}`, { headers });
   return res.data;
 }
-
