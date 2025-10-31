@@ -25,3 +25,22 @@ export async function getReservas() {
   const res = await api.get(`/reserva`);
   return res.data;
 }
+
+export async function updateReserva(id: number, payload: Partial<ReservaPayload>) {
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
+
+  const res = await api.put(`/reserva/${id}`, payload, { headers });
+  return res.data;
+}
+
+export async function deleteReserva(id: number) {
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const headers = token ? { Authorization: `Bearer ${token}` } : undefined;
+
+  const res = await api.delete(`/reserva/${id}`, { headers });
+  return res.data;
+}
+
