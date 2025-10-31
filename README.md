@@ -9,8 +9,8 @@
 
 
 ### Repositorios(archivos)
-- [frontend](https://github.com/Lyn-UTN/TP-DSW/tree/main/backend) 
-- [backend](https://github.com/Lyn-UTN/TP-DSW/tree/main/frontend) 
+- [frontend](https://github.com/Lyn-UTN/tp-dsw/tree/main/Frontend) 
+- [backend](https://github.com/Lyn-UTN/tp-dsw/tree/main/Backend) 
 - [pull-request](https://github.com/Lyn-UTN/TP-DSW/pulls)
 
 ## Tema
