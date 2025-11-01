@@ -13,3 +13,4 @@ export const pool = mysql.createPool({
   enableKeepAlive: true, //evita timeout desde el lado del servidor
   keepAliveInitialDelay: 0,
 });
+//creo q no es necesario tener este archivo en el proyecto, pero lo dejo por las dudas
