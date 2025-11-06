@@ -129,7 +129,7 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-// Obtener reservas activas (pendientes o confirmadas) de un garage
+//  reservas activas pendientes/confirmadas de un garage (esto es para el frontend y los  turnos)
 async function getReservasByGarage(req: Request, res: Response) {
   try {
     const garageId = Number(req.params.id);
