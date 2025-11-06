@@ -7,10 +7,10 @@ const router = Router();
 
 const authController = new AuthController(orm.em.fork());
 
-// Registro
+// registro
 router.post("/register", authController.register);
 
-// Login
+// login
 router.post("/login", authController.login);
 
 router.get("/perfil", verifyToken, (req: AuthRequest, res) => {

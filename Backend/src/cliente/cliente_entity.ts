@@ -8,8 +8,7 @@ import {
 } from "@mikro-orm/core";
 import { Vehiculo } from "../vehiculo/vehiculo_entity.js";
 import { Reserva } from "../reserva/reserva_entity.js";
-//import { BaseEntity } from "@mikro-orm/core";
-// import { Garage } from '../garage/garage_entity.js';
+
 
 @Entity()
 export class Cliente {

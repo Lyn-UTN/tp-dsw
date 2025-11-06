@@ -59,15 +59,15 @@ export function GarageList({
 
   const handleCheckboxChange = (type: string) => {
     if (type === 'todos') {
-      // Si se selecciona "Todos", limpiar todos los filtros
+      // si se selecciona "Todos", limpiar todos los filtros
       onVehicleTypeChange([]);
     } else {
-      // Si se selecciona un tipo específico
+      // para seleccionar un tipo específico:
       if (vehicleTypeFilter.includes(type)) {
-        // Si ya está seleccionado, quitarlo
+        // si ya se selecciono, sacarlo
         onVehicleTypeChange(vehicleTypeFilter.filter((t) => t !== type));
       } else {
-        // Si no está seleccionado, agregarlo
+        // si no se selecciono, agregarlo
         onVehicleTypeChange([...vehicleTypeFilter, type]);
       }
     }
@@ -133,7 +133,7 @@ export function GarageList({
         </div>
       </aside>
 
-      {/* Contenido principal con garages */}
+      {/* listado de garages */}
       <div className="flex-1">
         <div className="mb-6">
           <h2 className="text-2xl font-bold">Garages Disponibles</h2>

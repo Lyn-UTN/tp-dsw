@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 export default function NotFound() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function NotFound() {
           </div>
         </div>
 
-        {/* Mensaje principal */}
+        {/* msj principal */}
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
           ¡Ups! Página no encontrada
         </h2>
@@ -28,23 +28,23 @@ export default function NotFound() {
           desarrollo.
         </p>
 
-        {/* Ilustración decorativa */}
+        {/* ilustracion para q quede mas fachero */}
         <div className="mb-10 flex justify-center gap-4">
           <div
             className="w-3 h-3 bg-blue-400 rounded-full animate-bounce"
-            style={{ animationDelay: "0ms" }}
+            style={{ animationDelay: '0ms' }}
           ></div>
           <div
             className="w-3 h-3 bg-blue-500 rounded-full animate-bounce"
-            style={{ animationDelay: "150ms" }}
+            style={{ animationDelay: '150ms' }}
           ></div>
           <div
             className="w-3 h-3 bg-blue-600 rounded-full animate-bounce"
-            style={{ animationDelay: "300ms" }}
+            style={{ animationDelay: '300ms' }}
           ></div>
         </div>
 
-        {/* Botones de acción */}
+        {/* botones para ir a la pag anterior */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button
             onClick={() => navigate(-1)}
@@ -53,14 +53,13 @@ export default function NotFound() {
             ← Volver atrás
           </button>
           <button
-            onClick={() => navigate("/home")}
+            onClick={() => navigate('/home')}
             className="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 min-w-[160px] shadow-lg shadow-blue-600/30"
           >
             Ir al inicio
           </button>
         </div>
 
-        {/* Mensaje adicional */}
         <p className="mt-12 text-sm text-gray-500">
           Si crees que esto es un error, por favor contacta al soporte.
         </p>

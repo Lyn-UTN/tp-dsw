@@ -9,10 +9,10 @@ import {
 
 export const garageRouter = Router();
 
-// Obtener todos los garages
+// obtener todos los garages
 garageRouter.get("/", findAll);
 
-// Obtener un garage por ID
+// obtener un garage por ID
 garageRouter.get("/:id", findOne);
 
 //crear garage

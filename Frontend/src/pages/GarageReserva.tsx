@@ -24,12 +24,13 @@ export default function GarageDetail() {
   const [garage, setGarage] = useState<GarageDto | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Estado del calendario
+  // calendario
   const [dateRange, setDateRange] = useState<{ from: Date; to?: Date }>();
   const [showTimeSelector, setShowTimeSelector] = useState(false);
   const [selectedStartTime, setSelectedStartTime] = useState("");
   const [selectedEndTime, setSelectedEndTime] = useState("");
 
+<<<<<<< HEAD
   // Tipos correctos para reservas ocupadas
   interface ReservaOcupada {
     fechaDesde: string;
@@ -49,6 +50,9 @@ export default function GarageDetail() {
   const [horasOcupadas, setHorasOcupadas] = useState<HoraOcupada[]>([]);
 
   // 🔹 Cargar datos del garage y sus reservas cuando cambia el id
+=======
+  // aca se cargan los datos del garage cuando cambia al id del garage seleccionado
+>>>>>>> af7d526e9d68b4fed2740de18045d41e7c3a021b
   useEffect(() => {
     if (!id) return;
 
@@ -120,11 +124,11 @@ export default function GarageDetail() {
     setShowTimeSelector(false);
   };
 
-  // Si todavía carga
+  // si todavía carga:
   if (loading)
     return <div className="text-center py-20 text-lg">Cargando...</div>;
 
-  // Si no se encontró el garage
+  // si no se encontró el garage:
   if (!garage)
     return (
       <div className="text-center py-20 text-lg">Garage no encontrado</div>
@@ -136,7 +140,7 @@ export default function GarageDetail() {
 
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="max-w-6xl mx-auto">
-          {/* Imagen del garage */}
+          {/* foto del garage */}
           <Card className="overflow-hidden shadow-lg mb-8">
             {garage?.imagen ? (
               <img
@@ -152,7 +156,7 @@ export default function GarageDetail() {
           </Card>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Información principal */}
+            {/* info principal (hay parte de esto que aún es genérico) */}
             <div className="lg:col-span-2 space-y-6">
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold mb-4">
@@ -207,7 +211,7 @@ export default function GarageDetail() {
               </Card>
             </div>
 
-            {/* Panel de reserva */}
+            {/* seleccion de dias y hs para la reserva */}
             <div className="lg:col-span-1">
               <Card className="p-6 shadow-lg sticky top-24">
                 <div className="mb-6">

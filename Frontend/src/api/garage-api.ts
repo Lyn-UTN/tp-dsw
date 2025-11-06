@@ -1,4 +1,3 @@
-// src/apis/garage-api.ts
 import { api } from './axiosConfig';
 
 export interface ZonaDto {
@@ -25,7 +24,7 @@ export async function getAllGarages(limit = 100): Promise<GarageDto[]> {
   return res.data.data;
 }
 
-// Buscar por dirección (usa query param 'direccion')
+// aca busca por direccion (se usa query param 'direccion')
 export async function searchGaragesByDireccion(
   direccion: string,
   limit = 100

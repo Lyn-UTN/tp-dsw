@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "secret_key";
 export class AuthController {
   constructor(private readonly em: EntityManager) {}
 
-  // Registro de cliente
+  // registrar
   register = async (req: Request, res: Response) => {
     try {
       const {
@@ -43,8 +43,8 @@ export class AuthController {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // casteo a 'any' para evitar que TypeScript requiera el PK (idCliente)
-      // al crear una nueva entidad. Alternativas más tipadas se explican abajo.
+      // casteo a 'any' para evitar que typescript necesite el PK (idCliente)
+      
       const cliente = this.em.create(Cliente, {
         nombre,
         apellido,
@@ -67,7 +67,7 @@ export class AuthController {
     }
   };
 
-  // Login de cliente
+  // login 
   login = async (req: Request, res: Response) => {
     try {
       const { email, password } = req.body;
