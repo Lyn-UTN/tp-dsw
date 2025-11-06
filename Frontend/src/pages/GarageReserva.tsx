@@ -341,13 +341,28 @@ export default function GarageDetail() {
                 </label>
                 <div className="grid grid-cols-4 gap-2 mt-2">
                   {availableHours
-                    .filter(
-                      (hour) =>
-                        hour > selectedStartTime &&
-                        !horasOcupadas.some(
-                          (h) => hour > h.desde && hour <= h.hasta
-                        )
-                    )
+                    .filter((hour) => {
+                      if (hour <= selectedStartTime) return false;
+
+                      // Verificamos si el rango [inicio, hour) se cruza con alguna reserva existente
+                      const haySolapamiento = horasOcupadas.some((h) => {
+                        const inicio = selectedStartTime;
+                        const fin = hour;
+
+                        // Caso 1: el inicio está dentro de otra reserva
+                        if (inicio >= h.desde && inicio < h.hasta) return true;
+
+                        // Caso 2: el fin está dentro de otra reserva
+                        if (fin > h.desde && fin <= h.hasta) return true;
+
+                        // Caso 3: cubre completamente otra reserva (ej. 00.00–07:00 y esta reserva cubre 04:00–06:30 entonces se sobreescribe)
+                        if (inicio <= h.desde && fin >= h.hasta) return true;
+
+                        return false;
+                      });
+
+                      return !haySolapamiento;
+                    })
                     .map((hour) => (
                       <Button
                         key={`end-${hour}`}
