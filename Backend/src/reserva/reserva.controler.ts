@@ -30,7 +30,7 @@ function sanitizeReservaInput(req: Request, res: Response, next: NextFunction) {
   next();
 }
 
-// Listar todas las reservas
+//  reservas
 async function findAll(req: Request, res: Response) {
   try {
     const reservas = await em.find(
@@ -44,7 +44,7 @@ async function findAll(req: Request, res: Response) {
   }
 }
 
-// Obtener una reserva por ID
+// reserva por ID
 async function findOne(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
@@ -59,25 +59,16 @@ async function findOne(req: Request, res: Response) {
   }
 }
 
-// Crear una nueva reserva
+// nueva reserva
 async function add(req: Request, res: Response) {
   try {
     const { tipoReserva, cliente, garage, horaDesde, horaHasta, ...rest } =
       req.body.sanitizedInput;
 
-    const garageEntity = await em.findOneOrFail(Garage, { idGarage: garage }); //Es para mostrar el precio total pero todavia no esta linkeado con el frontend
+    const garageEntity = await em.findOneOrFail(Garage, { idGarage: garage }); //es para mostrar el precio total pero todavia no esta linkeado con el frontend
 
     const horaInicio = parseInt(horaDesde.split(":")[0]);
     const horaFin = parseInt(horaHasta.split(":")[0]);
-
-    /*if (horaFin <= horaInicio) {
-      return res
-        .status(400)
-        .json({
-          message: "La hora de fin debe ser mayor que la hora de inicio",
-        });
-    }*/
-
     const horasTotales = horaFin - horaInicio;
     const precioTotal = horasTotales * garageEntity.precio;
 
@@ -99,7 +90,7 @@ async function add(req: Request, res: Response) {
   }
 }
 
-// Actualizar una reserva
+// actualizar una reserva
 async function update(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
@@ -125,7 +116,7 @@ async function update(req: Request, res: Response) {
   }
 }
 
-// Eliminar una reserva
+// eliminar una reserva
 async function remove(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);

@@ -3,7 +3,7 @@ import { orm } from "../shared/orm.js";
 import { Cliente } from "./cliente_entity.js";
 
 const em = orm.em;
-//c
+
 // Middleware para sanear la entrada
 export function sanitizeClienteInput(
   req: Request,
@@ -20,7 +20,7 @@ export function sanitizeClienteInput(
     password: req.body.password,
     licenciaConducir: req.body.licenciaConducir,
   };
-  // Eliminar campos vacios (undefined)
+  // sacamo campos vacios (undefined)
   Object.keys(req.body.sanitizedInput).forEach((key) => {
     if (req.body.sanitizedInput[key] === undefined) {
       delete req.body.sanitizedInput[key];
@@ -75,7 +75,7 @@ export async function findOne(req: Request, res: Response) {
 export async function add(req: Request, res: Response) {
   const input = req.body.sanitizedInput;
   try {
-    // Cast a 'any' to avoid TypeScript requiring the PK when creating a new entity
+    // para q no requiere la PK al crear una nueva entidad (creo q es algo asi jej )
     const cliente = orm.em.create(Cliente, input as any);
     await orm.em.persistAndFlush(cliente);
     res.status(201).json({ message: "Cliente creado", data: cliente });

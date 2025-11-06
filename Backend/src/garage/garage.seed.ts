@@ -7,7 +7,7 @@ export async function seedGarages() {
   const count = await em.count(Garage, {});
 
   if (count === 0) {
-    // Buscar las zonas existentes por nombre (usando el enum)
+    //(usamos el enum para bsuca zonas existentes)
     const zonas = await em.find(Zona, {});
 
     const getZona = (nombre: NombreZona) =>
@@ -268,12 +268,6 @@ export async function seedGarages() {
     ];
 
     for (const garage of garagesPorDefecto) {
-      if (!garage.zona) {
-        console.warn(
-          `⚠️ No se encontró la zona para el garage "${garage.titulo}", verificá que las zonas estén seedadas correctamente`
-        );
-        continue;
-      }
       const nuevoGarage = em.create(Garage, garage as any);
       em.persist(nuevoGarage);
     }
