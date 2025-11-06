@@ -69,10 +69,7 @@ async function add(req: Request, res: Response) {
 
     const horaInicio = parseInt(horaDesde.split(":")[0]);
     const horaFin = parseInt(horaHasta.split(":")[0]);
-<<<<<<< HEAD
 
-=======
->>>>>>> af7d526e9d68b4fed2740de18045d41e7c3a021b
     const horasTotales = horaFin - horaInicio;
     const precioTotal = horasTotales * garageEntity.precio;
 

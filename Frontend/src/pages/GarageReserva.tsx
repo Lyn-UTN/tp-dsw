@@ -30,7 +30,6 @@ export default function GarageDetail() {
   const [selectedStartTime, setSelectedStartTime] = useState("");
   const [selectedEndTime, setSelectedEndTime] = useState("");
 
-<<<<<<< HEAD
   // Tipos correctos para reservas ocupadas
   interface ReservaOcupada {
     fechaDesde: string;
@@ -49,10 +48,8 @@ export default function GarageDetail() {
   );
   const [horasOcupadas, setHorasOcupadas] = useState<HoraOcupada[]>([]);
 
-  // 🔹 Cargar datos del garage y sus reservas cuando cambia el id
-=======
   // aca se cargan los datos del garage cuando cambia al id del garage seleccionado
->>>>>>> af7d526e9d68b4fed2740de18045d41e7c3a021b
+
   useEffect(() => {
     if (!id) return;
 
