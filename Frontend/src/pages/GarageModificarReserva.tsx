@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { getGarageById } from "@/api/garage-api";
-import { getReservaById, updateReserva } from "@/api/reserva-api";
-import { Header } from "@/components/header";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getGarageById } from '@/api/garage-api';
+import { getReservaById, updateReserva } from '@/api/reserva-api';
+import { Header } from '@/components/header';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Clock, MapPin, Star, Shield, Car } from "lucide-react";
-import type { GarageDto } from "@/api/garage-api";
+} from '@/components/ui/dialog';
+import { Clock, MapPin, Star, Shield, Car } from 'lucide-react';
+import type { GarageDto } from '@/api/garage-api';
 
 export default function GarageModificarReserva() {
   const { id } = useParams(); // id de la reserva
@@ -26,24 +26,22 @@ export default function GarageModificarReserva() {
 
   const [dateRange, setDateRange] = useState<{ from: Date; to?: Date }>();
   const [showTimeSelector, setShowTimeSelector] = useState(false);
-  const [selectedStartTime, setSelectedStartTime] = useState("");
-  const [selectedEndTime, setSelectedEndTime] = useState("");
+  const [selectedStartTime, setSelectedStartTime] = useState('');
+  const [selectedEndTime, setSelectedEndTime] = useState('');
 
-  // Cargar reserva y garage
+  // cargar reserva y garage
   useEffect(() => {
     if (!id) return;
 
     const fetchData = async () => {
       try {
         const res = await getReservaById(Number(id));
-        // getReservaById puede devolver distintas envolturas: { data: {...} } o {...}
         const reserva = (res && (res.data ?? res)) || res;
 
-        // extraer campos seguros
         const fechaDesde = reserva?.fechaDesde ?? reserva?.fecha_desde;
         const fechaHasta = reserva?.fechaHasta ?? reserva?.fecha_hasta;
-        const horaDesde = reserva?.horaDesde ?? reserva?.hora_desde ?? "";
-        const horaHasta = reserva?.horaHasta ?? reserva?.hora_hasta ?? "";
+        const horaDesde = reserva?.horaDesde ?? reserva?.hora_desde ?? '';
+        const horaHasta = reserva?.horaHasta ?? reserva?.hora_hasta ?? '';
 
         if (fechaDesde) {
           setDateRange({
@@ -54,15 +52,15 @@ export default function GarageModificarReserva() {
         setSelectedStartTime(horaDesde);
         setSelectedEndTime(horaHasta);
 
-        // obtener id del garage
+        // obtiene id del garage
         const garageId = reserva?.garage?.idGarage ?? reserva?.garage ?? null;
         if (garageId) {
           const g = await getGarageById(Number(garageId));
           setGarage(g);
         }
       } catch (err) {
-        console.error("Error al cargar la reserva:", err);
-        alert("No se pudo cargar la reserva para editar");
+        console.error('Error al cargar la reserva:', err);
+        alert('No se pudo cargar la reserva para editar');
       } finally {
         setLoading(false);
       }
@@ -74,8 +72,8 @@ export default function GarageModificarReserva() {
   const generateHours = () => {
     const hours = [];
     for (let i = 0; i < 24; i++) {
-      hours.push(`${i.toString().padStart(2, "0")}:00`);
-      hours.push(`${i.toString().padStart(2, "0")}:30`);
+      hours.push(`${i.toString().padStart(2, '0')}:00`);
+      hours.push(`${i.toString().padStart(2, '0')}:30`);
     }
     return hours;
   };
@@ -86,7 +84,7 @@ export default function GarageModificarReserva() {
     date: Date | { from: Date; to?: Date } | undefined
   ) => {
     if (!date) return;
-    if ("from" in date) {
+    if ('from' in date) {
       setDateRange(date);
       if (!date.to || date.from.toDateString() === date.to.toDateString()) {
         setShowTimeSelector(true);
@@ -115,7 +113,7 @@ export default function GarageModificarReserva() {
 
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="max-w-6xl mx-auto">
-          {/* Imagen del garage */}
+          {/* foto de garage */}
           <Card className="overflow-hidden shadow-lg mb-8">
             {garage?.imagen ? (
               <img
@@ -131,7 +129,7 @@ export default function GarageModificarReserva() {
           </Card>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Información principal */}
+            {/* info principal */}
             <div className="lg:col-span-2 space-y-6">
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold mb-4">
@@ -186,7 +184,7 @@ export default function GarageModificarReserva() {
               </Card>
             </div>
 
-            {/* Panel de modificación */}
+            {/* seleccion de hs o dias para la modificacion */}
             <div className="lg:col-span-1">
               <Card className="p-6 shadow-lg sticky top-24">
                 <div className="mb-6">
@@ -218,25 +216,25 @@ export default function GarageModificarReserva() {
                   className="w-full bg-primary hover:bg-primary-hover text-white h-12 text-base font-semibold"
                   disabled={!dateRange?.from}
                   onClick={async () => {
-                    const token = localStorage.getItem("token");
+                    const token = localStorage.getItem('token');
                     if (!token) {
-                      navigate("/login");
+                      navigate('/login');
                       return;
                     }
 
-                    const clienteStr = localStorage.getItem("cliente");
+                    const clienteStr = localStorage.getItem('cliente');
                     const clienteObj = clienteStr
                       ? JSON.parse(clienteStr)
                       : null;
 
                     if (!clienteObj?.idCliente) {
-                      alert("Debés iniciar sesión con una cuenta válida");
-                      navigate("/login");
+                      alert('Debés iniciar sesión con una cuenta válida');
+                      navigate('/login');
                       return;
                     }
 
                     if (!dateRange?.from) {
-                      alert("Seleccioná una fecha válida antes de modificar");
+                      alert('Seleccioná una fecha válida antes de modificar');
                       return;
                     }
 
@@ -246,9 +244,9 @@ export default function GarageModificarReserva() {
                       fechaHasta: (
                         dateRange.to ?? dateRange.from
                       ).toISOString(),
-                      horaDesde: selectedStartTime || "00:00",
-                      horaHasta: selectedEndTime || "23:59",
-                      estadoRes: "pendiente",
+                      horaDesde: selectedStartTime || '00:00',
+                      horaHasta: selectedEndTime || '23:59',
+                      estadoRes: 'pendiente',
                       tipoReserva: 1,
                       cliente: clienteObj.idCliente,
                       garage: garage.idGarage,
@@ -256,11 +254,11 @@ export default function GarageModificarReserva() {
 
                     try {
                       await updateReserva(Number(id), payload);
-                      alert("Reserva modificada correctamente");
-                      navigate("/misreservas");
+                      alert('Reserva modificada correctamente');
+                      navigate('/misreservas');
                     } catch (err) {
-                      console.error("Error modificando reserva", err);
-                      alert("No se pudo modificar la reserva");
+                      console.error('Error modificando reserva', err);
+                      alert('No se pudo modificar la reserva');
                     }
                   }}
                 >
@@ -290,11 +288,11 @@ export default function GarageModificarReserva() {
                 {availableHours.map((hour) => (
                   <Button
                     key={`start-${hour}`}
-                    variant={selectedStartTime === hour ? "default" : "outline"}
+                    variant={selectedStartTime === hour ? 'default' : 'outline'}
                     className={`h-10 ${
                       selectedStartTime === hour
-                        ? "bg-primary hover:bg-primary-hover text-white"
-                        : ""
+                        ? 'bg-primary hover:bg-primary-hover text-white'
+                        : ''
                     }`}
                     onClick={() => setSelectedStartTime(hour)}
                   >
@@ -317,12 +315,12 @@ export default function GarageModificarReserva() {
                       <Button
                         key={`end-${hour}`}
                         variant={
-                          selectedEndTime === hour ? "default" : "outline"
+                          selectedEndTime === hour ? 'default' : 'outline'
                         }
                         className={`h-10 ${
                           selectedEndTime === hour
-                            ? "bg-primary hover:bg-primary-hover text-white"
-                            : ""
+                            ? 'bg-primary hover:bg-primary-hover text-white'
+                            : ''
                         }`}
                         onClick={() => setSelectedEndTime(hour)}
                       >
@@ -339,8 +337,8 @@ export default function GarageModificarReserva() {
                 className="flex-1 bg-transparent"
                 onClick={() => {
                   setShowTimeSelector(false);
-                  setSelectedStartTime("");
-                  setSelectedEndTime("");
+                  setSelectedStartTime('');
+                  setSelectedEndTime('');
                 }}
               >
                 Cancelar

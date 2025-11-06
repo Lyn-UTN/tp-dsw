@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Usamos un cliente separado para las rutas de auth que apuntan al root del servidor.
 const authApi = axios.create({ baseURL: 'http://localhost:3000' });
 
 interface ClienteLogin {
@@ -16,7 +15,7 @@ interface LoginResponse {
   cliente: ClienteLogin;
 }
 
-// Función para login
+// funcion para login
 export const loginCliente = async (
   email: string,
   password: string
@@ -37,7 +36,7 @@ export const loginCliente = async (
   }
 };
 
-// Función para registrar cliente
+// funcion para registrar al cliente
 export const registerCliente = async (data: {
   nombre: string;
   apellido: string;
@@ -64,7 +63,7 @@ export const registerCliente = async (data: {
   }
 };
 
-// Función para obtener perfil (es ruta protegida)
+// funcion para obtener el perfil
 export const getPerfil = async () => {
   try {
     const token = localStorage.getItem('token');

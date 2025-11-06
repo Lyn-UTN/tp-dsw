@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, MapPin, Calendar } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { RotatingText } from "@/components/ui/rotating-text";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Search, MapPin, Calendar } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { RotatingText } from '@/components/ui/rotating-text';
 
 interface HeroProps {
   onSearch: (query: string) => void;
 }
 
 export function Hero({ onSearch }: HeroProps) {
-  const [direccion, setDireccion] = useState("");
+  const [direccion, setDireccion] = useState('');
 
   const handleSearch = () => {
     onSearch(direccion.trim());
@@ -23,24 +23,23 @@ export function Hero({ onSearch }: HeroProps) {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center mb-12">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-balance mb-6">
-            Encontrá el garage{" "}
+            Encontrá el garage{' '}
             <RotatingText
-              words={["perfecto", "más cercano", "seguro", "ideal"]}
+              words={['perfecto', 'más cercano', 'seguro', 'ideal']}
               className="text-primary"
-            />{" "}
+            />{' '}
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground text-balance">
             Alquilá garages por hora, día o mes en toda la ciudad
           </p>
         </div>
 
-        {/* Search Card */}
         <Card className="max-w-4xl mx-auto p-6 shadow-lg">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-primary" />
-                Ubicación (Zona)
+                Ubicación
               </label>
               <Input
                 value={direccion}

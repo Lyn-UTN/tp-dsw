@@ -1,11 +1,10 @@
-"use client";
+'use client';
 
 export function Footer() {
   return (
     <footer className="bg-muted/50 border-t">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand */}
           <div className="space-y-4">
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-NDYPUS6grAG1OMP5A4t3DneJC0eRJ1.png"
@@ -17,7 +16,7 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Company */}
+          {/* info de la empresa, es para facha nmas, no redirige a nada */}
           <div>
             <h3 className="font-semibold mb-4">Empresa</h3>
             <ul className="space-y-2 text-sm">
@@ -48,7 +47,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Support */}
           <div>
             <h3 className="font-semibold mb-4">Soporte</h3>
             <ul className="space-y-2 text-sm">
@@ -79,7 +77,7 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Hosts */}
+          {/* botones para los propietarios (CU a futuro) */}
           <div>
             <h3 className="font-semibold mb-4">Propietarios</h3>
             <ul className="space-y-2 text-sm">

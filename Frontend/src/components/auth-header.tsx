@@ -9,7 +9,7 @@ export function AuthHeader() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
+          {/* logo */}
           <Link to="/home" className="flex items-center">
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-NDYPUS6grAG1OMP5A4t3DneJC0eRJ1.png"
@@ -18,7 +18,7 @@ export function AuthHeader() {
             />
           </Link>
 
-          {/* Help Button */}
+          {/* boton de ayuda, por el momento no hace nada, tendrá que redirigir a una pag nueva con info de ayuda */}
           <Button
             variant="outline"
             size="icon"
