@@ -70,14 +70,6 @@ async function add(req: Request, res: Response) {
     const horaInicio = parseInt(horaDesde.split(":")[0]);
     const horaFin = parseInt(horaHasta.split(":")[0]);
 
-    /*if (horaFin <= horaInicio) {
-      return res
-        .status(400)
-        .json({
-          message: "La hora de fin debe ser mayor que la hora de inicio",
-        });
-    }*/
-
     const horasTotales = horaFin - horaInicio;
     const precioTotal = horasTotales * garageEntity.precio;
 
@@ -137,4 +129,33 @@ async function remove(req: Request, res: Response) {
   }
 }
 
-export { sanitizeReservaInput, findAll, findOne, add, update, remove };
+// Obtener reservas activas (pendientes o confirmadas) de un garage
+async function getReservasByGarage(req: Request, res: Response) {
+  try {
+    const garageId = Number(req.params.id);
+    const reservas = await em.find(
+      Reserva,
+      {
+        garage: { idGarage: garageId },
+        estadoRes: { $in: ["pendiente", "confirmada"] },
+      },
+      {
+        fields: ["fechaDesde", "fechaHasta", "horaDesde", "horaHasta"],
+      }
+    );
+
+    res.status(200).json({ message: "Reservas activas", data: reservas });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export {
+  sanitizeReservaInput,
+  findAll,
+  findOne,
+  add,
+  update,
+  remove,
+  getReservasByGarage,
+};

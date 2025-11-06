@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Menu, User } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Menu, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 
 export function Header() {
   const [nombreUsuario, setNombreUsuario] = useState<string | null>(null);
 
   useEffect(() => {
-    const clienteStr = localStorage.getItem('cliente');
+    const clienteStr = localStorage.getItem("cliente");
 
     if (clienteStr) {
       try {
@@ -28,7 +28,7 @@ export function Header() {
           return;
         }
       } catch (err) {
-        console.error('Error parseando cliente desde localStorage:', err);
+        console.error("Error parseando cliente desde localStorage:", err);
       }
     }
   }, []);
@@ -59,7 +59,11 @@ export function Header() {
               </DropdownMenuTrigger>
               {/*aca se podría agregar un cerrar sesión que anule el token y redirija al login*/}
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem>Ayuda</DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/Notfound" className="cursor-pointer">
+                    Ayuda
+                  </Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 

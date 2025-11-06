@@ -8,6 +8,7 @@ import {
   add,
   update,
   remove,
+  getReservasByGarage,
 } from "./reserva.controler.js";
 
 export const reservaRouter = Router();
@@ -16,6 +17,8 @@ export const reservaRouter = Router();
 reservaRouter.use((req, res, next) => {
   RequestContext.create(orm.em, next);
 });
+
+reservaRouter.get("/garage/:id", getReservasByGarage);
 
 reservaRouter.get("/", findAll);
 reservaRouter.get("/:id", findOne);

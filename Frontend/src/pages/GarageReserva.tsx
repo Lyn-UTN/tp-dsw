@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getGarageById } from '@/api/garage-api';
-import { createReserva } from '@/api/reserva-api';
-import { Header } from '@/components/header';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getGarageById } from "@/api/garage-api";
+import { createReserva } from "@/api/reserva-api";
+import { Header } from "@/components/header";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Clock, MapPin, Star, Shield, Car } from 'lucide-react';
-import type { GarageDto } from '@/api/garage-api';
+} from "@/components/ui/dialog";
+import { Clock, MapPin, Star, Shield, Car } from "lucide-react";
+import type { GarageDto } from "@/api/garage-api";
 
 export default function GarageDetail() {
   const { id } = useParams(); // obtenemos el id de la URL
@@ -27,30 +27,57 @@ export default function GarageDetail() {
   // Estado del calendario
   const [dateRange, setDateRange] = useState<{ from: Date; to?: Date }>();
   const [showTimeSelector, setShowTimeSelector] = useState(false);
-  const [selectedStartTime, setSelectedStartTime] = useState('');
-  const [selectedEndTime, setSelectedEndTime] = useState('');
+  const [selectedStartTime, setSelectedStartTime] = useState("");
+  const [selectedEndTime, setSelectedEndTime] = useState("");
 
-  // 🔹 Cargar datos del garage cuando cambia el id
+  // Tipos correctos para reservas ocupadas
+  interface ReservaOcupada {
+    fechaDesde: string;
+    fechaHasta: string;
+    horaDesde: string;
+    horaHasta: string;
+  }
+
+  interface HoraOcupada {
+    desde: string;
+    hasta: string;
+  }
+
+  const [reservasOcupadas, setReservasOcupadas] = useState<ReservaOcupada[]>(
+    []
+  );
+  const [horasOcupadas, setHorasOcupadas] = useState<HoraOcupada[]>([]);
+
+  // 🔹 Cargar datos del garage y sus reservas cuando cambia el id
   useEffect(() => {
     if (!id) return;
-    const fetchGarage = async () => {
+
+    const fetchGarageAndReservas = async () => {
       try {
-        const data = await getGarageById(Number(id));
-        setGarage(data);
+        const dataGarage = await getGarageById(Number(id));
+        setGarage(dataGarage);
+
+        // 🔹 traer reservas activas (pendientes o confirmadas)
+        const res = await fetch(
+          `http://localhost:3000/api/reserva/garage/${id}`
+        );
+        const data = await res.json();
+        setReservasOcupadas(data.data || []);
       } catch (err) {
-        console.error('Error al obtener el garage:', err);
+        console.error("Error al obtener el garage o reservas:", err);
       } finally {
         setLoading(false);
       }
     };
-    fetchGarage();
+
+    fetchGarageAndReservas();
   }, [id]);
 
   const generateHours = () => {
     const hours = [];
     for (let i = 0; i < 24; i++) {
-      hours.push(`${i.toString().padStart(2, '0')}:00`);
-      hours.push(`${i.toString().padStart(2, '0')}:30`);
+      hours.push(`${i.toString().padStart(2, "0")}:00`);
+      hours.push(`${i.toString().padStart(2, "0")}:30`);
     }
     return hours;
   };
@@ -61,15 +88,32 @@ export default function GarageDetail() {
     date: Date | { from: Date; to?: Date } | undefined
   ) => {
     if (!date) return;
-    if ('from' in date) {
+
+    let selectedDate: Date;
+    if ("from" in date) {
+      selectedDate = date.from;
       setDateRange(date);
       if (!date.to || date.from.toDateString() === date.to.toDateString()) {
         setShowTimeSelector(true);
       }
     } else {
+      selectedDate = date;
       setDateRange({ from: date, to: date });
       setShowTimeSelector(true);
     }
+
+    // 🔹 Filtrar reservas del día seleccionado
+    const reservasDelDia = reservasOcupadas.filter((r) => {
+      const fechaReserva = new Date(r.fechaDesde).toDateString();
+      return fechaReserva === selectedDate.toDateString();
+    });
+
+    const ocupadas = reservasDelDia.map((r) => ({
+      desde: r.horaDesde,
+      hasta: r.horaHasta,
+    }));
+
+    setHorasOcupadas(ocupadas);
   };
 
   const handleTimeConfirm = () => {
@@ -195,25 +239,25 @@ export default function GarageDetail() {
                   className="w-full bg-primary hover:bg-primary-hover text-white h-12 text-base font-semibold"
                   disabled={!dateRange?.from}
                   onClick={async () => {
-                    const token = localStorage.getItem('token');
+                    const token = localStorage.getItem("token");
                     if (!token) {
-                      navigate('/login');
+                      navigate("/login");
                       return;
                     }
 
-                    const clienteStr = localStorage.getItem('cliente');
+                    const clienteStr = localStorage.getItem("cliente");
                     const clienteObj = clienteStr
                       ? JSON.parse(clienteStr)
                       : null;
 
                     if (!clienteObj?.idCliente) {
-                      alert('Debés iniciar sesión con una cuenta válida');
-                      navigate('/login');
+                      alert("Debés iniciar sesión con una cuenta válida");
+                      navigate("/login");
                       return;
                     }
 
                     if (!dateRange?.from) {
-                      alert('Seleccioná una fecha válida antes de reservar');
+                      alert("Seleccioná una fecha válida antes de reservar");
                       return;
                     }
                     const payload = {
@@ -222,9 +266,9 @@ export default function GarageDetail() {
                       fechaHasta: (
                         dateRange.to ?? dateRange.from
                       ).toISOString(),
-                      horaDesde: selectedStartTime || '00:00',
-                      horaHasta: selectedEndTime || '23:59',
-                      estadoRes: 'pendiente',
+                      horaDesde: selectedStartTime || "00:00",
+                      horaHasta: selectedEndTime || "23:59",
+                      estadoRes: "pendiente",
                       tipoReserva: 1,
                       cliente: clienteObj.idCliente,
                       garage: garage.idGarage,
@@ -232,10 +276,10 @@ export default function GarageDetail() {
 
                     try {
                       await createReserva(payload);
-                      alert('Reserva creada correctamente');
+                      alert("Reserva creada correctamente");
                     } catch (err) {
-                      console.error('Error creando reserva', err);
-                      alert('No se pudo crear la reserva');
+                      console.error("Error creando reserva", err);
+                      alert("No se pudo crear la reserva");
                     }
                   }}
                 >
@@ -262,20 +306,29 @@ export default function GarageDetail() {
                 Hora de inicio
               </label>
               <div className="grid grid-cols-4 gap-2 mt-2">
-                {availableHours.map((hour) => (
-                  <Button
-                    key={`start-${hour}`}
-                    variant={selectedStartTime === hour ? 'default' : 'outline'}
-                    className={`h-10 ${
-                      selectedStartTime === hour
-                        ? 'bg-primary hover:bg-primary-hover text-white'
-                        : ''
-                    }`}
-                    onClick={() => setSelectedStartTime(hour)}
-                  >
-                    {hour}
-                  </Button>
-                ))}
+                {availableHours
+                  .filter(
+                    (hour) =>
+                      !horasOcupadas.some(
+                        (h) => hour >= h.desde && hour < h.hasta
+                      )
+                  )
+                  .map((hour) => (
+                    <Button
+                      key={`start-${hour}`}
+                      variant={
+                        selectedStartTime === hour ? "default" : "outline"
+                      }
+                      className={`h-10 ${
+                        selectedStartTime === hour
+                          ? "bg-primary hover:bg-primary-hover text-white"
+                          : ""
+                      }`}
+                      onClick={() => setSelectedStartTime(hour)}
+                    >
+                      {hour}
+                    </Button>
+                  ))}
               </div>
             </div>
 
@@ -283,21 +336,27 @@ export default function GarageDetail() {
               <div>
                 <label className="text-sm font-medium mb-3 flex items-center gap-2">
                   <Clock className="h-4 w-4 text-primary" />
-                  Hora de fin (opcional)
+                  Hora de fin
                 </label>
                 <div className="grid grid-cols-4 gap-2 mt-2">
                   {availableHours
-                    .filter((hour) => hour > selectedStartTime)
+                    .filter(
+                      (hour) =>
+                        hour > selectedStartTime &&
+                        !horasOcupadas.some(
+                          (h) => hour > h.desde && hour <= h.hasta
+                        )
+                    )
                     .map((hour) => (
                       <Button
                         key={`end-${hour}`}
                         variant={
-                          selectedEndTime === hour ? 'default' : 'outline'
+                          selectedEndTime === hour ? "default" : "outline"
                         }
                         className={`h-10 ${
                           selectedEndTime === hour
-                            ? 'bg-primary hover:bg-primary-hover text-white'
-                            : ''
+                            ? "bg-primary hover:bg-primary-hover text-white"
+                            : ""
                         }`}
                         onClick={() => setSelectedEndTime(hour)}
                       >
@@ -314,8 +373,8 @@ export default function GarageDetail() {
                 className="flex-1 bg-transparent"
                 onClick={() => {
                   setShowTimeSelector(false);
-                  setSelectedStartTime('');
-                  setSelectedEndTime('');
+                  setSelectedStartTime("");
+                  setSelectedEndTime("");
                 }}
               >
                 Cancelar
