@@ -13,7 +13,7 @@ import { Cliente } from "../cliente/cliente_entity.js";
 import { Garage } from "../garage/garage_entity.js";
 import { Zona } from "../zona/zona_entity.js";
 
-// 🔧 Configuración directa sin dotenv, con valores por defecto
+//  valores por defecto
 const DB_NAME = process.env.DB_NAME || "AIRBNG";
 const DB_USER = process.env.DB_USER || "root";
 const DB_PASSWORD =
