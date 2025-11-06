@@ -26,6 +26,9 @@ export class Reserva {
   horaHasta!: string;
 
   @Property()
+  precioTotal!: number;
+
+  @Property()
   estadoRes!: EstadoRes;
 
   @ManyToOne(() => Tiporeserva, { nullable: false })

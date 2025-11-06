@@ -17,8 +17,8 @@ function sanitizeReservaInput(req: Request, res: Response, next: NextFunction) {
     horaHasta: req.body.horaHasta,
     estadoRes: req.body.estadoRes,
     tipoReserva: req.body.tipoReserva, // ID del tipo de reserva
-    cliente: req.body.cliente,         // ID del cliente
-    garage: req.body.garage,           // ID del garage
+    cliente: req.body.cliente, // ID del cliente
+    garage: req.body.garage, // ID del garage
   };
 
   Object.keys(req.body.sanitizedInput).forEach((key) => {
@@ -33,7 +33,11 @@ function sanitizeReservaInput(req: Request, res: Response, next: NextFunction) {
 // Listar todas las reservas
 async function findAll(req: Request, res: Response) {
   try {
-    const reservas = await em.find(Reserva, {}, { populate: ["tipoReserva", "cliente", "garage"] });
+    const reservas = await em.find(
+      Reserva,
+      {},
+      { populate: ["tipoReserva", "cliente", "garage"] }
+    );
     res.status(200).json({ message: "todas las reservas", data: reservas });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -58,16 +62,37 @@ async function findOne(req: Request, res: Response) {
 // Crear una nueva reserva
 async function add(req: Request, res: Response) {
   try {
-    const { tipoReserva, cliente, garage, ...rest } = req.body.sanitizedInput;
+    const { tipoReserva, cliente, garage, horaDesde, horaHasta, ...rest } =
+      req.body.sanitizedInput;
+
+    const garageEntity = await em.findOneOrFail(Garage, { idGarage: garage }); //Es para mostrar el precio total pero todavia no esta linkeado con el frontend
+
+    const horaInicio = parseInt(horaDesde.split(":")[0]);
+    const horaFin = parseInt(horaHasta.split(":")[0]);
+
+    /*if (horaFin <= horaInicio) {
+      return res
+        .status(400)
+        .json({
+          message: "La hora de fin debe ser mayor que la hora de inicio",
+        });
+    }*/
+
+    const horasTotales = horaFin - horaInicio;
+    const precioTotal = horasTotales * garageEntity.precio;
 
     const reserva = em.create(Reserva, {
       ...rest,
+      horaDesde,
+      horaHasta,
+      precioTotal,
       tipoReserva: em.getReference(Tiporeserva, tipoReserva),
       cliente: em.getReference(Cliente, cliente),
       garage: em.getReference(Garage, garage),
     });
 
     await em.flush();
+
     res.status(201).json({ message: "reserva creada", data: reserva });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -79,18 +104,22 @@ async function update(req: Request, res: Response) {
   try {
     const id = Number.parseInt(req.params.id);
     const reservaToUpdate = await em.findOneOrFail(Reserva, { idReserva: id });
-    
+
     const { tipoReserva, cliente, garage, ...rest } = req.body.sanitizedInput;
-    
+
     em.assign(reservaToUpdate, {
       ...rest,
-      ...(tipoReserva ? { tipoReserva: em.getReference(Tiporeserva, tipoReserva) } : {}),
+      ...(tipoReserva
+        ? { tipoReserva: em.getReference(Tiporeserva, tipoReserva) }
+        : {}),
       ...(cliente ? { cliente: em.getReference(Cliente, cliente) } : {}),
       ...(garage ? { garage: em.getReference(Garage, garage) } : {}),
     });
 
     await em.flush();
-    res.status(200).json({ message: "reserva actualizada", data: reservaToUpdate });
+    res
+      .status(200)
+      .json({ message: "reserva actualizada", data: reservaToUpdate });
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }

@@ -15,6 +15,7 @@ interface Reserva {
   fechaHasta: string;
   horaDesde: string;
   horaHasta: string;
+  precioTotal: number;
   estadoRes: "pendiente" | "confirmada" | "cancelada";
   garage: {
     titulo: string;
@@ -137,7 +138,7 @@ export default function MisReservas() {
                   className="w-full py-4 bg-white shadow-md hover:shadow-lg transition-shadow"
                 >
                   <div className="flex items-center justify-between px-6">
-                    <div className="flex-1 grid grid-cols-2 md:grid-cols-6 gap-4 items-center">
+                    <div className="flex-1 grid grid-cols-2 md:grid-cols-7 gap-4 items-center">
                       <div className="col-span-2 md:col-span-1">
                         <h3 className="font-semibold text-foreground">
                           {reserva.garage?.titulo ?? "Garage"}
@@ -175,6 +176,15 @@ export default function MisReservas() {
                               a {reserva.horaHasta}
                             </p>
                           </div>
+                        </div>
+                      </div>
+
+                      <div className="col-span-1">
+                        <div className="flex flex-col items-start text-sm">
+                          <p className="font-semibold text-foreground">
+                            ${reserva.precioTotal?.toFixed(2) ?? "-"}
+                          </p>
+                          <p className="text-xs text-muted-foreground">Total</p>
                         </div>
                       </div>
 
