@@ -31,7 +31,7 @@ app.use((req, res, next) => {
   RequestContext.create(orm.em, next);
 });
 
-//Rutas de negocio
+//rutas de negocio
 app.use("/api/tipoReserva", tiporeservaRouter);
 app.use("/api/reserva", reservaRouter);
 app.use("/api/garage", garageRouter);

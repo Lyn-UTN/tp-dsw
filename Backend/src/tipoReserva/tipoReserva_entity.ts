@@ -22,6 +22,5 @@ export class Tiporeserva {
 }
 
 // puede no ir "autoincrement: true"
-
-// yo creo que no hace falta usar lo del type, proque no obliga a usar any
-// en el seed y creo que puede tener alguna vulnerabilidad, aca no pasa nada, pero como para saber
+/* yo creo que no hace falta usar lo del type, proque no obliga a usar any
+ en el seed y creo que puede tener alguna vulnerabilidad, aca no pasa nada, pero como para saber  */
