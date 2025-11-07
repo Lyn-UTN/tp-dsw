@@ -7,7 +7,7 @@ import { orm } from "../shared/orm.js";
 
 const em = orm.em;
 
-// Middleware para sanitizar input
+// middleware para sanitizar input
 function sanitizeReservaInput(req: Request, res: Response, next: NextFunction) {
   req.body.sanitizedInput = {
     fechaReserva: req.body.fechaReserva,

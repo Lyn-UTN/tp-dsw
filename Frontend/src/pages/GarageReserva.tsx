@@ -30,7 +30,7 @@ export default function GarageDetail() {
   const [selectedStartTime, setSelectedStartTime] = useState("");
   const [selectedEndTime, setSelectedEndTime] = useState("");
 
-  // Tipos correctos para reservas ocupadas
+  // tipos correctos para reservas ocupadas
   interface ReservaOcupada {
     fechaDesde: string;
     fechaHasta: string;

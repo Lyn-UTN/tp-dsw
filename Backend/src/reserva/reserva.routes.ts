@@ -13,7 +13,7 @@ import {
 
 export const reservaRouter = Router();
 
-//middleware: crea un RequestContext por cada request para que `em` funcione bien
+//middleware
 reservaRouter.use((req, res, next) => {
   RequestContext.create(orm.em, next);
 });
