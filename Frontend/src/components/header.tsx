@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, User } from "lucide-react";
+import { Menu, User, LogOut } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +13,7 @@ import {
 
 export function Header() {
   const [nombreUsuario, setNombreUsuario] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const clienteStr = localStorage.getItem("cliente");
@@ -25,13 +26,18 @@ export function Header() {
         };
         if (cliente?.nombre) {
           setNombreUsuario(cliente.nombre);
-          return;
         }
       } catch (err) {
         console.error("Error parseando cliente desde localStorage:", err);
       }
     }
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("cliente");
+    navigate("/");
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -47,6 +53,7 @@ export function Header() {
           </Link>
 
           <div className="flex items-center gap-2 ml-auto">
+            {/* Menú de opciones (Ayuda, etc.) */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -57,7 +64,7 @@ export function Header() {
                   <Menu className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
-              {/*aca se podría agregar un cerrar sesión que anule el token y redirija al login*/}
+
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuItem asChild>
                   <Link to="/Notfound" className="cursor-pointer">
@@ -67,6 +74,7 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
 
+            {/* Menú de usuario */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -77,11 +85,20 @@ export function Header() {
                   <User className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
+
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuItem asChild>
                   <Link to="/misreservas" className="cursor-pointer">
                     Mis Reservas
                   </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="cursor-pointer text-red-600 focus:text-red-700"
+                >
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Cerrar sesión
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
