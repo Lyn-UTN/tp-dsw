@@ -58,7 +58,7 @@ export default function GarageDetail() {
         const dataGarage = await getGarageById(Number(id));
         setGarage(dataGarage);
 
-        // 🔹 traer reservas activas (pendientes o confirmadas)
+        // traemos reservas activas (pendientes o confirmadas)
         const res = await fetch(
           `http://localhost:3000/api/reserva/garage/${id}`
         );
@@ -103,7 +103,7 @@ export default function GarageDetail() {
       setShowTimeSelector(true);
     }
 
-    // 🔹 Filtrar reservas del día seleccionado
+    //  filtramos reservas del día seleccionado
     const reservasDelDia = reservasOcupadas.filter((r) => {
       const fechaReserva = new Date(r.fechaDesde).toDateString();
       return fechaReserva === selectedDate.toDateString();
@@ -344,18 +344,18 @@ export default function GarageDetail() {
                     .filter((hour) => {
                       if (hour <= selectedStartTime) return false;
 
-                      // Verificamos si el rango [inicio, hour) se cruza con alguna reserva existente
+                      // vemos si el rango [inicio, hour) se cruza con alguna reserva existente
                       const haySolapamiento = horasOcupadas.some((h) => {
                         const inicio = selectedStartTime;
                         const fin = hour;
 
-                        // Caso 1: el inicio está dentro de otra reserva
+                        // caso 1: el inicio está dentro de otra reserva
                         if (inicio >= h.desde && inicio < h.hasta) return true;
 
-                        // Caso 2: el fin está dentro de otra reserva
+                        // caso 2: el fin está dentro de otra reserva
                         if (fin > h.desde && fin <= h.hasta) return true;
 
-                        // Caso 3: cubre completamente otra reserva (ej. 00.00–07:00 y esta reserva cubre 04:00–06:30 entonces se sobreescribe)
+                        // caso 3: cubre completamente otra reserva 
                         if (inicio <= h.desde && fin >= h.hasta) return true;
 
                         return false;
